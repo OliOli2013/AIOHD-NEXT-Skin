@@ -22,7 +22,7 @@ AIOHD NEXT modifications by **Paweł Pawełek**, based on MetrixHD by iMaxxx / O
 Copy the IPK to `/tmp` and run:
 
 ```sh
-opkg install /tmp/enigma2-plugin-skins-aiohd-next_3.2.1-r4_all.ipk
+opkg install /tmp/enigma2-plugin-skins-aiohd-next_3.2.1-r5_all.ipk
 ```
 
 Select **AIOHD** in the skin selector and restart the GUI from the receiver menu.
@@ -41,6 +41,8 @@ Open **Plugins → AIOHD NEXT — Style**.
 - Yellow shows a broader launcher list; blue opens the selected plugin.
 
 ## In-plugin updates
+
+Version `3.2.1-r5` adds four less-common accent palettes: **Petrol**, **Copper**, **Jade** and **Sakura**.
 
 Since `3.2.1-r4`, opening **Plugins → AIOHD NEXT — Style** starts a non-blocking check of the official GitHub Releases feed. If a newer stable package is available, the user gets a Yes/No prompt. Nothing is installed automatically; the IPK is downloaded and passed to `opkg` only after explicit confirmation. The package URL is restricted to the official `OliOli2013/AIOHD-NEXT-Skin` release path.
 

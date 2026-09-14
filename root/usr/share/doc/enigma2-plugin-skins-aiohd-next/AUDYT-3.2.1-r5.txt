@@ -1,0 +1,11 @@
+AIOHD NEXT 3.2.1-r5 — AUDYT POPRAWEK
+Data: 2026-09-15
+
+Zakres:
+- SoftwareUpdate: jednowierszowy licznik „Dostępne aktualizacje”, bez obcięcia.
+- DeviceManager: wfNoBorder + pełnoekranowe tło skina, bez drugiego tytułu systemowego.
+- FlashOnline: usunięty podwójny T_Title, jeden szeroki nagłówek OPEN_SOURCE_INFO i tło maskujące poprzedni ekran.
+- Palety: Aurora, Amber, Violet + Petrol, Copper, Jade, Sakura.
+- Updater: lokalna rewizja 3.2.1-r5.
+
+Walidacja wykonywana przez tests/test_skin.py i build.py: składnia Python, XML, applety i sumy plików IPK.

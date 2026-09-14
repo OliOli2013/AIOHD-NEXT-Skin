@@ -1,5 +1,15 @@
 # Changelog
 
+## 3.2.1-r5 — 2026-09-15
+
+- Poprawiono pozostałe błędy widoczne na ekranie **Aktualizacja oprogramowania**: napis „Dostępne aktualizacje” jest teraz jednowierszowy i ma oddzielne miejsce na licznik pakietów.
+- **Menedżer urządzeń** działa jako pełnoekranowe okno bez systemowej ramki tytułu, dzięki czemu nie pojawia się drugi, ucięty tytuł przy górnej krawędzi.
+- **Flash Online / Systemy OpenATV** ma tylko jeden tytuł. Usunięto dublowanie `T_Title` i dodano nieprzezroczyste tło nagłówka, które zakrywa tytuł poprzedniego ekranu.
+- Poszerzono nagłówek ekranów OPEN SOURCE i zmniejszono jego font, aby długie polskie tytuły mieściły się bez nakładania.
+- Dodano cztery nowe, mniej typowe palety koloru przewodniego: **Petrol**, **Copper**, **Jade** i **Sakura**. Zachowano dotychczasowe Aurora, Amber i Violet.
+- Mechanizm aktualizacji skina pozostaje bez zmian funkcjonalnych i od tej rewizji identyfikuje lokalny pakiet jako `3.2.1-r5`.
+- Rewizja pakietu: `3.2.1-r5`; widoczna wersja skina pozostaje `3.2.1`.
+
 ## 3.2.1-r4 — 2026-09-14
 
 - Poprawiono zgłoszone przycięcia tekstu w ekranach **Aktualizacja oprogramowania**, **Flash Manager / Systemy OpenATV** oraz **Kalibracja OSD**.

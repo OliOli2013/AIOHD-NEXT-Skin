@@ -16,7 +16,7 @@ try:
 except ImportError:  # pragma: no cover - AIOHD NEXT itself requires Python 3
     from urllib2 import Request, urlopen
 
-CURRENT_PACKAGE_VERSION = '3.2.1-r4'
+CURRENT_PACKAGE_VERSION = '3.2.1-r5'
 RELEASES_API = 'https://api.github.com/repos/OliOli2013/AIOHD-NEXT-Skin/releases/latest'
 DOWNLOAD_PREFIX = 'https://github.com/OliOli2013/AIOHD-NEXT-Skin/releases/download/'
 _PACKAGE_RE = re.compile(r'^enigma2-plugin-skins-aiohd-next_[0-9]+\.[0-9]+\.[0-9]+-r[0-9]+_all\.ipk$')

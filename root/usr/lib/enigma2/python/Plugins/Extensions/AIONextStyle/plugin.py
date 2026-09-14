@@ -10,7 +10,7 @@ from Components.Label import Label
 from Components.config import ConfigSelection, ConfigYesNo, getConfigListEntry, configfile
 from threading import Thread
 from twisted.internet import reactor
-from .theme import current_palette, apply_palette
+from .theme import PALETTE_CHOICES, current_palette, apply_palette
 from .settings import settings, tr
 from .weather import weather_plugins, preferred_weather_key, open_weather, start_weather_sources
 from .updater import CURRENT_PACKAGE_VERSION, fetch_latest, installer_command
@@ -51,7 +51,7 @@ class AIONextStyle(Screen, ConfigListScreen):
         self['description'] = Label(tr(
             'Standard: 32 px / 18 kanałów. Duża: 38 px / 15 kanałów. Bardzo duża: 42 px / 14 kanałów.\nPogoda inline: Auto najpierw używa aktualnego backendu OpenATV / MetrixWeather, potem Weather Plugin.\nWybrana niżej wtyczka jest skrótem do pełnego ekranu i nie musi być źródłem danych inline.',
             'Standard: 32 px / 18 channels. Large: 38 px / 15 channels. Extra large: 42 px / 14 channels.\nInline weather: Auto first uses the current OpenATV / MetrixWeather backend, then Weather Plugin.\nThe plugin selected below is a launcher for its full screen and does not have to be the inline data provider.'))
-        self.palette = ConfigSelection(default=current_palette(SKIN_PATH), choices=[('aurora', 'Aurora'), ('amber', 'Amber'), ('violet', 'Violet')])
+        self.palette = ConfigSelection(default=current_palette(SKIN_PATH), choices=PALETTE_CHOICES)
         self.listSize = ConfigSelection(default=settings.listSize.value, choices=[('standard', tr('Standard — 18 kanałów', 'Standard — 18 channels')), ('large', tr('Duża — 15 kanałów', 'Large — 15 channels')), ('xlarge', tr('Bardzo duża — 14 kanałów', 'Extra large — 14 channels'))])
         self.weatherInline = ConfigYesNo(default=settings.weatherInline.value)
         self.weatherProvider = ConfigSelection(default=settings.weatherProvider.value, choices=[

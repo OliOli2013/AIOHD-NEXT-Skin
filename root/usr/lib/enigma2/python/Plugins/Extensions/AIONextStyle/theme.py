@@ -8,11 +8,33 @@ PALETTES = {
     'aurora': ('#0034D6CF', '#00195759'),
     'amber': ('#00F6C56C', '#0060441F'),
     'violet': ('#00BCABFF', '#00483C70'),
+    # Less common palettes chosen to stay readable on dark OpenATV layers.
+    'petrol': ('#0020B7A6', '#00184346'),
+    'copper': ('#00D99058', '#004A2D21'),
+    'jade': ('#0059D39A', '#001C4A37'),
+    'sakura': ('#00E07BA4', '#00472B38'),
 }
+PALETTE_CHOICES = [
+    ('aurora', 'Aurora'),
+    ('amber', 'Amber'),
+    ('violet', 'Violet'),
+    ('petrol', 'Petrol'),
+    ('copper', 'Copper'),
+    ('jade', 'Jade'),
+    ('sakura', 'Sakura'),
+]
 ACCENTS = {'nextAccent', 'infobaraccent1', 'infobarprogress', 'layer-a-accent1',
            'layer-b-accent1', 'layer-a-progress', 'layer-a-underline',
            'scrollbarSlidercolor', 'layer-a-channelselection-progressbar'}
-STRONG_SELECTIONS = {'aurora': '#00007678', 'amber': '#00805412', 'violet': '#006C4A9A'}
+STRONG_SELECTIONS = {
+    'aurora': '#00007678',
+    'amber': '#00805412',
+    'violet': '#006C4A9A',
+    'petrol': '#00505F5B',
+    'copper': '#00713E22',
+    'jade': '#002E6B50',
+    'sakura': '#00733B52',
+}
 SELECTIONS = {'nextAccentDim', 'layer-a-selection-background',
               'layer-b-selection-background'}
 

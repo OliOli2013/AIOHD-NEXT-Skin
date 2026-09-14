@@ -1,5 +1,5 @@
 Package: enigma2-plugin-skins-aiohd-next
-Version: 3.2.1-r4
+Version: 3.2.1-r5
 Section: skins
 Priority: optional
 Architecture: all
@@ -10,4 +10,5 @@ Replaces: enigma2-plugin-skins-aiohd
 Description: AIOHD NEXT 3.2.1 Full HD skin for OpenATV / Python 3
  Rebuilt channel details panel with smaller MiniTV, scrolling multi-line EPG,
  four upcoming events, compact InfoBar with separated description/progress, inline weather, three channel-list sizes and in-plugin update checks.
- Fixes clipped OpenATV update/flash/OSD screens. Update checks use stable GitHub Releases and always require user confirmation.
+ Fixes remaining OpenATV title/count clipping in Software Update, Device Manager and Flash Online.
+ Adds Petrol, Copper, Jade and Sakura accent palettes. Update checks use stable GitHub Releases and always require user confirmation.

@@ -84,7 +84,7 @@ class Tests(unittest.TestCase):
   theme=load('theme',B/'Plugins/Extensions/AIONextStyle/theme.py')
   with tempfile.TemporaryDirectory() as d:
    p=Path(d)/'skin.xml';original=Path('root/usr/share/enigma2/AIOHD/skin.xml').read_bytes();p.write_bytes(original)
-   for key in ['amber','violet','aurora']:
+   for key in ['amber','violet','petrol','copper','jade','sakura','aurora']:
     self.assertTrue(theme.apply_palette(str(p),key));self.assertEqual(theme.current_palette(str(p)),key);self.assertFalse(theme.apply_palette(str(p),key))
    self.assertEqual(p.read_bytes(),original)
 class FeatureTests(unittest.TestCase):
@@ -129,12 +129,12 @@ class FeatureTests(unittest.TestCase):
   weather_session=types.SimpleNamespace(screen={});weather.start_weather_sources(weather_session);self.assertEqual(weather_session.screen[weather.SOURCE_CITY].text,'Pogoda');self.assertIn('Ładowanie',weather_session.screen[weather.SOURCE_CONDITION].text)
  def test_updater_version_and_command_safety(self):
   updater=load('aiofeatures.updater',B/'Plugins/Extensions/AIONextStyle/updater.py')
-  self.assertEqual(updater.CURRENT_PACKAGE_VERSION,'3.2.1-r4')
-  self.assertTrue(updater.is_newer('3.2.1-r5'))
+  self.assertEqual(updater.CURRENT_PACKAGE_VERSION,'3.2.1-r5')
+  self.assertTrue(updater.is_newer('3.2.1-r6'))
   self.assertTrue(updater.is_newer('3.2.2-r0'))
+  self.assertFalse(updater.is_newer('3.2.1-r5'))
   self.assertFalse(updater.is_newer('3.2.1-r4'))
-  self.assertFalse(updater.is_newer('3.2.1-r3'))
-  url='https://github.com/OliOli2013/AIOHD-NEXT-Skin/releases/download/3.2.1-r5/enigma2-plugin-skins-aiohd-next_3.2.1-r5_all.ipk'
+  url='https://github.com/OliOli2013/AIOHD-NEXT-Skin/releases/download/3.2.1-r6/enigma2-plugin-skins-aiohd-next_3.2.1-r6_all.ipk'
   cmd=updater.installer_command(url)
   self.assertIn('wget -q --no-check-certificate',cmd);self.assertIn('opkg install /tmp/aiohd-next-update.ipk',cmd)
   with self.assertRaises(ValueError):updater.installer_command('https://example.com/evil.ipk')
@@ -143,10 +143,21 @@ class FeatureTests(unittest.TestCase):
   root=Path('root/usr/share/enigma2/AIOHD/skinfiles')
   openatv=E.parse(root/'skin_openatv.xml').getroot()
   flash=openatv.find("screen[@name='FlashOnline']")
-  self.assertIsNotNone(flash.find("panel[@name='T_Title']"))
+  self.assertIsNone(flash.find("panel[@name='T_Title']"))
+  self.assertIsNotNone(flash.find("panel[@name='OPEN_SOURCE_INFO']"))
   self.assertIsNotNone(flash.find("widget[@source='description']"))
+  shared=openatv.find("screen[@name='OPEN_SOURCE_INFO']")
+  shared_title=shared.find("widget[@source='Title']")
+  self.assertGreaterEqual(int(shared_title.get('size').split(',')[0]),1000)
+  self.assertEqual(shared_title.get('noWrap'),'1')
+  self.assertIsNotNone(shared.find('eLabel'))
+  device=openatv.find("screen[@name='DeviceManager']")
+  self.assertEqual(device.get('flags'),'wfNoBorder')
   software=openatv.find("screen[@name='SoftwareUpdate']")
-  self.assertGreaterEqual(int(software.find("widget[@name='package_text']").get('size').split(',')[1]),60)
+  package_text=software.find("widget[@name='package_text']")
+  self.assertEqual(package_text.get('noWrap'),'1')
+  self.assertGreaterEqual(int(package_text.get('size').split(',')[0]),450)
+  self.assertGreaterEqual(int(package_text.get('size').split(',')[1]),54)
   osd=openatv.find("screen[@name='OSDCalibration']")
   text=osd.find("widget[@source='text']");cfg=osd.find("widget[@name='config']")
   ty,th=map(int,(text.get('position').split(',')[1],text.get('size').split(',')[1]));cy=int(cfg.get('position').split(',')[1])
@@ -186,5 +197,7 @@ class FeatureTests(unittest.TestCase):
   def luminance(v):
    c=[int(v[i:i+2],16)/255 for i in (3,5,7)];c=[x/12.92 if x<=.04045 else ((x+.055)/1.055)**2.4 for x in c];return sum(a*b for a,b in zip(c,[.2126,.7152,.0722]))
   theme=load('featuretheme',B/'Plugins/Extensions/AIONextStyle/theme.py')
+  self.assertEqual(set(theme.PALETTES),set(k for k,_ in theme.PALETTE_CHOICES))
+  self.assertTrue({'petrol','copper','jade','sakura'}.issubset(theme.PALETTES))
   for col in theme.STRONG_SELECTIONS.values():self.assertGreater(1.05/(luminance(col)+.05),4.5)
 if __name__=='__main__':unittest.main(verbosity=2)

@@ -24,7 +24,7 @@ Modyfikacje AIOHD NEXT: **Paweł Pawełek**. Baza: MetrixHD autorstwa iMaxxx / z
 Pobierz plik IPK z wydania GitHub, prześlij go do `/tmp` tunera i wykonaj:
 
 ```sh
-opkg install /tmp/enigma2-plugin-skins-aiohd-next_3.2.1-r4_all.ipk
+opkg install /tmp/enigma2-plugin-skins-aiohd-next_3.2.1-r5_all.ipk
 ```
 
 Następnie wybierz **AIOHD** w ustawieniach skina i uruchom ponownie GUI z menu tunera.
@@ -48,6 +48,8 @@ Otwórz **Wtyczki → AIOHD NEXT — Style**.
 - Po wejściu do ustawień wtyczka **w tle sprawdza GitHub Releases**. Jeśli pojawi się nowsza stabilna rewizja, pokaże informację i zapyta o zgodę na instalację.
 
 ## Aktualizacje z poziomu wtyczki
+
+W `3.2.1-r5` wybór koloru przewodniego został rozszerzony o palety **Petrol**, **Copper**, **Jade** i **Sakura**.
 
 Od `3.2.1-r4` AIOHD NEXT ma własny, opcjonalny mechanizm aktualizacji. Po otwarciu **AIOHD NEXT — Style** status aktualizacji pojawia się pod listą ustawień. Sprawdzanie nie blokuje interfejsu.
 
