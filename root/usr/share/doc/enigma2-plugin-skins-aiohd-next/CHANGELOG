@@ -1,48 +1,39 @@
-## 3.2.1 — 2026-09-14
+AIOHD NEXT 3.2.1-r1 (2026-09-14)
+- Rebuilt ChannelSelection right panel: smaller 16:9 MiniTV and more room for EPG.
+- Multi-line FullDescription with vertical auto-scroll when the text does not fit.
+- Four upcoming events retained in a cleaner right-panel layout.
+- Channel names increased to 38/42 px in NextBold; strong active-row selection retained.
+- InfoBar reduced to 240 px and reorganized around current event, progress and next event.
+- Full long EPG description remains in the scrollable Event Information screen.
+- Inline weather added: city, temperature, condition and icon.
+- OpenATV Weather Plugin is the preferred inline data provider when installed/configured.
+- Other installed weather plugins remain selectable as launchers.
+- Visible skin version unified as 3.2.1; IPK package revision is r1.
 
-- Naprawiono wykrywanie wtyczek pogody: OpenATV używa pola `function`, a nie `fnc`.
-- Dodano obsługę launcherów menu głównego i ręczny wybór ze wszystkich wtyczek (żółty przycisk).
-- Nazwy kanałów są pogrubione: 36 lub 40 px; opisy audycji 30 lub 32 px.
-- Mniejsze odstępy: 15 lub 14 wierszy; dwuliniowo 9 lub 8.
-- Ustawienie czcionek przetrwa kolejne wywołania setFontsize.
-- Bootlogo z numerem 3.2.1, także aktualizacja systemowego logo przy aktywnym skinie AIOHD.
+AIOHD NEXT 3.2.1-r0 (2026-09-14)
+- Fixed weather-plugin discovery for OpenATV PluginDescriptor.function.
+- Added main-menu launcher discovery and manual all-plugin selection.
+- Bold channel names 36/40 px and event text 30/32 px.
+- 15/14 rows in one-line mode and 9/8 in two-line mode.
+- Font settings survive later setFontsize calls.
+- Bootlogo updated to 3.2.1 and copied to the system bootlogo only when AIOHD is active.
 
-# Changelog
-
-## 3.2.0 — 2026-09-14
-
-- Większa domyślna czcionka kanałów: 32 px, opisów: 26 px.
-- Opcja bardzo dużej czcionki: kanały 36 px, opisy 29 px.
-- Klasyczna lista: 12 lub 10 wierszy; dwuliniowa: 8 lub 6.
-- Lokalne ustawienie wysokości wierszy bez zmiany globalnej konfiguracji systemu.
-- Mocniejsze zaznaczenie kanału we wszystkich trzech paletach; biały tekst zaznaczenia.
-- W ustawieniach skina: wybór zainstalowanej wtyczki pogody i niebieski przycisk uruchamiania.
-- Opcjonalny skrót pogodowy w menu rozszerzeń, obsługa braku lub usunięcia wtyczki.
-- Zachowany MiniTV, cztery kolejne audycje i wcześniejsze poprawki EPG/komunikatów.
-- Pełne źródła, budowanie IPK, testy oraz GitHub Actions.
-
-## 3.1.3
-
-Poprawki warstw EventView, geometrii komunikatów i pozostałych okien,
-większa czytelność infobara, wspólny układ listy i poprawki zapytań EPG.
-Szczegółowy raport poprzedniej wersji znajduje się w katalogu dokumentacji pakietu.
-
+AIOHD NEXT 3.2.0-r0 (2026-09-14)
+- Larger channel-list typography and optional extra-large mode.
+- Local row-height handling without global ServiceList changes.
+- Stronger active-row selection for Aurora, Amber and Violet.
+- Weather-plugin launcher selection in AIOHD NEXT Style.
+- MiniTV and four upcoming events retained.
+- Full source tree, IPK builder, tests and GitHub Actions.
 
 AIOHD NEXT 3.1.3-r0 (2026-09-13)
-- EventView/InfoBarEventView: decorative layers below ScrollLabel parent.
-- Native scrollable EPG and empty-EPG placeholder, no system file patching.
-- Correct MessageBox row height, bounded measured layout, left/right pages
-  for long messages; Yes/No selection and timeout semantics unchanged.
-- Infobar: opaque text cards, bolder channel/event titles, native description,
-  next-event start time, retained picon and SNR/AGC bars.
-- Six channel screens use one shared layout with MiniTV and four next events.
-- Upcoming EPG: one IBDT query, chronological filtering and deduplication,
-  bounded shared cache, refresh while visible, date after midnight.
-- Smaller progress bars, explicit selected colour and accent selection.
-- Fixed HelpMenu/FlashOnline/TimeInput and explicit widget bounds.
-- Removed precompiled Python 3.13 cache from all-architecture package.
+- EventView/InfoBarEventView layer fixes and scrollable EPG description.
+- Improved MessageBox sizing/paging, InfoBar readability and shared ChannelSelection layout.
+- One-query upcoming EPG with chronological filtering, deduplication and bounded cache.
+- Explicit progress/selection colours and assorted OpenATV screen fixes.
+- Removed precompiled Python cache from the all-architecture package.
 
 AIOHD NEXT 3.1.2-r0
-- Added solid background layers to remove TV bleed-through on menu, plugin browser and infobar cards.
-- Repaired Event Information full description rendering.
+- Added solid background layers to remove TV bleed-through.
+- Repaired Event Information description rendering.
 - Minor visual cleanup and version bump.

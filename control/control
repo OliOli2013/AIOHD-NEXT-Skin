@@ -1,5 +1,5 @@
 Package: enigma2-plugin-skins-aiohd-next
-Version: 3.2.1-r0
+Version: 3.2.1-r1
 Section: skins
 Priority: optional
 Architecture: all
@@ -8,5 +8,6 @@ Depends: enigma2, enigma2-plugin-skins-metrix-atv, python3-core
 Conflicts: enigma2-plugin-skins-aiohd
 Replaces: enigma2-plugin-skins-aiohd
 Description: AIOHD NEXT 3.2.1 Full HD skin for OpenATV / Python 3
- Large channel list fonts with strong selection, MiniTV and four upcoming
- events. Optional launcher for an installed weather plugin. Three palettes.
+ Rebuilt channel details panel with smaller MiniTV, scrolling multi-line EPG,
+ four upcoming events, compact InfoBar and inline weather integration.
+ Prefers OpenATV Weather Plugin when available; other weather launchers remain selectable.

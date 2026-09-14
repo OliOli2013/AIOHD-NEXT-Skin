@@ -1,0 +1,35 @@
+AIOHD NEXT 3.2.1-r1 — zakres audytu i zmian
+Data: 2026-09-14
+
+1. ChannelSelection
+- PiG zmniejszony z 620x349 do 544x306 (16:9).
+- Prawy panel przebudowany pod EPG: tytuł, postęp, czas, FullDescription i 4 następne audycje.
+- FullDescription używa wielowierszowego RunningText; przewija się tylko, gdy treść nie mieści się w polu.
+- Nazwy kanałów 38/42 px, NextBold, mocne zaznaczenie i biały tekst wybranej pozycji.
+
+2. InfoBar
+- Wysokość dolnych paneli zmniejszona z 300 do 240 px.
+- Usunięto pełny opis z InfoBar, ponieważ był obcinany i niepotrzebnie zwiększał wysokość.
+- Zostawiono nazwę kanału, bieżący tytuł, czas, postęp, pozostały czas i następną audycję.
+- Picon oraz SNR/AGC/BER i wskaźniki usług pozostają.
+
+3. Event Information
+- Istniejące EventView/EventViewSimple/EventViewEPGSelect mają duże pole epg_description z scrollbarMode=showOnDemand.
+- InfoBarEventView ma również przewijane pole opisu. Nie wprowadzono sztucznego obcinania pełnego EPG.
+
+4. Pogoda
+- Dodano bezpieczne źródła sesji AIONextWeatherCity/Temp/Condition/Icon.
+- Skin nie zależy bezpośrednio od obecności zewnętrznego convertera/rendererera pogodowego, więc brak wtyczki nie powinien wywracać ekranu.
+- Jeśli dostępny jest OpenATV Weather Plugin i ma ustawioną lokalizację, jego API danych zasila pola inline.
+- Weather Plugin jest preferowany jako launcher; inne wtyczki można wybierać ręcznie.
+
+5. Wersja
+- AIOHD_VERSION: 3.2.1.
+- Ustawienia, stopki i bootlogo: 3.2.1.
+- Rewizja pakietu: 3.2.1-r1.
+
+6. Walidacja przed pakowaniem
+- parsowanie wszystkich plików XML skina,
+- parsowanie składni wszystkich zmienionych modułów Python,
+- odtworzenie md5sums,
+- kontrola struktury IPK i metadanych pakietu.

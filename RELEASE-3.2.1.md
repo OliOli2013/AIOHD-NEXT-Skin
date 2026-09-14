@@ -1,15 +1,23 @@
-AIOHD NEXT 3.2.1 — poprawki po zgłoszeniach użytkowników
+# AIOHD NEXT 3.2.1-r1 — przebudowany ChannelSelection, InfoBar i pogoda inline
 
-## 3.2.1 — 2026-09-14
+Rewizja `r1` aktualizuje pakiet 3.2.1 bez zmiany widocznego numeru skina.
 
-- Naprawiono wykrywanie wtyczek pogody: OpenATV używa pola `function`, a nie `fnc`.
-- Dodano obsługę launcherów menu głównego i ręczny wybór ze wszystkich wtyczek (żółty przycisk).
-- Nazwy kanałów są pogrubione: 36 lub 40 px; opisy audycji 30 lub 32 px.
-- Mniejsze odstępy: 15 lub 14 wierszy; dwuliniowo 9 lub 8.
-- Ustawienie czcionek przetrwa kolejne wywołania setFontsize.
-- Bootlogo z numerem 3.2.1, także aktualizacja systemowego logo przy aktywnym skinie AIOHD.
+## Najważniejsze zmiany
 
+- mniejszy podgląd TV 544×306 i większy obszar danych po prawej stronie listy kanałów;
+- bieżący tytuł, czas, postęp, wielowierszowy opis i cztery kolejne audycje;
+- pogrubione nazwy kanałów 38/42 px;
+- InfoBar zmniejszony do 240 px, bez obcinanego długiego opisu;
+- pełny opis dostępny w przewijanym Event Information;
+- pogoda bezpośrednio w skinie: ikona, miejscowość, temperatura i warunki;
+- OpenATV Weather Plugin preferowany jako dostawca danych inline;
+- inne wtyczki pogodowe zachowane jako wybieralne launchery;
+- `AIOHD_VERSION` i pozostałe widoczne oznaczenia ujednolicone do 3.2.1.
 
-Po instalacji wykonaj restart GUI. Wybór pogody: Wtyczki → AIOHD NEXT — Style.
-Żółty przycisk pokazuje wszystkie zarejestrowane launchery.
-Wersja wymaga weryfikacji na fizycznym tunerze.
+## Pakiet
+
+`enigma2-plugin-skins-aiohd-next_3.2.1-r1_all.ipk`
+
+Po instalacji wybierz AIOHD i wykonaj restart GUI z menu tunera. Ustawienia pogody i czcionki: **Wtyczki → AIOHD NEXT — Style**.
+
+Przed publikacją zalecany jest test na fizycznym tunerze OpenATV, szczególnie ChannelSelection/PiG, przewijania EPG i Weather Plugin.

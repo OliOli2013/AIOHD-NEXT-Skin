@@ -1,50 +1,30 @@
-# Utworzenie repozytorium GitHub
+# AIOHD NEXT — dane repozytorium i publikacji
 
-Proponowana nazwa: **AIOHD-NEXT-Skin**
+Repozytorium: `OliOli2013/AIOHD-NEXT-Skin`
+Branch główny: `main`
 
-Opis repozytorium (pole Description):
+## Zalecane pole Description
 
-> AIOHD NEXT — Full HD skin for OpenATV / Enigma2 with TV preview, upcoming EPG, large channel fonts and optional weather plugin integration.
+> AIOHD NEXT — Full HD skin for OpenATV / Enigma2 with MiniTV, rich EPG, large channel fonts and inline weather integration.
 
-Website:
+## Website
 
 > https://olioli2013.github.io/aio-iptv-projekt/
 
-Topics:
+## Topics
 
-`enigma2`, `openatv`, `skin`, `full-hd`, `epg`, `python3`, `aiohd-next`
+`enigma2`, `openatv`, `skin`, `full-hd`, `epg`, `python3`, `aiohd-next`, `weather`
 
-## Pierwsze wysłanie z Linux Mint
+## Aktualizacja 3.2.1-r1
 
-1. Na GitHub utwórz puste repozytorium `AIOHD-NEXT-Skin` na koncie `OliOli2013`.
-2. Nie dodawaj automatycznie README, .gitignore ani dodatkowej licencji — pliki są w zestawie.
-3. Rozpakuj ZIP i otwórz terminal w folderze zawierającym `README.md` i `build.py`.
-4. Uruchom:
+Po skopiowaniu nowych plików do lokalnego klonu w GitKraken:
 
-```sh
-git init -b main
-git add .
-git commit -m "AIOHD NEXT 3.2.1: initial source release"
-git remote add origin https://github.com/OliOli2013/AIOHD-NEXT-Skin.git
-git push -u origin main
-```
+1. Sprawdź zmiany w **Unstaged Files**.
+2. Stage all files z zestawu aktualizacji.
+3. Commit: `AIOHD NEXT 3.2.1-r1: ChannelSelection, InfoBar and inline weather`.
+4. Push do `main`.
+5. Poczekaj na wynik GitHub Actions.
+6. Po teście na tunerze utwórz nowy tag/release `3.2.1-r1` zamiast przesuwać istniejący tag `3.2.1`.
+7. Do wydania dodaj `enigma2-plugin-skins-aiohd-next_3.2.1-r1_all.ipk` i plik SHA256.
 
-Użyj logowania GitHub obsługiwanego przez swój komputer. Nie wpisuj tokenu do
-plików projektu. Jeśli wybierzesz inną nazwę repozytorium, zmień adres `origin`.
-Wysyłanie przez Git pozwala zachować cały zestaw ponad 1600 plików i folder `.github`;
-nie trzeba dzielić go na porcje w przeglądarce.
-
-## Pierwsze wydanie
-
-1. Otwórz Releases → Draft a new release.
-2. Tag: `v3.2.1`, branch: `main`.
-3. Tytuł: `AIOHD NEXT 3.2.1`.
-4. Treść: skopiuj `RELEASE-3.2.1.md`.
-5. Dodaj pliki `dist/enigma2-plugin-skins-aiohd-next_3.2.1-r0_all.ipk`
-   i odpowiadający mu `.ipk.sha256` (powstają po `python3 build.py`).
-6. Opublikuj wydanie po teście na tunerze; wcześniej można zachować szkic.
-
-Workflow buduje artefakt przy każdym push i pull request. Nie publikuje wydań
-ani nie wysyła pakietu na tuner automatycznie.
-
-Repozytorium nie zostało utworzone ani opublikowane przez przygotowanie tego ZIP.
+Widoczna wersja skina pozostaje `3.2.1`; `r1` jest rewizją pakietu.

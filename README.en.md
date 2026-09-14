@@ -1,65 +1,64 @@
 # AIOHD NEXT 3.2.1
 
-Full HD skin for **OpenATV / Enigma2, Python 3**.
+Modern Full HD skin for **OpenATV / Enigma2 (Python 3)**.
 AIOHD NEXT modifications by **Paweł Pawełek**, based on MetrixHD by iMaxxx / OpenATV.
 
-## Features
+## Highlights
 
-- Clear infobar with picon, event description, progress, next event and SNR/AGC.
-- Mini TV preview and four upcoming events for the highlighted channel.
-- Bold 36 / 40 px channel fonts: 15 / 14 rows in supported legacy lists.
-- Two-line lists use 9 / 8 rows. Other template implementations retain native sizing.
-- Strong selection highlight matched to Aurora, Amber or Violet.
-- Scrollable EPG details and paginated long messages.
-- Optional launcher for an installed weather plugin.
+- Bold **38 px / 42 px** channel names with a strong active-row highlight.
+- Rebuilt right panel with a smaller **544×306 16:9 MiniTV**, current event, time/progress, multi-line EPG description and **four upcoming events**.
+- Long descriptions auto-scroll vertically only when needed.
+- Compact **240 px** InfoBar focused on channel, current event, progress/time and next event.
+- Full long EPG text remains available in the scrollable **Event Information** screen.
+- Inline weather: **icon, city, temperature and condition**.
+- Preferred inline provider: **Weather Plugin from the OpenATV feed**, when installed and configured.
+- Other installed weather plugins can still be selected as launchers.
+- Aurora, Amber and Violet palettes.
+- Visible skin version stays **3.2.1**; `r1` is the IPK package revision only.
 
 ## Install
 
 Copy the IPK to `/tmp` and run:
 
 ```sh
-opkg install /tmp/enigma2-plugin-skins-aiohd-next_3.2.1-r0_all.ipk
+opkg install /tmp/enigma2-plugin-skins-aiohd-next_3.2.1-r1_all.ipk
 ```
 
-Select **AIOHD** in the skin selector and restart the GUI through the receiver menu.
-Dependencies: Enigma2, Python 3 core and `enigma2-plugin-skins-metrix-atv`.
+Select **AIOHD** in the skin selector and restart the GUI from the receiver menu.
+Dependencies: `enigma2`, `python3-core`, `enigma2-plugin-skins-metrix-atv`.
 
-## Settings and weather
+## AIOHD NEXT settings
 
-Open **Plugins → AIOHD NEXT — Style**. Select the accent palette and list font.
-Enable the optional weather shortcut and choose an installed weather launcher.
-Blue previews weather; green saves. Reopen the channel list to apply font sizing.
-Palette changes and adding/removing the Extensions weather entry require a GUI restart.
+Open **Plugins → AIOHD NEXT — Style**.
 
-Weather detection checks registered Plugin/Extensions menu launchers for weather,
-pogoda, foreca, wetter or meteo in their identity. It does not install plugins,
-access weather APIs, add animated icons, or show weather in the infobar.
-Location and icon settings belong to the selected weather plugin. Specific
-versions of third-party weather plugins have not been hardware-tested.
-Unavailable or removed plugins produce an information message.
+- Large: 38 px / 15 rows.
+- Extra large: 42 px / 14 rows.
+- Two-line mode: 9 / 8 rows.
+- Inline weather is enabled by default for the new configuration key.
+- The full weather-plugin shortcut remains optional.
+- Yellow shows a broader launcher list; blue opens the selected plugin.
+
+## Inline weather
+
+AIOHD NEXT owns the weather session sources, so a missing external weather plugin should not break InfoBar or ChannelSelection.
+
+When the OpenATV **Weather Plugin** is installed and configured, AIOHD NEXT uses its data for city, temperature, condition and icon. Location and units remain configured in Weather Plugin itself.
+
+Other weather plugins can still be used as launchers, but third-party plugins do not expose one common data API, so selecting another launcher does not automatically make it an inline data provider.
 
 ## Build
-
-Python 3 standard library only:
 
 ```sh
 python3 -m unittest discover -s tests -v
 python3 build.py
 ```
 
-The IPK and SHA256 are generated in `dist/`. GitHub Actions runs tests and builds.
-The source tree includes all packaged assets and modules.
+The IPK and SHA256 file are generated in `dist/`. The builder validates Python, XML/applets and package checksums. GitHub Actions runs the same checks on push and pull requests.
 
-## Scope
+## Compatibility
 
-OpenATV only; retain the inherited MetrixHD licensing notice in `LICENSE` and
-`skin.xml`. No blanket MIT/GPL licence is assigned to third-party assets.
-Tests use mocked Enigma2 APIs; version 3.2.1 still requires physical receiver
-validation. Include receiver model, OpenATV version and screenshots in reports.
+OpenATV / Python 3. Keep the inherited MetrixHD licensing notices. Automated tests do not replace receiver testing.
 
-Author's website: https://olioli2013.github.io/aio-iptv-projekt/
+When reporting an issue, include receiver model, OpenATV version, skin version, screenshot and a sanitized crashlog.
 
-Yellow in the settings screen lists all registered launchers for manual selection.
-The corrected detector supports OpenATV PluginDescriptor.function.
-Bootlogo now displays 3.2.1. If AIOHD is the active skin during installation,
-the system bootlogo is updated with a backup of the previous file.
+Author website: https://olioli2013.github.io/aio-iptv-projekt/

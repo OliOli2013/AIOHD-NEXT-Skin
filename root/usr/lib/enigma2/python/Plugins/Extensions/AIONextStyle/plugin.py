@@ -9,7 +9,7 @@ from Components.Label import Label
 from Components.config import ConfigSelection, ConfigYesNo, getConfigListEntry, configfile
 from .theme import current_palette, apply_palette
 from .settings import settings, tr
-from .weather import weather_plugins, open_weather
+from .weather import weather_plugins, preferred_weather_key, open_weather, start_weather_sources
 
 SKIN_PATH = '/usr/share/enigma2/AIOHD/skin.xml'
 
@@ -18,8 +18,8 @@ class AIONextStyle(Screen, ConfigListScreen):
     skin = '''<screen name="AIONextStyle" position="center,center" size="1360,800" title="AIOHD NEXT 3.2.1" backgroundColor="#000B111A">
       <eLabel position="0,0" size="1360,6" backgroundColor="#0034D6CF" />
       <widget name="heading" position="44,30" size="1272,56" font="Regular;36" foregroundColor="#00F2F5FA" backgroundColor="#000B111A" />
-      <widget name="config" position="44,122" size="1272,280" itemHeight="70" font="Regular;30" backgroundColor="#00141E2A" foregroundColor="#00F2F5FA" backgroundColorSelected="#00007678" foregroundColorSelected="#00FFFFFF" scrollbarMode="showOnDemand" />
-      <widget name="description" position="44,434" size="1272,236" font="Regular;26" foregroundColor="#00ADBACA" backgroundColor="#000B111A" />
+      <widget name="config" position="44,122" size="1272,310" itemHeight="60" font="Regular;30" backgroundColor="#00141E2A" foregroundColor="#00F2F5FA" backgroundColorSelected="#00007678" foregroundColorSelected="#00FFFFFF" scrollbarMode="showOnDemand" />
+      <widget name="description" position="44,452" size="1272,218" font="Regular;26" foregroundColor="#00ADBACA" backgroundColor="#000B111A" />
       <eLabel position="44,714" size="6,30" backgroundColor="#00FF5A68" />
       <widget name="key_red" position="62,704" size="280,48" font="Regular;27" foregroundColor="#00F2F5FA" backgroundColor="#000B111A" />
       <eLabel position="362,714" size="6,30" backgroundColor="#006BE3A2" />
@@ -40,10 +40,11 @@ class AIONextStyle(Screen, ConfigListScreen):
         self['key_yellow'] = Label(tr('Wszystkie wtyczki', 'All plugins'))
         self['key_blue'] = Label(tr('Otwórz pogodę', 'Open weather'))
         self['description'] = Label(tr(
-            'Duża: pogrubione nazwy 36 px, 15 wierszy. Bardzo duża: 40 px, 14 wierszy.\nTryb dwuliniowy: 9 lub 8 wierszy.\nŻółty przycisk pokazuje wszystkie wtyczki — wybierz pogodową, jeśli nie została rozpoznana.\nLokalizację i ikony ustaw w wybranej wtyczce pogody.',
-            'Large: bold 36 px channel names, 15 rows. Extra large: 40 px, 14 rows.\nTwo-line mode: 9 or 8 rows.\nYellow shows all plugins: select your weather plugin if it was not recognised.\nSet location and icons in the selected weather plugin.'))
+            'Duża: pogrubione nazwy 38 px, 15 wierszy. Bardzo duża: 42 px, 14 wierszy.\nPogoda w skinie korzysta domyślnie z „Weather Plugin” z feedu OpenATV.\nLokalizację ustaw w tej wtyczce. Żółty pokazuje także inne zainstalowane wtyczki pogodowe.',
+            'Large: bold 38 px channel names, 15 rows. Extra large: 42 px, 14 rows.\nInline weather prefers “Weather Plugin” from the OpenATV feed.\nSet the location in that plugin. Yellow also shows other installed weather plugins.'))
         self.palette = ConfigSelection(default=current_palette(SKIN_PATH), choices=[('aurora', 'Aurora'), ('amber', 'Amber'), ('violet', 'Violet')])
         self.listSize = ConfigSelection(default=settings.listSize.value, choices=[('large', tr('Duża', 'Large')), ('xlarge', tr('Bardzo duża', 'Extra large'))])
+        self.weatherInline = ConfigYesNo(default=settings.weatherInline.value)
         self.weatherEnabled = ConfigYesNo(default=settings.weatherEnabled.value)
         found = weather_plugins()
         if settings.weatherPlugin.value and settings.weatherPlugin.value not in [p[0] for p in found]:
@@ -51,14 +52,15 @@ class AIONextStyle(Screen, ConfigListScreen):
         choices = [(key, name) for key, name, descriptor in found]
         if not choices:
             choices = [('', tr('Brak zainstalowanej wtyczki pogody', 'No installed weather plugin found'))]
-        default = settings.weatherPlugin.value
+        default = settings.weatherPlugin.value or preferred_weather_key(found)
         if default and default not in [key for key, name in choices]:
             choices.append((default, tr('Poprzednio wybrana — niedostępna', 'Previously selected — unavailable')))
         self.weatherPlugin = ConfigSelection(default=default if default in [key for key, name in choices] else choices[0][0], choices=choices)
         ConfigListScreen.__init__(self, [
             getConfigListEntry(tr('Kolor przewodni', 'Accent colour'), self.palette),
             getConfigListEntry(tr('Czcionka listy kanałów', 'Channel list font'), self.listSize),
-            getConfigListEntry(tr('Włącz skrót pogody', 'Enable weather shortcut'), self.weatherEnabled),
+            getConfigListEntry(tr('Pogoda bezpośrednio w skinie', 'Inline weather in skin'), self.weatherInline),
+            getConfigListEntry(tr('Skrót do pełnej wtyczki pogody', 'Weather plugin shortcut'), self.weatherEnabled),
             getConfigListEntry(tr('Wtyczka pogody', 'Weather plugin'), self.weatherPlugin)
         ], session=session)
         self['actions'] = ActionMap(['OkCancelActions', 'ColorActions'], {'cancel': self.close, 'red': self.close, 'green': self.saveStyle, 'ok': self.saveStyle, 'blue': self.previewWeather, 'yellow': self.togglePluginList}, -2)
@@ -78,13 +80,14 @@ class AIONextStyle(Screen, ConfigListScreen):
         open_weather(self.session, self.weatherPlugin.value)
 
     def saveStyle(self):
-        if self.weatherEnabled.value and self.weatherPlugin.value not in [p[0] for p in weather_plugins(show_all=True)]:
-            self.session.open(MessageBox, tr('Nie wykryto wybranej wtyczki pogody. Zainstaluj ją lub wyłącz skrót pogody.', 'Selected weather plugin not found. Install it or disable the weather shortcut.'), MessageBox.TYPE_INFO)
-            return
-        restart_needed = self.weatherEnabled.value != settings.weatherEnabled.value
+        # Missing weather software must never block saving unrelated skin options.
+        # The inline sources stay empty until a supported provider is configured.
+        restart_needed = (self.weatherEnabled.value != settings.weatherEnabled.value or
+                          self.weatherInline.value != settings.weatherInline.value)
         try:
             restart_needed = apply_palette(SKIN_PATH, self.palette.value) or restart_needed
             settings.listSize.value = self.listSize.value
+            settings.weatherInline.value = self.weatherInline.value
             settings.weatherEnabled.value = self.weatherEnabled.value
             settings.weatherPlugin.value = self.weatherPlugin.value
             settings.save()
@@ -111,8 +114,16 @@ def weather_main(session, **kwargs):
     open_weather(session)
 
 
+def sessionstart(reason, **kwargs):
+    if reason == 0:
+        start_weather_sources(kwargs.get('session'))
+
+
 def Plugins(**kwargs):
-    result = [PluginDescriptor(name='AIOHD NEXT — Style', description=tr('Wygląd, większe czcionki i pogoda', 'Appearance, larger fonts and weather'), where=PluginDescriptor.WHERE_PLUGINMENU, icon='plugin.png', fnc=main)]
+    result = [
+        PluginDescriptor(where=PluginDescriptor.WHERE_SESSIONSTART, fnc=sessionstart),
+        PluginDescriptor(name='AIOHD NEXT — Style', description=tr('Wygląd, większe czcionki i pogoda', 'Appearance, larger fonts and weather'), where=PluginDescriptor.WHERE_PLUGINMENU, icon='plugin.png', fnc=main),
+    ]
     if settings.weatherEnabled.value:
         result.append(PluginDescriptor(name=tr('AIOHD NEXT — Pogoda', 'AIOHD NEXT — Weather'), description=tr('Otwórz wybraną wtyczkę pogody', 'Open selected weather plugin'), where=PluginDescriptor.WHERE_EXTENSIONSMENU, fnc=weather_main))
     return result

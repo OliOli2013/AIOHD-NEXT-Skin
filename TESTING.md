@@ -1,36 +1,38 @@
-# Weryfikacja
+# Weryfikacja AIOHD NEXT 3.2.1-r1
 
 ## Testy automatyczne
 
-`python3 -m unittest discover -s tests -v`
+```sh
+python3 -m unittest discover -s tests -v
+python3 build.py
+```
 
-Osiem testów obejmuje: wysokości listy dla 4 kombinacji rozmiaru i trybu,
-brak modyfikacji innych instancji listy, trwałość ustawienia wierszy przy zmianie
-trybu, wykrywanie i deduplikację wtyczek pogody, obsługę usunięcia wtyczki,
-kontrast białego tekstu zaznaczenia we wszystkich paletach, wspólne panele,
-MiniTV i cztery audycje oraz regresje EPG, komunikatów i zapisywania palet.
-Testy korzystają z atrap API Enigma2. Budowanie sprawdza także składnię XML,
-Python i appletów oraz sumy kontrolne plików w archiwum danych.
+Testy obejmują m.in.:
 
-## Do sprawdzenia na fizycznym tunerze
+- 15/14 wierszy listy oraz 9/8 w trybie dwuliniowym;
+- fonty kanałów 38/42 px i brak globalnej ingerencji w inne ServiceList;
+- wykrywanie i wybór launcherów pogody;
+- preferencję dla Weather Plugin;
+- obecność bezpiecznych źródeł pogody i renderera ikony;
+- wspólny ChannelSelection, MiniTV i cztery następne audycje;
+- przewijany opis EPG i kontrast zaznaczenia;
+- zachowanie palet oraz bootlogo.
 
-- Aktualizacja 3.1.3 → 3.2.1 i restart GUI.
-- Strzałki listy, widoczność zaznaczenia i piconów; wszystkie warianty listy.
-- Rozmiary Duża / Bardzo duża; tryby jedno- i dwuliniowe.
-- Podgląd TV, zmiana zaznaczonego kanału, cztery przyszłe audycje.
-- Aurora / Amber / Violet, zapis i restart.
-- Brak wtyczki pogodowej, jedna dostępna, kilka dostępnych, usunięta po konfiguracji.
-- Niebieski przycisk pogody, powrót do ustawień, skrót w menu rozszerzeń.
-- Anulowanie ustawień bez zapisywania.
-- Pełny opis EPG, długi komunikat i wybór Tak/Nie.
+## Test na fizycznym tunerze
 
-W przygotowaniu wydania nie wykonano testów na fizycznym odbiorniku.
-Zgodność szczególnych wersji wtyczek pogodowych wymaga sprawdzenia na urządzeniu.
+Po instalacji sprawdź:
 
-Dodatkowo sprawdzono właściwości fontu (NextBold 36/40) po ponownym setFontsize.
-Wykrywanie pogody sprawdzono również z rzeczywistą klasą PluginDescriptor
-z repozytorium OpenATV, używając dwóch testowych funkcji uruchamiających.
-Nie zastępuje to uruchomienia konkretnych wtyczek użytkownika na tunerze.
+- listę kanałów we wszystkich wariantach i oba rozmiary czcionki;
+- zaznaczenie, picony i paski postępu;
+- PiG 544×306 i poprawną zmianę podglądu po przechodzeniu po kanałach;
+- pełny opis EPG po prawej oraz jego automatyczne przewijanie;
+- cztery następne audycje;
+- InfoBar 240 px: tytuł, czas, postęp i następna audycja bez obcięć;
+- Event Information z długim przewijanym opisem;
+- Weather Plugin z feedu OpenATV: skonfigurowana lokalizacja, ikona, miejscowość, temperatura i warunki;
+- zachowanie skina bez Weather Plugin oraz po wyłączeniu pogody inline;
+- launcher innej zainstalowanej wtyczki pogodowej;
+- Aurora / Amber / Violet;
+- restart GUI, ponowne wejście do listy i zachowanie ustawień.
 
-Test instalacji bootlogo: zachowanie innego aktywnego skina, aktualizacja
-przy aktywnym AIOHD i zachowanie pierwotnej kopii przy kolejnej aktualizacji.
+Automatyczna walidacja nie zastępuje testu na odbiorniku.

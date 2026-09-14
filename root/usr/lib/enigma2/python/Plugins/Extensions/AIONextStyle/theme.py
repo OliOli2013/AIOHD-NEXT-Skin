@@ -48,7 +48,7 @@ def apply_palette(path, key):
         original = stream.read()
     root = ET.fromstring(original)
     if root.tag != 'skin' or root.find("./colors/color[@name='nextAccent']") is None:
-        raise ValueError('AIOHD NEXT 3.1 skin.xml is required')
+        raise ValueError('AIOHD NEXT 3.2.1 skin.xml is required')
     accent, selected = PALETTES[key]
     text = original.decode('utf-8')
     changes = [0]

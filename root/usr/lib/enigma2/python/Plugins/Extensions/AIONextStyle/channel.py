@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
-"""Compact large-type channel list; changes are restricted to this instance."""
+"""Large, readable channel-list typography restricted to this screen instance."""
 from types import MethodType
 from enigma import eSize, gFont
 from Components.config import config
 from .settings import settings
 
 # rows, two-line rows, channel font, event font, number font
-SIZES = {'large': (15, 9, 36, 30, 30), 'xlarge': (14, 8, 40, 32, 32)}
+SIZES = {'large': (15, 9, 38, 30, 30), 'xlarge': (14, 8, 42, 32, 32)}
 
 
 def configure_channel_list(screen):
@@ -24,8 +24,6 @@ def configure_channel_list(screen):
 
     def set_fonts(instance):
         size = SIZES.get(settings.listSize.value, SIZES['large'])
-        # Set both the source attributes and rendered fonts. Enigma2 calls
-        # setFontsize again during list refreshes; this must keep our typography.
         for field, family, points in (
             ('ServiceName', 'NextBold', size[2]),
             ('ServiceInfo', 'Next', size[3]),
