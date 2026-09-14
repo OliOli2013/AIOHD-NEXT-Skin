@@ -1,0 +1,93 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<skin>
+  <screen name="AIONextChannelLayout">
+    <eLabel position="0,0" size="1920,1080" backgroundColor="nextBg" zPosition="-20" />
+    <eLabel text="AIO" position="76,46" size="84,50" font="Next;34" foregroundColor="nextAccent" backgroundColor="nextBg" transparent="0" valign="center" zPosition="8" />
+    <eLabel position="182,51" size="2,42" backgroundColor="nextTrack" zPosition="-20" />
+    <widget source="Title" render="Label" position="210,42" size="1210,60" font="Next;36" foregroundColor="nextText" backgroundColor="nextBg" transparent="0" valign="center" noWrap="1" zPosition="8" />
+    <widget source="global.CurrentTime" render="Label" position="1570,40" size="270,56" zPosition="8" font="Next;38" foregroundColor="nextText" backgroundColor="nextBg" transparent="0" valign="center" halign="right">
+      <convert type="ClockToText">Default</convert>
+    </widget>
+    <eLabel position="76,120" size="1768,2" backgroundColor="nextDivider" zPosition="-20" />
+    <eLabel position="76,120" size="104,3" backgroundColor="nextAccent" zPosition="-20" />
+    <eLabel text="NEXT 3.2.1  /  by Paweł Pawełek" position="76,1022" size="720,30" font="Next;18" foregroundColor="nextMuted" backgroundColor="nextBg" transparent="0" valign="center" zPosition="8" />
+    <eLabel position="76,180" size="1096,780" backgroundColor="nextCard" zPosition="-20" />
+    <eLabel position="1192,180" size="652,780" backgroundColor="nextCard" zPosition="-20" />
+    <ePixmap pixmap="next3/channels.png" position="76,180" size="1096,780" alphatest="blend" zPosition="-10" />
+    <ePixmap pixmap="next3/details.png" position="1192,180" size="652,780" alphatest="blend" zPosition="-10" />
+    <widget name="list" position="94,202" size="1060,744" listMarginLeft="14" listMarginRight="20" scrollbarMode="showNever" fieldMargins="10" itemsDistances="2" progressbarHeight="8" progressBarWidth="108" progressbarBorderWidth="0" colorServiceRecorded="layer-a-channelselection-foreground-colorServiceRecorded" colorServicePseudoRecorded="layer-a-channelselection-foreground-colorServicePseudoRecorded" colorServiceStreamed="layer-a-channelselection-foreground-colorServiceStreamed" colorServiceDescription="nextMuted" colorServiceDescriptionSelected="#00FFFFFF" colorEventProgressbar="nextAccent" colorEventProgressbarBorder="nextTrack" colorEventProgressbarBorderSelected="#000B111A" foregroundColorServiceNotAvail="#00687986" serviceItemHeight="62" serviceNumberFont="Next;30" serviceNameFont="NextBold;36" serviceInfoFont="Next;30" progressInfoFont="Next;19" transparent="0" backgroundColor="nextCard" foregroundColor="nextText" backgroundColorSelected="nextSelection" foregroundColorSelected="#00FFFFFF" zPosition="6" colorEventProgressbarSelected="#00FFFFFF" />
+    <widget source="session.VideoPicture" render="Pig" position="1208,196" size="620,349" zPosition="6" backgroundColor="#ff000000" />
+    <widget source="ServiceEvent" render="Picon" position="1214,560" size="72,54" zPosition="8" alphatest="blend" transparent="1" scale="1">
+      <convert type="ServiceName">Reference</convert>
+    </widget>
+    <widget source="ServiceEvent" render="Label" position="1302,560" size="510,54" zPosition="8" font="NextBold;27" foregroundColor="nextText" backgroundColor="nextCard" transparent="0" valign="center" noWrap="1">
+      <convert type="ServiceName">Name</convert>
+    </widget>
+    <eLabel text="Now" position="1214,624" size="94,30" zPosition="8" font="NextBold;18" foregroundColor="nextAccent" backgroundColor="nextCard" transparent="0" valign="center" />
+    <widget source="ServiceEvent" render="Label" position="1318,620" size="494,40" zPosition="8" font="NextBold;25" foregroundColor="nextText" backgroundColor="nextCard" transparent="0" valign="center" noWrap="1">
+      <convert type="EventName">Name</convert>
+    </widget>
+    <widget source="ServiceEvent" render="Label" position="1214,665" size="598,40" zPosition="8" font="Next;21" foregroundColor="nextMuted" backgroundColor="nextCard" transparent="0" valign="center" noWrap="1">
+      <convert type="EventName">ShortDescription</convert>
+    </widget>
+    <widget source="ServiceEvent" render="Progress" position="1214,716" size="598,8" zPosition="8" foregroundColor="nextAccent" backgroundColor="nextTrack" borderWidth="0">
+      <convert type="EventTime">Progress</convert>
+    </widget>
+    <widget source="ServiceEvent" render="Label" position="1214,732" size="132,30" zPosition="8" font="Next;20" foregroundColor="nextMuted" backgroundColor="nextCard" transparent="0" valign="center">
+      <convert type="EventTime">StartTime</convert>
+      <convert type="ClockToText">Default</convert>
+    </widget>
+    <widget source="ServiceEvent" render="Label" position="1344,732" size="338,30" zPosition="8" font="Next;20" foregroundColor="nextGold" backgroundColor="nextCard" transparent="0" halign="center" valign="center">
+      <convert type="EventTime">Remaining</convert>
+      <convert type="RemainingToText" />
+    </widget>
+    <widget source="ServiceEvent" render="Label" position="1680,732" size="132,30" zPosition="8" font="Next;20" foregroundColor="nextMuted" backgroundColor="nextCard" transparent="0" halign="right" valign="center">
+      <convert type="EventTime">EndTime</convert>
+      <convert type="ClockToText">Default</convert>
+    </widget>
+    <eLabel text="Next" position="1214,785" size="140,28" zPosition="8" font="NextBold;18" foregroundColor="nextMuted" backgroundColor="nextCard" transparent="0" valign="center" />
+    <eLabel position="1360,799" size="452,2" backgroundColor="nextDivider" zPosition="-20" />
+    <widget source="ServiceEvent" render="Label" position="1214,817" size="598,30" zPosition="8" font="Next;21" foregroundColor="nextText" backgroundColor="nextCard" transparent="0" valign="center" noWrap="1">
+      <convert type="AIONextEvent">1</convert>
+    </widget>
+    <widget source="ServiceEvent" render="Label" position="1214,850" size="598,30" zPosition="8" font="Next;21" foregroundColor="nextText" backgroundColor="nextCard" transparent="0" valign="center" noWrap="1">
+      <convert type="AIONextEvent">2</convert>
+    </widget>
+    <widget source="ServiceEvent" render="Label" position="1214,883" size="598,30" zPosition="8" font="Next;21" foregroundColor="nextText" backgroundColor="nextCard" transparent="0" valign="center" noWrap="1">
+      <convert type="AIONextEvent">3</convert>
+    </widget>
+    <widget source="ServiceEvent" render="Label" position="1214,916" size="598,30" zPosition="8" font="Next;21" foregroundColor="nextText" backgroundColor="nextCard" transparent="0" valign="center" noWrap="1">
+      <convert type="AIONextEvent">4</convert>
+    </widget>
+    <eLabel position="76,981" size="6,24" backgroundColor="red" zPosition="-20" />
+    <widget source="key_red" render="Label" position="96,973" size="400,40" zPosition="8" font="Next;23" foregroundColor="nextText" backgroundColor="nextBg" transparent="0" valign="center" conditional="key_red" />
+    <eLabel position="516,981" size="6,24" backgroundColor="green" zPosition="-20" />
+    <widget source="key_green" render="Label" position="536,973" size="400,40" zPosition="8" font="Next;23" foregroundColor="nextText" backgroundColor="nextBg" transparent="0" valign="center" conditional="key_green" />
+    <eLabel position="956,981" size="6,24" backgroundColor="yellow" zPosition="-20" />
+    <widget source="key_yellow" render="Label" position="976,973" size="400,40" zPosition="8" font="Next;23" foregroundColor="nextText" backgroundColor="nextBg" transparent="0" valign="center" conditional="key_yellow" />
+    <eLabel position="1396,981" size="6,24" backgroundColor="blue" zPosition="-20" />
+    <widget source="key_blue" render="Label" position="1416,973" size="400,40" zPosition="8" font="Next;23" foregroundColor="nextText" backgroundColor="nextBg" transparent="0" valign="center" conditional="key_blue" />
+    <applet type="onLayoutFinish">
+from Plugins.Extensions.AIONextStyle.channel import configure_channel_list
+configure_channel_list(self)
+</applet>
+  </screen>
+  <screen name="ChannelSelectionDefault" position="0,0" size="1920,1080" title="Channel Selection" flags="wfNoBorder" backgroundColor="nextBg" label="AIOHD NEXT">
+    <panel name="AIONextChannelLayout" />
+  </screen>
+  <screen name="ChannelSelectionPIG" position="0,0" size="1920,1080" title="Channel Selection" flags="wfNoBorder" backgroundColor="nextBg" label="AIOHD NEXT">
+    <panel name="AIONextChannelLayout" />
+  </screen>
+  <screen name="ChannelSelectionFull" position="0,0" size="1920,1080" title="Channel Selection" flags="wfNoBorder" backgroundColor="nextBg" label="AIOHD NEXT">
+    <panel name="AIONextChannelLayout" />
+  </screen>
+  <screen name="ChannelSelectionGrid" position="0,0" size="1920,1080" title="Channel Selection" flags="wfNoBorder" backgroundColor="nextBg" label="AIOHD NEXT">
+    <panel name="AIONextChannelLayout" />
+  </screen>
+  <screen name="ChannelSelection" position="0,0" size="1920,1080" title="Channel Selection" flags="wfNoBorder" backgroundColor="nextBg">
+    <panel name="AIONextChannelLayout" />
+  </screen>
+  <screen name="ChannelSelection_PIG" position="0,0" size="1920,1080" title="Channel Selection" flags="wfNoBorder" backgroundColor="nextBg" label="AIOHD NEXT">
+    <panel name="AIONextChannelLayout" />
+  </screen>
+</skin>

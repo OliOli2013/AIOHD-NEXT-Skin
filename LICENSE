@@ -1,0 +1,16 @@
+AIOHD NEXT — licensing and attribution
+
+This package contains an adapted MetrixHD skin. The original notice is retained
+in root/usr/share/enigma2/AIOHD/skin.xml and applies to the inherited skin:
+
+MetrixHD v2.5 by iMaxxx | optimized for openATV 4.0
+Explicitly, no one is allowed to use any version of the Skin with other team Images
+You can modify and redistribute it as long as you keep this license and the
+original author for the skin and all of your modifications
+
+AIOHD NEXT modifications: Paweł Pawełek.
+No blanket MIT/GPL licence is asserted for third-party assets in this repository.
+The included DejaVu font licence is in:
+root/usr/share/enigma2/AIOHD/fonts/LICENSE-DejaVu.txt
+Optional plugins, system fonts and MetrixHD components retain their own licences.
+Retain these notices when redistributing this repository or an IPK built from it.

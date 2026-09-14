@@ -1,0 +1,20 @@
+name: Validate and build IPK
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run logic and layout tests
+        run: python3 -m unittest discover -s tests -v
+      - name: Build IPK
+        run: python3 build.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: AIOHD-NEXT-IPK
+          path: dist/*

@@ -1,0 +1,70 @@
+AIOHD NEXT 3.1.3 — audyt i zakres weryfikacji
+Baza: dostarczony pakiet 3.1.2-r0. Data: 13.09.2026.
+
+1. EPG / Informacje o wydarzeniu
+Przyczyna stwierdzona w analizie kodu: ScrollLabel ma kontener eWidget,
+lecz atrybut zPosition trafia do jego wewnętrznych etykiet. Dekoracja na
+z=1 mogła zasłonić kontener na z=0. Przeniesiono dekoracje pod kontener
+w EventView, EventViewSimple i InfoBarEventView; dodano alias
+EventViewEPGSelect. Pozostawiono natywne epg_description i przewijanie.
+Brak danych EPG otrzymuje komunikat zamiast pustej powierzchni.
+Nie zmieniono znaczenia przycisku OK ani plików systemowych Enigma2.
+
+2. Komunikaty
+Stary applet liczył 30 px na pozycję przy itemHeight=45. Przesuwał tekst,
+listę i okno według różnych marginesów; dekoracje miały nawet 1920x1080
+w oknie 1200x600. Nowy wspólny układ mierzy tekst przy docelowej szerokości,
+liczy pełne wiersze 54 px, centruje okno i zachowuje marginesy ekranu.
+Długie komunikaty są dzielone bez utraty znaków na strony (lewo/prawo).
+Góra/dół nadal wybierają odpowiedź. Lista ponad 6 pozycji jest przewijana.
+Rozwiązanie objęło MessageBox, Modal, Simple, Ext oraz Genuine.
+
+3. Infobar i listy
+Wzmocniono hierarchię typografii, tła tekstów są nieprzezroczyste.
+Opis infobara korzysta z natywnej etykiety, bez dodatkowego renderera
+przewijającego; pełny długi opis jest dostępny w widoku wydarzenia.
+Dodano godzinę rozpoczęcia następnej audycji. Zachowano picon i sygnał.
+Wszystkie 6 wariantów listy korzysta ze wspólnego panelu, MiniTV/PIG
+pozostaje w prawym górnym rogu, poniżej są cztery następne audycje.
+Pobieranie EPG nie zakłada, że pierwszy rekord jest audycją bieżącą.
+Tytuł i godzina pochodzą z jednego rekordu; sortowanie i usuwanie duplikatów.
+Ograniczona pamięć podręczna i odświeżanie co 15 s; data przy innym dniu.
+Paski zmniejszono do 8 px i usunięto obramowania; wybrany kanał wyróżnia
+kolor aktualnego stylu. Systemowa liczba wierszy i powiększenie czcionek
+pozostają pod kontrolą użytkownika i mogą wpływać na końcowy układ.
+
+4. Pozostałe kontrole
+Sprawdzono 15 plików XML oraz 905 nazw ekranów/paneli, wszystkie odwołania
+do paneli są rozwiązane. Sprawdzono składnię Python i appletów XML.
+Poprawiono pozycję opisu HelpMenu (wcześniej x=2040 na ekranie 1920),
+wysokość opisu FlashOnline, TimeInput i jawne wyjścia widżetów poza okna.
+Zależność od MetrixHD/OpenATV została zachowana — fonty ikon i komponenty
+pochodzą także z pakietu enigma2-plugin-skins-metrix-atv.
+Odwołania do zasobów opcjonalnych wtyczek pozostały ich zależnościami.
+Bootlogo w pakiecie obejrzano: AIOHD NEXT 3.1, bez starego AIO Panel 15.
+Pakiet nie nadpisuje systemowego bootlogo ani nie aktywuje skina samoczynnie.
+Usunięto dołączony wcześniej plik pyc zależny od Python 3.13.
+
+5. Testy wykonane
+- Krótkie i długie komunikaty, polskie i inne znaki Unicode, tekst bez spacji;
+  0/2/6/20 odpowiedzi, pełne zachowanie tekstu po przejściu przez strony,
+  ograniczenia geometrii i ponowne wywołanie układu.
+- EPG bez bieżącej audycji, duplikaty, nieuporządkowane rekordy, brak EPG,
+  wspólne zapytanie czterech pozycji i limit pamięci podręcznej.
+- Zapis i odtworzenie wszystkich 3 palet, brak zmian przy ponownym zapisie.
+- Warstwy EventView oraz zgodność 6 wariantów MiniTV + 4 audycje.
+- Kontrola struktury IPK, sum kontrolnych i ponowne odczytanie archiwów.
+- Obejrzano schematyczny podgląd infobara wygenerowany z XML.
+
+Ograniczenia: nie uruchomiono Enigma2 na fizycznym tunerze. Testy logiki
+korzystały z atrap API, podgląd XML nie zastępuje renderera Enigma2.
+Nie jest to gwarancja działania każdego z opcjonalnych ekranów wtyczek
+ani każdego wydania OpenATV. Braku treści EPG od nadawcy nie naprawi skin.
+Po instalacji wymagany restart GUI; na tunerze należy sprawdzić EPG,
+przewijanie opisu, krótkie i długie komunikaty oraz podgląd TV.
+
+Źródła porównawcze: kod OpenATV/enigma2, odczyt 13.09.2026:
+https://github.com/openatv/enigma2/blob/master/lib/python/Screens/EventView.py
+https://github.com/openatv/enigma2/blob/master/lib/python/Screens/MessageBox.py
+https://github.com/openatv/enigma2/blob/master/lib/python/Components/ScrollLabel.py
+https://github.com/openatv/enigma2/blob/master/lib/python/Components/ServiceList.py
