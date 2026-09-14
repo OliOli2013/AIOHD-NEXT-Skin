@@ -3,13 +3,17 @@ from Plugins.Plugin import PluginDescriptor
 from Screens.Screen import Screen
 from Screens.MessageBox import MessageBox
 from Screens.Standby import TryQuitMainloop
+from Screens.Console import Console
 from Components.ActionMap import ActionMap
 from Components.ConfigList import ConfigListScreen
 from Components.Label import Label
 from Components.config import ConfigSelection, ConfigYesNo, getConfigListEntry, configfile
+from threading import Thread
+from twisted.internet import reactor
 from .theme import current_palette, apply_palette
 from .settings import settings, tr
 from .weather import weather_plugins, preferred_weather_key, open_weather, start_weather_sources
+from .updater import CURRENT_PACKAGE_VERSION, fetch_latest, installer_command
 
 SKIN_PATH = '/usr/share/enigma2/AIOHD/skin.xml'
 
@@ -18,8 +22,9 @@ class AIONextStyle(Screen, ConfigListScreen):
     skin = '''<screen name="AIONextStyle" position="center,center" size="1360,800" title="AIOHD NEXT 3.2.1" backgroundColor="#000B111A">
       <eLabel position="0,0" size="1360,6" backgroundColor="#0034D6CF" />
       <widget name="heading" position="44,30" size="1272,56" font="Regular;36" foregroundColor="#00F2F5FA" backgroundColor="#000B111A" />
-      <widget name="config" position="44,122" size="1272,348" itemHeight="56" font="Regular;30" backgroundColor="#00141E2A" foregroundColor="#00F2F5FA" backgroundColorSelected="#00007678" foregroundColorSelected="#00FFFFFF" scrollbarMode="showOnDemand" />
-      <widget name="description" position="44,488" size="1272,182" font="Regular;24" foregroundColor="#00ADBACA" backgroundColor="#000B111A" />
+      <widget name="config" position="44,122" size="1272,336" itemHeight="56" font="Regular;30" backgroundColor="#00141E2A" foregroundColor="#00F2F5FA" backgroundColorSelected="#00007678" foregroundColorSelected="#00FFFFFF" scrollbarMode="showOnDemand" />
+      <widget name="update_status" position="44,470" size="1272,38" font="Regular;22" foregroundColor="#006BE3A2" backgroundColor="#000B111A" />
+      <widget name="description" position="44,520" size="1272,150" font="Regular;23" foregroundColor="#00ADBACA" backgroundColor="#000B111A" />
       <eLabel position="44,714" size="6,30" backgroundColor="#00FF5A68" />
       <widget name="key_red" position="62,704" size="280,48" font="Regular;27" foregroundColor="#00F2F5FA" backgroundColor="#000B111A" />
       <eLabel position="362,714" size="6,30" backgroundColor="#006BE3A2" />
@@ -39,6 +44,10 @@ class AIONextStyle(Screen, ConfigListScreen):
         self.showAllPlugins = False
         self['key_yellow'] = Label(tr('Wszystkie wtyczki', 'All plugins'))
         self['key_blue'] = Label(tr('Otwórz pogodę', 'Open weather'))
+        self['update_status'] = Label(tr('Aktualizacja: sprawdzanie…', 'Update: checking…'))
+        self._update_check_started = False
+        self._offered_release = None
+        self._closed = False
         self['description'] = Label(tr(
             'Standard: 32 px / 18 kanałów. Duża: 38 px / 15 kanałów. Bardzo duża: 42 px / 14 kanałów.\nPogoda inline: Auto najpierw używa aktualnego backendu OpenATV / MetrixWeather, potem Weather Plugin.\nWybrana niżej wtyczka jest skrótem do pełnego ekranu i nie musi być źródłem danych inline.',
             'Standard: 32 px / 18 channels. Large: 38 px / 15 channels. Extra large: 42 px / 14 channels.\nInline weather: Auto first uses the current OpenATV / MetrixWeather backend, then Weather Plugin.\nThe plugin selected below is a launcher for its full screen and does not have to be the inline data provider.'))
@@ -70,6 +79,95 @@ class AIONextStyle(Screen, ConfigListScreen):
             getConfigListEntry(tr('Wtyczka pogody', 'Weather plugin'), self.weatherPlugin)
         ], session=session)
         self['actions'] = ActionMap(['OkCancelActions', 'ColorActions'], {'cancel': self.close, 'red': self.close, 'green': self.saveStyle, 'ok': self.saveStyle, 'blue': self.previewWeather, 'yellow': self.togglePluginList}, -2)
+        self.onLayoutFinish.append(self._start_update_check)
+        self.onClose.append(self._mark_closed)
+
+    def _mark_closed(self):
+        self._closed = True
+
+    def _start_update_check(self):
+        if self._update_check_started:
+            return
+        self._update_check_started = True
+        Thread(target=self._update_worker, name='AIONextUpdateCheck', daemon=True).start()
+
+    def _update_worker(self):
+        try:
+            release = fetch_latest()
+            error = None
+        except Exception as exc:
+            release = None
+            error = str(exc)
+        try:
+            reactor.callFromThread(self._finish_update_check, release, error)
+        except Exception:
+            # The screen is still fully usable if the network/update check fails.
+            pass
+
+    def _finish_update_check(self, release, error=None):
+        if self._closed:
+            return
+        if error:
+            self['update_status'].setText(tr(
+                'Aktualizacja: nie udało się sprawdzić (ustawienia działają normalnie)',
+                'Update: check failed (settings still work normally)'))
+            return
+        if not release:
+            self['update_status'].setText(tr(
+                'Aktualizacja: masz najnowszą wersję %s' % CURRENT_PACKAGE_VERSION,
+                'Update: you have the latest version %s' % CURRENT_PACKAGE_VERSION))
+            return
+        self._offered_release = release
+        self['update_status'].setText(tr(
+            'Dostępna aktualizacja: %s' % release['version'],
+            'Update available: %s' % release['version']))
+        self.session.openWithCallback(
+            self._update_answer,
+            MessageBox,
+            tr(
+                'Dostępna jest aktualizacja AIOHD NEXT %s.\nZainstalować ją teraz?\n\nPo instalacji wymagany będzie restart GUI.' % release['version'],
+                'AIOHD NEXT %s is available.\nInstall it now?\n\nA GUI restart will be required after installation.' % release['version']),
+            MessageBox.TYPE_YESNO,
+            default=False)
+
+    def _update_answer(self, answer):
+        if not answer or not self._offered_release:
+            return
+        try:
+            command = installer_command(self._offered_release['url'])
+        except Exception as exc:
+            self.session.open(MessageBox, tr('Nieprawidłowe dane aktualizacji: ', 'Invalid update data: ') + str(exc), MessageBox.TYPE_ERROR)
+            return
+        self['update_status'].setText(tr('Aktualizacja: instalowanie…', 'Update: installing…'))
+        self.session.openWithCallback(
+            self._after_update_command,
+            Console,
+            title=tr('Aktualizacja AIOHD NEXT', 'AIOHD NEXT update'),
+            cmdlist=[command],
+            closeOnSuccess=True)
+
+    def _after_update_command(self):
+        status = ''
+        try:
+            with open('/tmp/aiohd-next-update.status', 'r') as handle:
+                status = handle.read().strip()
+        except Exception:
+            pass
+        if status == 'OK':
+            self['update_status'].setText(tr('Aktualizacja: zainstalowana — wymagany restart GUI', 'Update: installed — GUI restart required'))
+            self.session.openWithCallback(
+                self._restart_after_update,
+                MessageBox,
+                tr('Aktualizacja AIOHD NEXT została zainstalowana.\nUruchomić ponownie GUI teraz?', 'AIOHD NEXT update was installed.\nRestart the GUI now?'),
+                MessageBox.TYPE_YESNO,
+                default=False)
+        else:
+            self['update_status'].setText(tr('Aktualizacja: instalacja nie powiodła się', 'Update: installation failed'))
+            self.session.open(MessageBox, tr('Aktualizacja nie została zainstalowana. Sprawdź wynik w oknie poleceń.', 'The update was not installed. Check the command window for details.'), MessageBox.TYPE_ERROR)
+
+    def _restart_after_update(self, answer):
+        if answer:
+            self.session.open(TryQuitMainloop, 3)
 
     def togglePluginList(self):
         self.showAllPlugins = not self.showAllPlugins

@@ -1,0 +1,13 @@
+AIOHD NEXT 3.2.1-r4 — audyt zgłoszonych ekranów
+Data: 2026-09-14
+
+Zakres:
+- SoftwarePanel / SoftwareUpdate: większe pola licznika, 64 px pozycje listy, osobne linie nazwy/opisu.
+- FlashOnline / FlashManager: pełny nagłówek FHD, lista bez nakładania opisu, osobny opis pod listą.
+- OSDCalibration / UIPositionSetup: większy obszar instrukcji i bezpieczny odstęp od listy konfiguracji.
+- InfoBar: większy obszar FullDescription, pasek postępu i czasy przesunięte pod opis.
+- AIOHD NEXT — Style: asynchroniczne sprawdzanie oficjalnego GitHub Releases oraz instalacja tylko po potwierdzeniu.
+- Updater: walidacja hosta/ścieżki/nazwy IPK i brak automatycznej instalacji.
+
+Testy automatyczne: tests/test_skin.py.
+Test fizycznego tunera nadal jest wymagany dla ekranów zależnych od wersji OpenATV.

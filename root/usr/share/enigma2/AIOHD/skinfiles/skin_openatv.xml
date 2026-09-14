@@ -2428,18 +2428,18 @@ if getattr(self, "event", None) is None and not self["epg_description"].getText(
   <screen name="SoftwarePanel" position="0,0" size="1920,1080" title="SoftwarePanel" flags="wfNoBorder" backgroundColor="transparent">
     <panel name="T_Title" />
     <eLabel text="Software Update" position="8,802" size="1912,278" font="global_large_screen;150" noWrap="0" backgroundColor="text-background" transparent="1" foregroundColor="background-text" valign="bottom" zPosition="-50" />
-    <widget name="packagetext" position="105,172" size="375,52" zPosition="1" font="Regular;36" halign="right" backgroundColor="layer-a-background" transparent="1" />
-    <widget name="packagenr" position="486,172" size="75,52" zPosition="1" font="Regular;36" halign="right" backgroundColor="layer-a-background" transparent="1" />
-    <widget source="list" render="Listbox" position="105,270" size="1050,624" scrollbarMode="showOnDemand" backgroundColor="layer-a-background" foregroundColor="layer-a-foreground" backgroundColorSelected="layer-a-selection-background" foregroundColorSelected="layer-a-selection-foreground" transparent="1">
+    <widget name="packagetext" position="105,166" size="360,66" zPosition="1" font="Regular;34" halign="right" valign="center" backgroundColor="layer-a-background" transparent="1" />
+    <widget name="packagenr" position="480,166" size="120,66" zPosition="1" font="Regular;34" halign="left" valign="center" backgroundColor="layer-a-background" transparent="1" />
+    <widget source="list" render="Listbox" position="105,282" size="1050,612" scrollbarMode="showOnDemand" backgroundColor="layer-a-background" foregroundColor="layer-a-foreground" backgroundColorSelected="layer-a-selection-background" foregroundColorSelected="layer-a-selection-foreground" transparent="1">
       <convert type="TemplatedMultiContent">
 				{"template": [
-						MultiContentEntryText(pos = (5, 1), size = (590, 28), font=0, flags = RT_HALIGN_LEFT, text = 0), # index 0 is the name
-						MultiContentEntryText(pos = (5, 26), size = (590, 21), font=1, flags = RT_HALIGN_LEFT, text = 2), # index 2 is the description
-						MultiContentEntryPixmapAlphaBlend(pos = (605, 2), size = (48, 48), png = 4, flags = BT_SCALE), # index 4 is the status pixmap
-						MultiContentEntryPixmapAlphaBlend(pos = (0, 50), size = (700, 2), png = 5), # index 5 is the div pixmap
+						MultiContentEntryText(pos = (8, 2), size = (900, 31), font=0, flags = RT_HALIGN_LEFT|RT_VALIGN_CENTER, text = 0), # index 0 is the name
+						MultiContentEntryText(pos = (8, 34), size = (900, 25), font=1, flags = RT_HALIGN_LEFT|RT_VALIGN_CENTER, text = 2), # index 2 is the description
+						MultiContentEntryPixmapAlphaBlend(pos = (970, 8), size = (44, 44), png = 4, flags = BT_SCALE), # index 4 is the status pixmap
+						MultiContentEntryPixmapAlphaBlend(pos = (0, 62), size = (1020, 2), png = 5), # index 5 is the div pixmap
 					],
-				"fonts": [gFont("Regular",22),gFont("Regular",16)],
-				"itemHeight": 52
+				"fonts": [gFont("Regular",24),gFont("Regular",18)],
+				"itemHeight": 64
 				}
 			</convert>
     </widget>
@@ -2459,20 +2459,20 @@ if getattr(self, "event", None) is None and not self["epg_description"].getText(
   <screen name="SoftwareUpdate" position="0,0" size="1920,1080" title="Software Update" flags="wfNoBorder" backgroundColor="transparent">
     <panel name="T_Title" />
     <eLabel text="Software Update" position="8,802" size="1912,278" font="global_large_screen;150" noWrap="0" backgroundColor="text-background" transparent="1" foregroundColor="background-text" valign="bottom" zPosition="-50" />
-    <widget name="package_text" position="105,172" size="375,52" zPosition="1" font="Regular;36" halign="right" backgroundColor="layer-a-background" transparent="1" />
-    <widget name="package_count" position="486,172" size="75,52" zPosition="1" font="Regular;36" halign="right" backgroundColor="layer-a-background" transparent="1" />
+    <widget name="package_text" position="105,166" size="360,66" zPosition="1" font="Regular;34" halign="right" valign="center" backgroundColor="layer-a-background" transparent="1" />
+    <widget name="package_count" position="480,166" size="120,66" zPosition="1" font="Regular;34" halign="left" valign="center" backgroundColor="layer-a-background" transparent="1" />
     <widget name="feedmessage" position="1215,578" size="622,330" font="screen_info;30" foregroundColor="layer-b-foreground" halign="center" backgroundColor="layer-b-background" valign="center" transparent="1" />
-    <widget name="activity" position="105,255" size="465,8" />
-    <widget source="list" render="Listbox" position="105,270" size="1050,624" scrollbarMode="showOnDemand" backgroundColor="layer-a-background" foregroundColor="layer-a-foreground" backgroundColorSelected="layer-a-selection-background" foregroundColorSelected="layer-a-selection-foreground" transparent="1">
+    <widget name="activity" position="105,252" size="495,8" />
+    <widget source="list" render="Listbox" position="105,282" size="1050,612" scrollbarMode="showOnDemand" backgroundColor="layer-a-background" foregroundColor="layer-a-foreground" backgroundColorSelected="layer-a-selection-background" foregroundColorSelected="layer-a-selection-foreground" transparent="1">
       <convert type="TemplatedMultiContent">
 				{"template": [
-						MultiContentEntryText(pos = (5, 1), size = (590, 28), font=0, flags = RT_HALIGN_LEFT, text = 0), # index 0 is the name
-						MultiContentEntryText(pos = (5, 26), size = (590, 21), font=1, flags = RT_HALIGN_LEFT, text = 2), # index 2 is the description
-						MultiContentEntryPixmapAlphaBlend(pos = (605, 2), size = (48, 48), png = 4, flags = BT_SCALE), # index 4 is the status pixmap
-						MultiContentEntryPixmapAlphaBlend(pos = (0, 50), size = (700, 2), png = 5), # index 5 is the div pixmap
+						MultiContentEntryText(pos = (8, 2), size = (900, 31), font=0, flags = RT_HALIGN_LEFT|RT_VALIGN_CENTER, text = 0), # index 0 is the name
+						MultiContentEntryText(pos = (8, 34), size = (900, 25), font=1, flags = RT_HALIGN_LEFT|RT_VALIGN_CENTER, text = 2), # index 2 is the description
+						MultiContentEntryPixmapAlphaBlend(pos = (970, 8), size = (44, 44), png = 4, flags = BT_SCALE), # index 4 is the status pixmap
+						MultiContentEntryPixmapAlphaBlend(pos = (0, 62), size = (1020, 2), png = 5), # index 5 is the div pixmap
 					],
-				"fonts": [gFont("Regular",22),gFont("Regular",16)],
-				"itemHeight": 52
+				"fonts": [gFont("Regular",24),gFont("Regular",18)],
+				"itemHeight": 64
 				}
 			</convert>
     </widget>
@@ -2725,8 +2725,9 @@ if getattr(self, "event", None) is None and not self["epg_description"].getText(
     <panel name="__e-buttons_template1" />
   </screen>
   <screen name="FlashOnline" position="0,0" size="1920,1080" title="Flash Online" flags="wfNoBorder" backgroundColor="transparent">
-    <widget name="list" position="105,150" zPosition="1" size="1050,756" backgroundColor="layer-a-background" foregroundColor="layer-a-foreground" backgroundColorSelected="layer-a-selection-background" foregroundColorSelected="layer-a-selection-foreground" itemHeight="54" font="screen_text;30" scrollbarMode="showOnDemand" transparent="1" />
-    <widget name="description" position="105,450" zPosition="1" size="1050,480" backgroundColor="layer-a-background" foregroundColor="layer-a-foreground" backgroundColorSelected="layer-a-selection-background" foregroundColorSelected="layer-a-selection-foreground" itemHeight="50" font="screen_text;30" scrollbarMode="showOnDemand" transparent="1" />
+    <panel name="T_Title" />
+    <widget name="list" position="105,150" zPosition="1" size="1050,738" backgroundColor="layer-a-background" foregroundColor="layer-a-foreground" backgroundColorSelected="layer-a-selection-background" foregroundColorSelected="layer-a-selection-foreground" itemHeight="54" font="screen_text;30" scrollbarMode="showOnDemand" transparent="1" />
+    <widget source="description" render="Label" position="105,900" zPosition="2" size="1050,45" font="screen_info;27" foregroundColor="layer-a-foreground" backgroundColor="layer-a-background" halign="center" valign="center" transparent="1" conditional="description" />
     <panel name="OPEN_SOURCE_INFO" />
     <panel name="ScreenTemplateAllColorButtons_template1" />
     <panel name="_oe-buttons_template1" />
@@ -2868,10 +2869,10 @@ if getattr(self, "event", None) is None and not self["epg_description"].getText(
     <panel name="OSDCalibration" />
   </screen>
   <screen name="OSDCalibration" position="0,0" size="1920,1080" backgroundColor="layer-a-background" flags="wfNoBorder" title="OSD Calibration">
-    <widget source="text" render="Label" position="300,165" zPosition="1" size="1320,180" valign="center" font="global_title;33" halign="center" foregroundColor="layer-a-title-foreground" backgroundColor="layer-a-background" transparent="1" />
-    <widget name="config" position="225,375" zPosition="1" size="1470,315" itemHeight="45" font="screen_text;30" scrollbarMode="showOnDemand" enableWrapAround="1" backgroundColorSelected="layer-a-selection-background" foregroundColorSelected="layer-a-selection-foreground" backgroundColor="layer-a-background" foregroundColor="layer-a-foreground" transparent="1" />
-    <widget name="description" position="300,712" zPosition="1" size="1320,120" font="screen_info;30" halign="center" valign="center" foregroundColor="layer-a-foreground" backgroundColor="layer-a-background" transparent="1" conditional="description" />
-    <widget source="status" render="Label" position="300,712" zPosition="1" size="1320,120" font="screen_info;30" halign="center" valign="center" foregroundColor="layer-a-foreground" backgroundColor="layer-a-background" transparent="1" conditional="status" />
+    <widget source="text" render="Label" position="270,120" zPosition="1" size="1380,245" valign="center" font="global_title;30" halign="center" foregroundColor="layer-a-title-foreground" backgroundColor="layer-a-background" transparent="1" />
+    <widget name="config" position="225,395" zPosition="1" size="1470,320" itemHeight="45" font="screen_text;30" scrollbarMode="showOnDemand" enableWrapAround="1" backgroundColorSelected="layer-a-selection-background" foregroundColorSelected="layer-a-selection-foreground" backgroundColor="layer-a-background" foregroundColor="layer-a-foreground" transparent="1" />
+    <widget name="description" position="270,735" zPosition="1" size="1380,105" font="screen_info;28" halign="center" valign="center" foregroundColor="layer-a-foreground" backgroundColor="layer-a-background" transparent="1" conditional="description" />
+    <widget source="status" render="Label" position="270,735" zPosition="1" size="1380,105" font="screen_info;28" halign="center" valign="center" foregroundColor="layer-a-foreground" backgroundColor="layer-a-background" transparent="1" conditional="status" />
     <eLabel backgroundColor="red" position="0,0" size="1920,2" zPosition="0" />
     <eLabel backgroundColor="red" position="0,1078" size="1920,2" zPosition="0" />
     <eLabel backgroundColor="red" position="0,0" size="2,1080" zPosition="0" />
@@ -2888,12 +2889,12 @@ if getattr(self, "event", None) is None and not self["epg_description"].getText(
     <eLabel backgroundColor="blue" position="112,966" size="1695,2" zPosition="0" />
     <eLabel backgroundColor="blue" position="112,112" size="2,855" zPosition="0" />
     <eLabel backgroundColor="blue" position="1806,112" size="2,855" zPosition="0" />
-    <ePixmap pixmap="buttons/key_red.png" position="500,870" size="45,60" alphatest="blend" />
-    <ePixmap pixmap="buttons/key_green.png" position="774,870" size="45,60" alphatest="blend" />
-    <ePixmap pixmap="buttons/key_yellow.png" position="1048,870" size="45,60" alphatest="blend" />
-    <widget source="key_red" render="Label" position="552,874" size="255,45" noWrap="1" zPosition="1" valign="center" font="global_button;30" halign="left" backgroundColor="layer-a-background" foregroundColor="layer-a-button-foreground" transparent="1" />
-    <widget source="key_green" render="Label" position="826,874" size="255,45" noWrap="1" zPosition="1" valign="center" font="global_button;30" halign="left" backgroundColor="layer-a-background" foregroundColor="layer-a-button-foreground" transparent="1" />
-    <widget source="key_yellow" render="Label" position="1101,874" size="255,45" noWrap="1" zPosition="1" valign="center" font="global_button;30" halign="left" backgroundColor="layer-a-background" foregroundColor="layer-a-button-foreground" transparent="1" />
+    <ePixmap pixmap="buttons/key_red.png" position="500,882" size="45,60" alphatest="blend" />
+    <ePixmap pixmap="buttons/key_green.png" position="774,882" size="45,60" alphatest="blend" />
+    <ePixmap pixmap="buttons/key_yellow.png" position="1048,882" size="45,60" alphatest="blend" />
+    <widget source="key_red" render="Label" position="552,886" size="255,45" noWrap="1" zPosition="1" valign="center" font="global_button;30" halign="left" backgroundColor="layer-a-background" foregroundColor="layer-a-button-foreground" transparent="1" />
+    <widget source="key_green" render="Label" position="826,886" size="255,45" noWrap="1" zPosition="1" valign="center" font="global_button;30" halign="left" backgroundColor="layer-a-background" foregroundColor="layer-a-button-foreground" transparent="1" />
+    <widget source="key_yellow" render="Label" position="1101,886" size="255,45" noWrap="1" zPosition="1" valign="center" font="global_button;30" halign="left" backgroundColor="layer-a-background" foregroundColor="layer-a-button-foreground" transparent="1" />
     <widget name="footnote" position="0,0" size="0,0" conditional="footnote" />
   </screen>
   <screen name="CableScanScreen" title="Cable Scan" position="0,0" size="1920,1080" flags="wfNoBorder" backgroundColor="transparent">

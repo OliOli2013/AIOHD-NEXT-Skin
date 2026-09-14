@@ -1,18 +1,21 @@
-# AIOHD NEXT 3.2.1-r3 — OpenATV Informacje i lista 18 kanałów
+# AIOHD NEXT 3.2.1-r4 — czytelność ekranów i aktualizacje z wtyczki
 
-Rewizja `r3` jest małą poprawką po testach `r2`. Widoczny numer skina pozostaje **3.2.1**.
+Rewizja `r4` odpowiada na zgłoszenia z testów na fizycznych tunerach. Widoczny numer skina pozostaje **3.2.1**.
 
 ## Zmiany
 
-- naprawiono ekran **OpenATV Informacje**, gdzie dłuższe etykiety nachodziły na wartości;
-- kolumny są teraz rozdzielone, mają bezpieczny odstęp i poprawne zawijanie długich wartości;
-- dodano rozmiar listy **Standard**: **18 kanałów**, nazwy 32 px, opis 26 px;
-- w trybie dwuliniowym Standard wyświetla 10 wierszy;
-- dotychczasowe opcje **Duża** (15 kanałów) i **Bardzo duża** (14 kanałów) pozostają bez zmian;
-- pogoda inline, InfoBar z opisem audycji, MiniTV i cztery następne audycje pozostają bez zmian względem `r2`.
+- poprawiono przycinanie tekstu w **Aktualizacji oprogramowania**;
+- poprawiono układ **Flash Manager / Systemy OpenATV** i dodano pełny nagłówek FHD;
+- przebudowano **Kalibrację OSD**, aby długie instrukcje nie nachodziły na listę ustawień;
+- uporządkowano InfoBar: opis wydarzenia ma osobny obszar, a pasek postępu znajduje się niżej i nie zasłania tekstu;
+- dodano sprawdzanie aktualizacji po wejściu do **AIOHD NEXT — Style**;
+- sprawdzanie działa w tle i nie blokuje konfiguracji;
+- nowsza wersja jest instalowana wyłącznie po potwierdzeniu użytkownika;
+- po udanej aktualizacji można wykonać restart GUI od razu albo później;
+- adres pakietu jest ograniczony do oficjalnych GitHub Releases projektu AIOHD NEXT.
 
 ## Pakiet
 
-`enigma2-plugin-skins-aiohd-next_3.2.1-r3_all.ipk`
+`enigma2-plugin-skins-aiohd-next_3.2.1-r4_all.ipk`
 
-Po instalacji wykonaj restart GUI. Rozmiar listy ustawisz w **Wtyczki → AIOHD NEXT — Style → Czcionka listy kanałów**.
+Po instalacji wykonaj restart GUI. Ustawienia skina pozostają w **Wtyczki → AIOHD NEXT — Style**.

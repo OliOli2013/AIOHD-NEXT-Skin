@@ -22,7 +22,7 @@ AIOHD NEXT modifications by **Paweł Pawełek**, based on MetrixHD by iMaxxx / O
 Copy the IPK to `/tmp` and run:
 
 ```sh
-opkg install /tmp/enigma2-plugin-skins-aiohd-next_3.2.1-r3_all.ipk
+opkg install /tmp/enigma2-plugin-skins-aiohd-next_3.2.1-r4_all.ipk
 ```
 
 Select **AIOHD** in the skin selector and restart the GUI from the receiver menu.
@@ -39,6 +39,12 @@ Open **Plugins → AIOHD NEXT — Style**.
 - Inline weather is enabled by default for the new configuration key.
 - The full weather-plugin shortcut remains optional.
 - Yellow shows a broader launcher list; blue opens the selected plugin.
+
+## In-plugin updates
+
+Since `3.2.1-r4`, opening **Plugins → AIOHD NEXT — Style** starts a non-blocking check of the official GitHub Releases feed. If a newer stable package is available, the user gets a Yes/No prompt. Nothing is installed automatically; the IPK is downloaded and passed to `opkg` only after explicit confirmation. The package URL is restricted to the official `OliOli2013/AIOHD-NEXT-Skin` release path.
+
+`r4` also fixes text clipping in Software Update, Flash Manager and OSD Calibration, and separates the InfoBar description from the progress bar.
 
 ## Inline weather
 

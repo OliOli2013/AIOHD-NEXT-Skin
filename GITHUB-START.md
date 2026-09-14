@@ -15,16 +15,16 @@ Branch główny: `main`
 
 `enigma2`, `openatv`, `skin`, `full-hd`, `epg`, `python3`, `aiohd-next`, `weather`
 
-## Aktualizacja 3.2.1-r3
+## Aktualizacja 3.2.1-r4
 
 Po skopiowaniu nowych plików do lokalnego klonu w GitKraken:
 
 1. Sprawdź zmiany w **Unstaged Files**.
 2. Stage all files z zestawu aktualizacji.
-3. Commit: `AIOHD NEXT 3.2.1-r3: fix OpenATV information layout and add 18-channel Standard list`.
+3. Commit: `AIOHD NEXT 3.2.1-r4: fix OpenATV information layout and add 18-channel Standard list`.
 4. Push do `main`.
 5. Poczekaj na wynik GitHub Actions.
 6. Po teście na tunerze utwórz nowy tag/release `3.2.1r3` zamiast przesuwać istniejący tag `3.2.1`.
-7. Do wydania dodaj `enigma2-plugin-skins-aiohd-next_3.2.1-r3_all.ipk` i plik SHA256.
+7. Do wydania dodaj `enigma2-plugin-skins-aiohd-next_3.2.1-r4_all.ipk` i plik SHA256.
 
 Widoczna wersja skina pozostaje `3.2.1`; `r3` jest rewizją pakietu.

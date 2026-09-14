@@ -31,7 +31,7 @@ then
     printf '%s\n' 'AIOHD: system bootlogo update failed; skin bootlogo remains available.'
 fi
 printf '%s\n'  \
-  'AIOHD NEXT 3.2.1-r3 installed.' \
+  'AIOHD NEXT 3.2.1-r4 installed.' \
   'Choose AIOHD in the skin selector, then restart the GUI.' \
   'Accent colours: Plugins -> AIOHD NEXT - Style.' \
   'No automatic restart or skin activation was performed.'

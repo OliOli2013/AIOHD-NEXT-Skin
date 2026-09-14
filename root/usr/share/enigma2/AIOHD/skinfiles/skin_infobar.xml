@@ -34,41 +34,41 @@
     </widget>
     <eLabel text="AIO  /  NEXT" position="84,986" size="202,24" font="Next;16" foregroundColor="nextMuted" backgroundColor="nextCard" transparent="0" valign="center" zPosition="5" halign="center" />
 
-    <!-- Main Now/Next block: compact bar with a two-line current-event description. -->
+    <!-- Main Now/Next block: current description has its own line box; progress is kept below it so text can never run into the bar. -->
     <widget source="session.CurrentService" render="Label" position="348,790" size="1044,34" zPosition="7" font="NextBold;28" foregroundColor="nextText" backgroundColor="nextCard" transparent="0" valign="center" noWrap="1">
       <convert type="ServiceName">Name</convert>
     </widget>
     <widget source="session.Event_Now" render="RunningText" position="348,824" size="1044,38" zPosition="7" font="NextBold;27" foregroundColor="nextAccent" backgroundColor="nextCard" transparent="0" valign="center" halign="left" options="movetype=running,direction=left,step=2,steptime=50,startdelay=2400,pause=1600,always=0,nowrap">
       <convert type="EventName">Name</convert>
     </widget>
-    <widget source="session.Event_Now" render="Label" position="348,862" size="1044,48" zPosition="7" font="Next;18" foregroundColor="nextMuted" backgroundColor="nextCard" transparent="0" valign="top">
+    <widget source="session.Event_Now" render="Label" position="348,866" size="1044,56" zPosition="7" font="Next;17" foregroundColor="nextMuted" backgroundColor="nextCard" transparent="0" valign="top">
       <convert type="EventName">FullDescription</convert>
     </widget>
-    <widget source="session.Event_Now" render="Label" position="348,914" size="82,28" zPosition="7" font="Next;19" foregroundColor="nextText" backgroundColor="nextCard" transparent="0" valign="center">
+    <widget source="session.Event_Now" render="Label" position="348,926" size="82,26" zPosition="7" font="Next;19" foregroundColor="nextText" backgroundColor="nextCard" transparent="0" valign="center">
       <convert type="EventTime">StartTime</convert>
       <convert type="ClockToText">Default</convert>
     </widget>
-    <widget source="session.Event_Now" render="Progress" position="442,924" size="670,8" zPosition="7" foregroundColor="nextAccent" backgroundColor="nextTrack" borderWidth="0">
+    <widget source="session.Event_Now" render="Progress" position="442,935" size="670,8" zPosition="7" foregroundColor="nextAccent" backgroundColor="nextTrack" borderWidth="0">
       <convert type="EventTime">Progress</convert>
     </widget>
-    <widget source="session.Event_Now" render="Label" position="1124,914" size="84,28" zPosition="7" font="Next;19" foregroundColor="nextText" backgroundColor="nextCard" transparent="0" valign="center" halign="right">
+    <widget source="session.Event_Now" render="Label" position="1124,926" size="84,26" zPosition="7" font="Next;19" foregroundColor="nextText" backgroundColor="nextCard" transparent="0" valign="center" halign="right">
       <convert type="EventTime">EndTime</convert>
       <convert type="ClockToText">Default</convert>
     </widget>
-    <widget source="session.Event_Now" render="Label" position="1218,914" size="174,28" zPosition="7" font="Next;19" foregroundColor="nextGold" backgroundColor="nextCard" transparent="0" valign="center" halign="right">
+    <widget source="session.Event_Now" render="Label" position="1218,926" size="174,26" zPosition="7" font="Next;19" foregroundColor="nextGold" backgroundColor="nextCard" transparent="0" valign="center" halign="right">
       <convert type="EventTime">Remaining</convert>
       <convert type="RemainingToText" />
     </widget>
-    <eLabel position="348,947" size="1044,2" backgroundColor="nextDivider" zPosition="5" />
-    <eLabel text="Next" position="348,954" size="76,32" font="NextBold;18" foregroundColor="nextMuted" backgroundColor="nextCard" transparent="0" valign="center" zPosition="5" />
-    <widget source="session.Event_Next" render="Label" position="438,954" size="88,32" font="Next;19" foregroundColor="nextAccent" backgroundColor="nextCard" transparent="0" zPosition="7" valign="center">
+    <eLabel position="348,958" size="1044,2" backgroundColor="nextDivider" zPosition="5" />
+    <eLabel text="Next" position="348,964" size="76,28" font="NextBold;18" foregroundColor="nextMuted" backgroundColor="nextCard" transparent="0" valign="center" zPosition="5" />
+    <widget source="session.Event_Next" render="Label" position="438,964" size="88,28" font="Next;19" foregroundColor="nextAccent" backgroundColor="nextCard" transparent="0" zPosition="7" valign="center">
       <convert type="EventTime">StartTime</convert>
       <convert type="ClockToText">Default</convert>
     </widget>
-    <widget source="session.Event_Next" render="RunningText" position="536,950" size="856,38" zPosition="5" font="Next;22" foregroundColor="nextText" backgroundColor="nextCard" transparent="0" valign="center" halign="left" options="movetype=running,direction=left,step=2,steptime=55,startdelay=2600,pause=1600,always=0,nowrap">
+    <widget source="session.Event_Next" render="RunningText" position="536,960" size="856,36" zPosition="5" font="Next;22" foregroundColor="nextText" backgroundColor="nextCard" transparent="0" valign="center" halign="left" options="movetype=running,direction=left,step=2,steptime=55,startdelay=2600,pause=1600,always=0,nowrap">
       <convert type="EventName">Name</convert>
     </widget>
-    <eLabel text="INFO  •  EPG" position="348,991" size="1044,19" font="Next;14" foregroundColor="nextMuted" backgroundColor="nextCard" transparent="0" valign="center" zPosition="5" />
+    <eLabel text="INFO  •  EPG" position="348,999" size="1044,16" font="Next;14" foregroundColor="nextMuted" backgroundColor="nextCard" transparent="0" valign="center" zPosition="5" />
 
     <!-- Signal block. -->
     <widget source="session.CurrentService" render="Label" position="1588,794" size="222,30" zPosition="7" font="Next;21" foregroundColor="nextText" backgroundColor="nextCard" transparent="0" valign="center" halign="right">

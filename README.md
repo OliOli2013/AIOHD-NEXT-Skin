@@ -10,21 +10,21 @@ Modyfikacje AIOHD NEXT: **Paweł Pawełek**. Baza: MetrixHD autorstwa iMaxxx / z
 - Czytelna lista kanałów z trzema rozmiarami: **Standard 32 px / 18 kanałów**, **Duża 38 px / 15 kanałów** i **Bardzo duża 42 px / 14 kanałów**, z mocnym zaznaczeniem aktywnej pozycji.
 - Prawy panel listy: mniejszy podgląd TV **544×306 (16:9)**, nazwa kanału, bieżąca audycja, czas, postęp, wielowierszowy opis EPG oraz **4 następne audycje**.
 - Długi opis EPG przewija się pionowo tylko wtedy, gdy nie mieści się w polu.
-- Kompaktowy InfoBar o wysokości **240 px**: kanał, tytuł, **dwuwierszowy opis bieżącej audycji**, postęp, czas i następna audycja.
+- Kompaktowy InfoBar o wysokości **240 px**: kanał, tytuł, opis bieżącej audycji, postęp, czas i następna audycja. W `r4` opis ma osobny obszar, a pasek postępu nie nachodzi już na tekst.
 - Pełny opis pozostaje dostępny w przewijanym oknie **Event Information**.
 - Pogoda bezpośrednio w skinie: **ikona, miejscowość, temperatura i warunki**.
 - Pogoda inline ma osobne źródło danych: **Auto** korzysta z skonfigurowanego Weather Plugin, a w razie braku/błędu przechodzi do aktualnego backendu **OpenATV / MetrixWeather / Tools.Weatherinfo**.
 - Wybór Foreca, MSNWeather i innych pozycji w polu „Wtyczka pogody” dotyczy launchera pełnego ekranu; nie każda wtyczka udostępnia wspólne API danych dla skina.
 - Trzy palety: **Aurora, Amber, Violet**.
-- Ekran **OpenATV Informacje** ma rozdzielone kolumny etykiet i wartości, dzięki czemu dłuższe opisy nie nachodzą na dane.
-- Widoczna wersja skina jest spójna: **3.2.1**. `r3` oznacza wyłącznie rewizję pakietu IPK.
+- Ekran **OpenATV Informacje** ma rozdzielone kolumny etykiet i wartości, a `r4` dodatkowo poprawia przycinanie w Aktualizacji oprogramowania, Flash Managerze i Kalibracji OSD.
+- Widoczna wersja skina jest spójna: **3.2.1**. `r4` oznacza wyłącznie rewizję pakietu IPK.
 
 ## Instalacja
 
 Pobierz plik IPK z wydania GitHub, prześlij go do `/tmp` tunera i wykonaj:
 
 ```sh
-opkg install /tmp/enigma2-plugin-skins-aiohd-next_3.2.1-r3_all.ipk
+opkg install /tmp/enigma2-plugin-skins-aiohd-next_3.2.1-r4_all.ipk
 ```
 
 Następnie wybierz **AIOHD** w ustawieniach skina i uruchom ponownie GUI z menu tunera.
@@ -45,6 +45,15 @@ Otwórz **Wtyczki → AIOHD NEXT — Style**.
 - **Pogoda bezpośrednio w skinie**: domyślnie włączona dla nowego klucza konfiguracji.
 - **Skrót do pełnej wtyczki pogody**: opcjonalny launcher z menu rozszerzeń.
 - Żółty przycisk pokazuje szerszą listę zainstalowanych launcherów; niebieski otwiera wybraną wtyczkę.
+- Po wejściu do ustawień wtyczka **w tle sprawdza GitHub Releases**. Jeśli pojawi się nowsza stabilna rewizja, pokaże informację i zapyta o zgodę na instalację.
+
+## Aktualizacje z poziomu wtyczki
+
+Od `3.2.1-r4` AIOHD NEXT ma własny, opcjonalny mechanizm aktualizacji. Po otwarciu **AIOHD NEXT — Style** status aktualizacji pojawia się pod listą ustawień. Sprawdzanie nie blokuje interfejsu.
+
+Jeżeli dostępne jest nowsze stabilne wydanie w oficjalnym repozytorium GitHub, wtyczka wyświetla okno **Tak/Nie**. Dopiero po wybraniu **Tak** pobierany jest oficjalny pakiet IPK i uruchamiana instalacja `opkg`. Po powodzeniu użytkownik może od razu zrestartować GUI albo zrobić to później.
+
+Mechanizm nie instaluje aktualizacji bez zgody i akceptuje wyłącznie pakiety z oficjalnej ścieżki wydań `OliOli2013/AIOHD-NEXT-Skin`.
 
 ## Pogoda inline
 

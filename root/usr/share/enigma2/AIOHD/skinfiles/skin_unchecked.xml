@@ -941,12 +941,12 @@ layout_message(self)
     <ePixmap pixmap="buttons/key_green.png" position="1173,1012" size="45,60" alphatest="blend" />
     <widget source="key_red" render="Label" position="570,1017" zPosition="1" size="270,45" valign="center" font="global_button;30" halign="left" foregroundColor="layer-a-button-foreground" backgroundColor="layer-a-background" transparent="1" />
     <widget source="key_green" render="Label" position="1230,1017" zPosition="1" size="270,45" valign="center" font="global_button;30" halign="left" foregroundColor="layer-a-button-foreground" backgroundColor="layer-a-background" transparent="1" />
-    <widget name="config" zPosition="2" position="243,474" size="1422,458" scrollbarMode="showOnDemand" transparent="1" />
+    <widget name="config" zPosition="2" position="243,430" size="1422,500" scrollbarMode="showOnDemand" transparent="1" />
     <eLabel name="new eLabel" position="9,9" size="30,30" backgroundColor="red" />
     <eLabel name="new eLabel" position="1881,9" size="30,30" backgroundColor="red" />
     <eLabel name="new eLabel" position="1881,1041" size="30,30" backgroundColor="red" />
     <eLabel name="new eLabel" position="9,1042" size="30,30" backgroundColor="red" />
-    <eLabel name="new eLabel" position="360,278" size="1200,60" text="Die roten Quadrate muessen sichtbar in den Ecken plaziert werden." font="Regular;33" halign="center" backgroundColor="rds_text_bg" />
+    <eLabel name="new eLabel" position="300,250" size="1320,120" text="Die roten Quadrate muessen sichtbar in den Ecken plaziert werden." font="Regular;33" halign="center" backgroundColor="rds_text_bg" />
   </screen>
   <screen name="BrowserLauncher" position="0,0" size="1920,1080" title="Web Browser" flags="wfNoBorder" backgroundColor="transparent">
     <panel name="template1_1layer" />

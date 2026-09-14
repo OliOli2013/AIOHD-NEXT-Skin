@@ -127,6 +127,37 @@ class FeatureTests(unittest.TestCase):
   session=types.SimpleNamespace(open=lambda *a,**kw:calls.append(a));weather.open_weather(session,weather.preferred_weather_key(discovered));self.assertEqual(calls[-1],{'session':session})
   entries.clear();weather.open_weather(session,'missing|WeatherPlugin');self.assertIsInstance(calls[-1],tuple)
   weather_session=types.SimpleNamespace(screen={});weather.start_weather_sources(weather_session);self.assertEqual(weather_session.screen[weather.SOURCE_CITY].text,'Pogoda');self.assertIn('Ładowanie',weather_session.screen[weather.SOURCE_CONDITION].text)
+ def test_updater_version_and_command_safety(self):
+  updater=load('aiofeatures.updater',B/'Plugins/Extensions/AIONextStyle/updater.py')
+  self.assertEqual(updater.CURRENT_PACKAGE_VERSION,'3.2.1-r4')
+  self.assertTrue(updater.is_newer('3.2.1-r5'))
+  self.assertTrue(updater.is_newer('3.2.2-r0'))
+  self.assertFalse(updater.is_newer('3.2.1-r4'))
+  self.assertFalse(updater.is_newer('3.2.1-r3'))
+  url='https://github.com/OliOli2013/AIOHD-NEXT-Skin/releases/download/3.2.1-r5/enigma2-plugin-skins-aiohd-next_3.2.1-r5_all.ipk'
+  cmd=updater.installer_command(url)
+  self.assertIn('wget -q --no-check-certificate',cmd);self.assertIn('opkg install /tmp/aiohd-next-update.ipk',cmd)
+  with self.assertRaises(ValueError):updater.installer_command('https://example.com/evil.ipk')
+ def test_reported_openatv_screens_do_not_clip(self):
+  import xml.etree.ElementTree as E
+  root=Path('root/usr/share/enigma2/AIOHD/skinfiles')
+  openatv=E.parse(root/'skin_openatv.xml').getroot()
+  flash=openatv.find("screen[@name='FlashOnline']")
+  self.assertIsNotNone(flash.find("panel[@name='T_Title']"))
+  self.assertIsNotNone(flash.find("widget[@source='description']"))
+  software=openatv.find("screen[@name='SoftwareUpdate']")
+  self.assertGreaterEqual(int(software.find("widget[@name='package_text']").get('size').split(',')[1]),60)
+  osd=openatv.find("screen[@name='OSDCalibration']")
+  text=osd.find("widget[@source='text']");cfg=osd.find("widget[@name='config']")
+  ty,th=map(int,(text.get('position').split(',')[1],text.get('size').split(',')[1]));cy=int(cfg.get('position').split(',')[1])
+  self.assertGreaterEqual(th,220);self.assertGreaterEqual(cy,ty+th+20)
+  infobar=E.parse(root/'skin_infobar.xml').getroot().find("screen[@name='InfoBar']")
+  desc=next(w for w in infobar.findall('widget') if w.find("convert[@type='EventName']") is not None and (w.find("convert[@type='EventName']").text or '').strip()=='FullDescription')
+  progress=next(w for w in infobar.findall('widget') if w.get('render')=='Progress' and w.find("convert[@type='EventTime']") is not None)
+  dy,dh=map(int,(desc.get('position').split(',')[1],desc.get('size').split(',')[1]));py=int(progress.get('position').split(',')[1])
+  self.assertGreaterEqual(py,dy+dh+8)
+  plugin=(B/'Plugins/Extensions/AIONextStyle/plugin.py').read_text()
+  self.assertIn("self['update_status']",plugin);self.assertIn('fetch_latest',plugin);self.assertIn('CURRENT_PACKAGE_VERSION',plugin)
  def test_bootlogo_backup_and_active_skin(self):
   import tempfile
   script=Path('control/postinst').read_text().split("<<'AIO_BOOTLOGO_PY'",1)[1].split('AIO_BOOTLOGO_PY',1)[0]

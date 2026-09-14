@@ -38,3 +38,12 @@ Po instalacji sprawdź:
 - restart GUI, ponowne wejście do listy i zachowanie ustawień.
 
 Automatyczna walidacja nie zastępuje testu na odbiorniku.
+
+## r4 — dodatkowe testy ręczne
+
+1. Otwórz **Aktualizacja oprogramowania** i sprawdź, czy „Dostępne”/liczba oraz dwie linie pozycji nie są obcięte.
+2. Otwórz **Flash Manager / Systemy OpenATV** i sprawdź pełny tytuł oraz listę systemów.
+3. Otwórz **Kalibrację OSD** i sprawdź, czy instrukcja nie nachodzi na ustawienia.
+4. Na InfoBarze sprawdź długi opis wydarzenia: pasek postępu musi znajdować się pod opisem.
+5. Wejdź do **AIOHD NEXT — Style**: status powinien przejść ze „sprawdzanie” na aktualną wersję albo informację o nowszej wersji.
+6. Test aktualizacji wykonuj dopiero po opublikowaniu nowszego GitHub Release. Odmowa w oknie Tak/Nie nie może uruchamiać żadnego polecenia instalacyjnego.

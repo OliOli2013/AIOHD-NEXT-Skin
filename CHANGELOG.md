@@ -1,5 +1,18 @@
 # Changelog
 
+## 3.2.1-r4 — 2026-09-14
+
+- Poprawiono zgłoszone przycięcia tekstu w ekranach **Aktualizacja oprogramowania**, **Flash Manager / Systemy OpenATV** oraz **Kalibracja OSD**.
+- Ekran Flash Manager otrzymał pełny nagłówek FHD i poprawny osobny obszar opisu, zamiast nakładających się elementów.
+- W Kalibracji OSD powiększono obszar instrukcji i przesunięto listę ustawień niżej, aby dłuższy polski tekst nie nachodził na konfigurację.
+- W ekranie aktualizacji systemu zwiększono wysokość nagłówka liczby pakietów oraz wysokość pozycji listy, żeby nazwa i opis nie były obcinane.
+- Uporządkowano **InfoBar**: opis bieżącego wydarzenia ma własny większy obszar, a pasek postępu i czasy zostały przesunięte niżej, dzięki czemu nie zasłaniają opisu.
+- Dodano mechanizm sprawdzania aktualizacji skina w **Wtyczki → AIOHD NEXT — Style**. Sprawdzanie odbywa się w tle przy wejściu do ustawień.
+- Gdy GitHub Releases zawiera nowszą stabilną wersję, użytkownik otrzymuje komunikat i sam decyduje, czy ją zainstalować. Aktualizacja nigdy nie jest instalowana automatycznie.
+- Po udanej instalacji wtyczka proponuje restart GUI; w czasie nagrywania można go odrzucić i wykonać później.
+- Dodano walidację adresu pakietu aktualizacji wyłącznie do oficjalnych wydań `OliOli2013/AIOHD-NEXT-Skin`.
+- Rewizja pakietu: `3.2.1-r4`; widoczna wersja skina pozostaje `3.2.1`.
+
 ## 3.2.1-r3 — 2026-09-14
 
 - Naprawiono ekran **OpenATV Informacje**: kolumny etykiet i wartości są fizycznie rozdzielone (`splitSeparated`), z większym odstępem i bez nachodzenia tekstu.
