@@ -1,23 +1,19 @@
-# AIOHD NEXT 3.2.1-r1 — przebudowany ChannelSelection, InfoBar i pogoda inline
+# AIOHD NEXT 3.2.1-r2 — pogoda inline i opis audycji w InfoBar
 
-Rewizja `r1` aktualizuje pakiet 3.2.1 bez zmiany widocznego numeru skina.
+Rewizja `r2` naprawia dwie rzeczy zgłoszone po teście `r1`, bez zmiany widocznego numeru skina **3.2.1**.
 
-## Najważniejsze zmiany
+## Zmiany
 
-- mniejszy podgląd TV 544×306 i większy obszar danych po prawej stronie listy kanałów;
-- bieżący tytuł, czas, postęp, wielowierszowy opis i cztery kolejne audycje;
-- pogrubione nazwy kanałów 38/42 px;
-- InfoBar zmniejszony do 240 px, bez obcinanego długiego opisu;
-- pełny opis dostępny w przewijanym Event Information;
-- pogoda bezpośrednio w skinie: ikona, miejscowość, temperatura i warunki;
-- OpenATV Weather Plugin preferowany jako dostawca danych inline;
-- inne wtyczki pogodowe zachowane jako wybieralne launchery;
-- `AIOHD_VERSION` i pozostałe widoczne oznaczenia ujednolicone do 3.2.1.
+- pogoda inline nie zależy już od samego wyboru launchera;
+- **Auto** korzysta ze skonfigurowanego Weather Plugin i ma fallback do aktualnego backendu OpenATV / MetrixWeather (`Tools.Weatherinfo`);
+- dodano timeout/fallback oraz czytelny status, więc panel pogody nie powinien pozostawać pustym prostokątem;
+- ustawienia rozdzielają teraz źródło danych pogody od wtyczki otwieranej na pełnym ekranie;
+- InfoBar zachowuje wysokość 240 px, ale pod tytułem bieżącej audycji pokazuje dwuwierszowy opis `FullDescription`;
+- pasek czasu/postępu i następna audycja zostały zachowane;
+- pełny opis nadal jest dostępny w przewijanym Event Information.
 
 ## Pakiet
 
-`enigma2-plugin-skins-aiohd-next_3.2.1-r1_all.ipk`
+`enigma2-plugin-skins-aiohd-next_3.2.1-r2_all.ipk`
 
-Po instalacji wybierz AIOHD i wykonaj restart GUI z menu tunera. Ustawienia pogody i czcionki: **Wtyczki → AIOHD NEXT — Style**.
-
-Przed publikacją zalecany jest test na fizycznym tunerze OpenATV, szczególnie ChannelSelection/PiG, przewijania EPG i Weather Plugin.
+Po instalacji wykonaj restart GUI. W **Wtyczki → AIOHD NEXT — Style** pozostaw źródło danych pogody na **Automatycznie (OpenATV)**, chyba że chcesz wymusić konkretny backend.

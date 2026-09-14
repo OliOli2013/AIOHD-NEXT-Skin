@@ -1,5 +1,15 @@
 # Changelog
 
+## 3.2.1-r2 — 2026-09-14
+
+- Naprawiono pusty panel pogody: tryb Auto nie traktuje już wyboru launchera jako interfejsu danych.
+- Dodano dwa rzeczywiste backendy inline: skonfigurowany `Weather Plugin` oraz aktualny OpenATV `MetrixWeather / Tools.Weatherinfo`.
+- Gdy klasyczny Weather Plugin nie odpowiada, Auto przechodzi do backendu OpenATV; dodano timeout i czytelne stany zamiast pustego prostokąta.
+- W ustawieniach rozdzielono **źródło danych inline** od **wtyczki otwieranej jako launcher**.
+- InfoBar nadal ma 240 px, ale pokazuje teraz dwuwierszowy `FullDescription` bieżącej audycji między tytułem a paskiem postępu.
+- Pełny przewijany opis pozostaje w Event Information.
+- Rewizja pakietu: `3.2.1-r2`; widoczna wersja skina pozostaje `3.2.1`.
+
 ## 3.2.1-r1 — 2026-09-14
 
 - Przebudowany prawy panel ChannelSelection: podgląd 544×306, więcej miejsca na EPG.

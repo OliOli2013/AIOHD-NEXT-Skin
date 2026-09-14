@@ -1,16 +1,22 @@
 # -*- coding: utf-8 -*-
 """Weather integration for AIOHD NEXT.
 
-The skin always owns its session sources, so missing third-party weather plugins
-cannot break InfoBar or ChannelSelection.  If OpenATV's Weather Plugin is
-installed and configured, its public configuration/data API is used for the
-inline city, temperature, condition and icon.  Other installed weather plugins
-remain available as launchers from AIOHD NEXT settings.
+Inline weather and the full-screen weather launcher are intentionally separate.
+The inline manager can read two OpenATV-compatible backends:
+
+* current OpenATV / MetrixWeather via Tools.Weatherinfo;
+* classic OE-Alliance Weather Plugin via its MSNWeather API.
+
+Auto mode prefers a configured classic Weather Plugin (because that reflects the
+location explicitly selected by the user) and falls back to the current OpenATV
+MetrixWeather backend when the classic service is unavailable.  Missing weather
+software never breaks the skin and never leaves an unexplained empty panel.
 """
 import os
 
 from Components.PluginComponent import plugins
 from Components.Sources.StaticText import StaticText
+from Components.config import config
 from Plugins.Plugin import PluginDescriptor
 from Screens.MessageBox import MessageBox
 from enigma import eTimer
@@ -22,6 +28,14 @@ SOURCE_CITY = 'AIONextWeatherCity'
 SOURCE_TEMP = 'AIONextWeatherTemp'
 SOURCE_CONDITION = 'AIONextWeatherCondition'
 SOURCE_ICON = 'AIONextWeatherIcon'
+AIO_WEATHER_ICONS = '/usr/share/enigma2/AIOHD/animated_weather_icons'
+
+
+def _log(message):
+    try:
+        print('[AIOHD NEXT][Weather] %s' % message)
+    except Exception:
+        pass
 
 
 def launcher(descriptor):
@@ -59,7 +73,7 @@ def weather_plugins(show_all=False):
 
 
 def preferred_weather_key(entries=None):
-    """Prefer OpenATV/OE-Alliance Weather Plugin, then another weather plugin."""
+    """Prefer OE-Alliance/OpenATV Weather Plugin as the full-screen launcher."""
     entries = entries if entries is not None else weather_plugins()
     if not entries:
         return ''
@@ -98,29 +112,59 @@ def _set_text(source, value):
         source.text = value
 
 
+def _value(obj, name, default=''):
+    try:
+        return getattr(obj, name).value
+    except Exception:
+        return default
+
+
 class AIONextWeatherManager(object):
-    """Refresh inline weather without making skin XML depend on WeatherPlugin."""
-    INITIAL_DELAY = 4000
+    """Publish stable weather session sources used by skin XML."""
+    INITIAL_DELAY = 1500
     REFRESH_INTERVAL = 30 * 60 * 1000
     RETRY_INTERVAL = 5 * 60 * 1000
+    PROVIDER_TIMEOUT = 20 * 1000
 
     def __init__(self, session):
         self.session = session
         self.weatherData = None
+        self.weatherInfo = None
         self.iconPath = ''
+        self.waiting = ''
+        self.provider = ''
         self.timer = eTimer()
         try:
-            self.timer.timeout.connect(self.refresh)
+            self.timer.timeout.connect(self._timer_event)
         except Exception:
-            self.timer.callback.append(self.refresh)
+            self.timer.callback.append(self._timer_event)
+        self._publish(city=tr('Pogoda', 'Weather'), condition=tr('Ładowanie…', 'Loading…'))
         self._arm(self.INITIAL_DELAY)
 
-    def _arm(self, milliseconds):
+    def _arm(self, milliseconds, waiting=''):
+        self.waiting = waiting
         try:
             self.timer.stop()
         except Exception:
             pass
         self.timer.start(int(milliseconds), True)
+
+    def _timer_event(self):
+        waiting = self.waiting
+        self.waiting = ''
+        if waiting == 'classic':
+            _log('classic Weather Plugin timed out')
+            self._cancel_classic()
+            if settings.weatherProvider.value == 'auto' and self._start_metrix():
+                return
+            self._failed(tr('Brak danych pogodowych', 'No weather data'))
+            return
+        if waiting == 'metrix':
+            _log('OpenATV/MetrixWeather timed out')
+            self._cancel_metrix()
+            self._failed(tr('Brak danych pogodowych', 'No weather data'))
+            return
+        self.refresh()
 
     def _source(self, name):
         try:
@@ -139,7 +183,7 @@ class AIONextWeatherManager(object):
             if source is not None:
                 _set_text(source, value)
 
-    def _cancel(self):
+    def _cancel_classic(self):
         if self.weatherData is not None:
             try:
                 self.weatherData.cancel()
@@ -147,76 +191,103 @@ class AIONextWeatherManager(object):
                 pass
         self.weatherData = None
 
+    def _cancel_metrix(self):
+        if self.weatherInfo is not None:
+            try:
+                self.weatherInfo.stop()
+            except Exception:
+                pass
+        self.weatherInfo = None
+
+    def _cancel(self):
+        self._cancel_classic()
+        self._cancel_metrix()
+
+    def _failed(self, text):
+        # Keep the panel meaningful instead of presenting an empty dark rectangle.
+        self._publish(city=tr('Pogoda', 'Weather'), condition=text)
+        self._arm(self.RETRY_INTERVAL)
+
     def refresh(self):
         self._cancel()
+        self.provider = ''
         if not settings.weatherInline.value:
             self._publish()
             self._arm(self.REFRESH_INTERVAL)
             return
 
-        # OpenATV/OE-Alliance Weather Plugin is the primary provider.  Importing
-        # its plugin module initializes config.plugins.WeatherPlugin exactly as
-        # the installed plugin expects; absence is handled without skin failure.
+        provider = getattr(settings, 'weatherProvider', None)
+        provider = getattr(provider, 'value', 'auto')
+        if provider == 'weatherplugin':
+            if not self._start_classic():
+                self._failed(tr('Skonfiguruj Weather Plugin', 'Configure Weather Plugin'))
+            return
+        if provider == 'metrix':
+            if not self._start_metrix():
+                self._failed(tr('Skonfiguruj pogodę OpenATV', 'Configure OpenATV weather'))
+            return
+
+        # Auto: use an explicitly configured Weather Plugin first.  If it is not
+        # present/configured, use the current OpenATV/Metrix Weatherinfo backend.
+        if self._start_classic():
+            return
+        if self._start_metrix():
+            return
+        self._failed(tr('Brak skonfigurowanego źródła', 'No configured weather source'))
+
+    def _start_classic(self):
         try:
             from Plugins.Extensions.WeatherPlugin import plugin as weather_plugin
             from Plugins.Extensions.WeatherPlugin.MSNWeather import MSNWeather
-        except Exception:
-            self._publish()
-            self._arm(self.RETRY_INTERVAL)
-            return
-
-        try:
             cfg = weather_plugin.config.plugins.WeatherPlugin
             count = int(cfg.entrycount.value)
             if count < 1 or len(cfg.Entry) < 1:
-                self._publish(city=tr('Ustaw pogodę', 'Set weather'))
-                self._arm(self.RETRY_INTERVAL)
-                return
+                return False
             entry = cfg.Entry[0]
-            city = str(getattr(entry.city, 'value', '') or '')
-            self._publish(city=city)
+            city = str(_value(entry, 'city', '') or '')
+            code = str(_value(entry, 'weatherlocationcode', '') or '')
+            degree = str(_value(entry, 'degreetype', 'C') or 'C')
+            if not code:
+                return False
+            self.provider = 'classic'
+            self._publish(city=city or tr('Pogoda', 'Weather'), condition=tr('Pobieranie danych…', 'Getting data…'))
             self.iconPath = ''
             self.weatherData = MSNWeather()
-            self.weatherData.getWeatherData(
-                entry.degreetype.value,
-                entry.weatherlocationcode.value,
-                entry.city.value,
-                self._weather_result,
-                self._weather_icon,
-            )
-            # This also provides a timeout/retry if a provider request never
-            # calls back. A later callback still updates the already-owned sources.
-            self._arm(self.REFRESH_INTERVAL)
-        except Exception:
-            self._publish()
-            self._arm(self.RETRY_INTERVAL)
+            self.weatherData.getWeatherData(degree, code, city, self._classic_result, self._classic_icon)
+            self._arm(self.PROVIDER_TIMEOUT, 'classic')
+            _log('using configured Weather Plugin')
+            return True
+        except Exception as error:
+            _log('Weather Plugin unavailable: %s' % error)
+            self._cancel_classic()
+            return False
 
-    def _weather_icon(self, index, filename):
-        if int(index) != -1:
+    def _classic_icon(self, index, filename):
+        try:
+            if int(index) != -1:
+                return
+        except Exception:
             return
         self.iconPath = str(filename or '')
         source = self._source(SOURCE_ICON)
         if source is not None:
             _set_text(source, self.iconPath if os.path.exists(self.iconPath) else '')
 
-    def _weather_result(self, result, errortext):
+    def _classic_result(self, result, errortext):
         data = self.weatherData
-        if data is None:
+        if data is None or self.provider != 'classic':
             return
         if result != getattr(data, 'OK', 1):
-            # Keep the configured city visible but remove stale measurements.
-            try:
-                city = str(data.city or '')
-            except Exception:
-                city = ''
-            self._publish(city=city)
-            self._arm(self.RETRY_INTERVAL)
+            _log('Weather Plugin data error: %s' % (errortext or 'unknown'))
+            self._cancel_classic()
+            if settings.weatherProvider.value == 'auto' and self._start_metrix():
+                return
+            self._failed(tr('Błąd Weather Plugin', 'Weather Plugin error'))
             return
         try:
             item = data.weatherItems.get('-1')
             if item is None:
-                self._arm(self.RETRY_INTERVAL)
-                return
+                raise ValueError('missing current weather item')
             city = str(data.city or '')
             temperature = str(getattr(item, 'temperature', '') or '').strip()
             degree = str(getattr(data, 'degreetype', '') or '').strip()
@@ -227,8 +298,92 @@ class AIONextWeatherManager(object):
                 icon = ''
             self._publish(city=city, temp=temp, condition=condition, icon=icon)
             self._arm(self.REFRESH_INTERVAL)
-        except Exception:
-            self._arm(self.RETRY_INTERVAL)
+            _log('Weather Plugin data published')
+        except Exception as error:
+            _log('Weather Plugin result parse error: %s' % error)
+            self._cancel_classic()
+            if settings.weatherProvider.value == 'auto' and self._start_metrix():
+                return
+            self._failed(tr('Niepełne dane pogodowe', 'Incomplete weather data'))
+
+    def _ensure_metrix_config(self):
+        if hasattr(config.plugins, 'MetrixWeather'):
+            return True
+        try:
+            # Loading MyMetrixLite defines config.plugins.MetrixWeather on OpenATV.
+            from Plugins.Extensions.MyMetrixLite import plugin as _metrix_plugin  # noqa: F401
+        except Exception as error:
+            _log('MyMetrixLite config unavailable: %s' % error)
+        return hasattr(config.plugins, 'MetrixWeather')
+
+    def _start_metrix(self):
+        try:
+            if not self._ensure_metrix_config():
+                return False
+            from Tools.Weatherinfo import Weatherinfo
+            cfg = config.plugins.MetrixWeather
+            city = str(_value(cfg, 'weathercity', '') or '')
+            geocode = str(_value(cfg, 'owm_geocode', '') or '')
+            parts = [x.strip() for x in geocode.split(',')]
+            if not city or len(parts) != 2 or not parts[0] or not parts[1]:
+                return False
+            # Validate that coordinates are numeric before starting the backend.
+            float(parts[0]); float(parts[1])
+            source = str(_value(cfg, 'weatherservice', 'MSN') or 'MSN')
+            mode = {'MSN': 'msn', 'OpenMeteo': 'omw', 'openweather': 'owm'}.get(source, 'msn')
+            api_key = str(_value(cfg, 'apikey', '') or '')
+            unit_value = str(_value(cfg, 'tempUnit', 'Celsius') or 'Celsius')
+            units = 'imperial' if unit_value == 'Fahrenheit' else 'metric'
+            scheme = str(config.osd.language.value or 'en_GB').replace('_', '-')
+            self.provider = 'metrix'
+            self._publish(city=city, condition=tr('Pobieranie danych…', 'Getting data…'))
+            self.weatherInfo = Weatherinfo(mode, api_key)
+            # OpenATV uses geodata=(city, longitude, latitude).
+            self.weatherInfo.start(geodata=(city, parts[0], parts[1]), units=units, scheme=scheme, reduced=True, callback=self._metrix_result)
+            self._arm(self.PROVIDER_TIMEOUT, 'metrix')
+            _log('using OpenATV/MetrixWeather (%s)' % mode)
+            return True
+        except Exception as error:
+            _log('OpenATV/MetrixWeather unavailable: %s' % error)
+            self._cancel_metrix()
+            return False
+
+    def _metrix_icon(self, current):
+        code = str(current.get('yahooCode', '') or '')
+        if not code:
+            return ''
+        filename = os.path.join(AIO_WEATHER_ICONS, code, 'a0.png')
+        if os.path.exists(filename):
+            return filename
+        fallback = os.path.join(AIO_WEATHER_ICONS, 'NA', 'a0.png')
+        return fallback if os.path.exists(fallback) else ''
+
+    def _metrix_result(self, data, error):
+        if self.provider != 'metrix':
+            return
+        if error or not isinstance(data, dict):
+            _log('OpenATV/MetrixWeather data error: %s' % (error or 'empty data'))
+            self._cancel_metrix()
+            self._failed(tr('Błąd danych OpenATV', 'OpenATV weather error'))
+            return
+        try:
+            current = data.get('current') or {}
+            city = str(data.get('name') or _value(config.plugins.MetrixWeather, 'weathercity', '') or '')
+            temp_value = current.get('temp', '')
+            unit_value = str(_value(config.plugins.MetrixWeather, 'tempUnit', 'Celsius') or 'Celsius')
+            unit = 'F' if unit_value == 'Fahrenheit' else 'C'
+            temp = ('%s°%s' % (temp_value, unit)) if temp_value not in ('', None) else ''
+            condition = str(current.get('text') or '')
+            icon = self._metrix_icon(current)
+            if not (city or temp or condition):
+                raise ValueError('empty current weather payload')
+            self._publish(city=city, temp=temp, condition=condition, icon=icon)
+            self._arm(self.REFRESH_INTERVAL)
+            _log('OpenATV/MetrixWeather data published')
+        except Exception as exc:
+            _log('OpenATV/MetrixWeather result parse error: %s' % exc)
+            self._cancel_metrix()
+            self._failed(tr('Niepełne dane OpenATV', 'Incomplete OpenATV weather data'))
 
     def stop(self):
         try:
@@ -242,9 +397,15 @@ def start_weather_sources(session):
     """Install safe session sources before skin screens reference them."""
     if session is None or not hasattr(session, 'screen'):
         return
+    defaults = {
+        SOURCE_CITY: tr('Pogoda', 'Weather'),
+        SOURCE_TEMP: '',
+        SOURCE_CONDITION: tr('Ładowanie…', 'Loading…'),
+        SOURCE_ICON: '',
+    }
     for name in (SOURCE_CITY, SOURCE_TEMP, SOURCE_CONDITION, SOURCE_ICON):
         if name not in session.screen:
-            session.screen[name] = StaticText('')
+            session.screen[name] = StaticText(defaults[name])
     manager = getattr(session, '_aioNextWeatherManager', None)
     if manager is None:
         manager = AIONextWeatherManager(session)

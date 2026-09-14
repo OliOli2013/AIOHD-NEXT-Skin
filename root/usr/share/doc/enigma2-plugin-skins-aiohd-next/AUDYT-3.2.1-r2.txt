@@ -1,0 +1,9 @@
+AIOHD NEXT 3.2.1-r2 — AUDYT POPRAWEK
+
+1. Repozytorium r1 miało poprawną strukturę i zielony workflow, ale pogoda inline miała ograniczenie architektoniczne: wybór launchera nie oznacza wspólnego API danych.
+2. weather.py obsługuje teraz dwa konkretne backendy OpenATV: klasyczny Weather Plugin oraz aktualny MetrixWeather/Tools.Weatherinfo.
+3. Tryb Auto używa skonfigurowanego Weather Plugin i w razie braku/błędu/timeoutu przechodzi do MetrixWeather.
+4. Panel nie pozostaje pusty: pokazuje stan ładowania, konfiguracji lub błędu.
+5. InfoBar nadal ma 240 px. Dodano dwuwierszowy FullDescription bieżącego wydarzenia bez usuwania czasu, progresu i pozycji Next.
+6. Pełny opis pozostaje w Event Information.
+7. Widoczny numer skina: 3.2.1; rewizja pakietu: 3.2.1-r2.

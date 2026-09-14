@@ -8,20 +8,20 @@ AIOHD NEXT modifications by **Paweł Pawełek**, based on MetrixHD by iMaxxx / O
 - Bold **38 px / 42 px** channel names with a strong active-row highlight.
 - Rebuilt right panel with a smaller **544×306 16:9 MiniTV**, current event, time/progress, multi-line EPG description and **four upcoming events**.
 - Long descriptions auto-scroll vertically only when needed.
-- Compact **240 px** InfoBar focused on channel, current event, progress/time and next event.
+- Compact **240 px** InfoBar with channel, current title, a **two-line current-event description**, progress/time and next event.
 - Full long EPG text remains available in the scrollable **Event Information** screen.
 - Inline weather: **icon, city, temperature and condition**.
-- Preferred inline provider: **Weather Plugin from the OpenATV feed**, when installed and configured.
-- Other installed weather plugins can still be selected as launchers.
+- Inline data provider is separate from the launcher. **Auto** uses a configured Weather Plugin first and falls back to the current **OpenATV / MetrixWeather / Tools.Weatherinfo** backend.
+- Other installed weather plugins can still be selected as full-screen launchers; they do not all expose a common inline-data API.
 - Aurora, Amber and Violet palettes.
-- Visible skin version stays **3.2.1**; `r1` is the IPK package revision only.
+- Visible skin version stays **3.2.1**; `r2` is the IPK package revision only.
 
 ## Install
 
 Copy the IPK to `/tmp` and run:
 
 ```sh
-opkg install /tmp/enigma2-plugin-skins-aiohd-next_3.2.1-r1_all.ipk
+opkg install /tmp/enigma2-plugin-skins-aiohd-next_3.2.1-r2_all.ipk
 ```
 
 Select **AIOHD** in the skin selector and restart the GUI from the receiver menu.
@@ -40,11 +40,11 @@ Open **Plugins → AIOHD NEXT — Style**.
 
 ## Inline weather
 
-AIOHD NEXT owns the weather session sources, so a missing external weather plugin should not break InfoBar or ChannelSelection.
+AIOHD NEXT owns the weather session sources, so a missing provider should not break InfoBar or ChannelSelection or leave an unexplained blank weather panel.
 
-When the OpenATV **Weather Plugin** is installed and configured, AIOHD NEXT uses its data for city, temperature, condition and icon. Location and units remain configured in Weather Plugin itself.
+In **Automatic (OpenATV)** mode the skin first uses a configured OpenATV **Weather Plugin**. If it is missing, not configured or times out, AIOHD NEXT falls back to the current **OpenATV / MetrixWeather / Tools.Weatherinfo** backend. Either backend can also be forced in AIOHD NEXT settings.
 
-Other weather plugins can still be used as launchers, but third-party plugins do not expose one common data API, so selecting another launcher does not automatically make it an inline data provider.
+The **Weather plugin** selector remains a separate full-screen launcher. Foreca and other plugins can be launched there, but they do not all expose a common data API and therefore cannot automatically feed the inline panel.
 
 ## Build
 

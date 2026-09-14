@@ -89,7 +89,7 @@ class Tests(unittest.TestCase):
    self.assertEqual(p.read_bytes(),original)
 class FeatureTests(unittest.TestCase):
  def setUp(self):
-  self.settings=types.SimpleNamespace(listSize=types.SimpleNamespace(value='large'),weatherEnabled=types.SimpleNamespace(value=True),weatherInline=types.SimpleNamespace(value=True),weatherPlugin=types.SimpleNamespace(value=''))
+  self.settings=types.SimpleNamespace(listSize=types.SimpleNamespace(value='large'),weatherEnabled=types.SimpleNamespace(value=True),weatherInline=types.SimpleNamespace(value=True),weatherProvider=types.SimpleNamespace(value='auto'),weatherPlugin=types.SimpleNamespace(value=''))
   module('aiofeatures.settings',settings=self.settings,tr=lambda pl,en:pl);package=module('aiofeatures');package.__path__=[]
  def test_channel_rows_and_no_global_change(self):
   channel=load('aiofeatures.channel',B/'Plugins/Extensions/AIONextStyle/channel.py')
@@ -126,6 +126,7 @@ class FeatureTests(unittest.TestCase):
   self.assertEqual(len(weather.weather_plugins(show_all=True)),3)
   session=types.SimpleNamespace(open=lambda *a,**kw:calls.append(a));weather.open_weather(session,weather.preferred_weather_key(discovered));self.assertEqual(calls[-1],{'session':session})
   entries.clear();weather.open_weather(session,'missing|WeatherPlugin');self.assertIsInstance(calls[-1],tuple)
+  weather_session=types.SimpleNamespace(screen={});weather.start_weather_sources(weather_session);self.assertEqual(weather_session.screen[weather.SOURCE_CITY].text,'Pogoda');self.assertIn('Ładowanie',weather_session.screen[weather.SOURCE_CONDITION].text)
  def test_bootlogo_backup_and_active_skin(self):
   import tempfile
   script=Path('control/postinst').read_text().split("<<'AIO_BOOTLOGO_PY'",1)[1].split('AIO_BOOTLOGO_PY',1)[0]
@@ -146,6 +147,9 @@ class FeatureTests(unittest.TestCase):
   self.assertEqual(s.find("widget[@name='list']").get('backgroundColorSelected'),'nextSelection')
   weather_sources={w.get('source') for w in s.findall('widget') if (w.get('source') or '').startswith('session.AIONextWeather')};self.assertEqual(len(weather_sources),4)
   self.assertTrue(Path('root/usr/lib/enigma2/python/Components/Renderer/AIONextWeatherPixmap.py').is_file())
+  infobar=E.parse(root/'skinfiles/skin_infobar.xml').getroot().find("screen[@name='InfoBar']")
+  self.assertIsNotNone(infobar)
+  self.assertTrue(any((c.text or '').strip()=='FullDescription' for c in infobar.findall("widget/convert[@type='EventName']")))
   def luminance(v):
    c=[int(v[i:i+2],16)/255 for i in (3,5,7)];c=[x/12.92 if x<=.04045 else ((x+.055)/1.055)**2.4 for x in c];return sum(a*b for a,b in zip(c,[.2126,.7152,.0722]))
   theme=load('featuretheme',B/'Plugins/Extensions/AIONextStyle/theme.py')

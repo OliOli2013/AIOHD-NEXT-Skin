@@ -1,52 +1,81 @@
-# AIOHD NEXT 3.2.1 — package revision r1
+# AIOHD NEXT 3.2.1
 
-Skin Full HD dla **OpenATV / Enigma2, Python 3**, autor modyfikacji: **Paweł Pawełek**.
-Na bazie MetrixHD autorstwa iMaxxx / zespołu OpenATV.
+Nowoczesny skin Full HD dla **OpenATV / Enigma2 (Python 3)**.
+Modyfikacje AIOHD NEXT: **Paweł Pawełek**. Baza: MetrixHD autorstwa iMaxxx / zespołu OpenATV.
 
-## Najważniejsze elementy
+[English](README.en.md) · [Historia zmian](CHANGELOG.md) · [Testy](TESTING.md)
 
-- Lista kanałów: pogrubione nazwy 38 px lub 42 px, mocne zaznaczenie aktywnej pozycji i czytelny postęp.
-- Prawy panel listy: mniejszy podgląd TV 16:9, nazwa kanału, tytuł, czas, pełny wielowierszowy opis EPG z automatycznym przewijaniem i cztery kolejne audycje.
-- Infobar: wysokość 240 px, bieżąca audycja, postęp i następna audycja bez obcinanego akapitu opisu.
-- Event Information: pełny opis EPG pozostaje w dużym natywnie przewijanym polu.
-- Pogoda bezpośrednio w skinie: ikona, miejscowość, temperatura i warunki.
-- OpenATV **Weather Plugin** jest preferowany jako dostawca pogody inline i jako domyślny launcher, jeśli jest zainstalowany.
-- Inne zainstalowane wtyczki pogodowe można nadal wybrać w ustawieniach jako launcher.
-- Trzy palety: Aurora, Amber, Violet.
-- Widoczny numer wersji jest spójny: **3.2.1**. `r1` jest wyłącznie rewizją pakietu IPK.
+## Najważniejsze funkcje
+
+- Czytelna lista kanałów z pogrubionymi nazwami **38 px** lub **42 px** i mocnym zaznaczeniem aktywnej pozycji.
+- Prawy panel listy: mniejszy podgląd TV **544×306 (16:9)**, nazwa kanału, bieżąca audycja, czas, postęp, wielowierszowy opis EPG oraz **4 następne audycje**.
+- Długi opis EPG przewija się pionowo tylko wtedy, gdy nie mieści się w polu.
+- Kompaktowy InfoBar o wysokości **240 px**: kanał, tytuł, **dwuwierszowy opis bieżącej audycji**, postęp, czas i następna audycja.
+- Pełny opis pozostaje dostępny w przewijanym oknie **Event Information**.
+- Pogoda bezpośrednio w skinie: **ikona, miejscowość, temperatura i warunki**.
+- Pogoda inline ma osobne źródło danych: **Auto** korzysta z skonfigurowanego Weather Plugin, a w razie braku/błędu przechodzi do aktualnego backendu **OpenATV / MetrixWeather / Tools.Weatherinfo**.
+- Wybór Foreca, MSNWeather i innych pozycji w polu „Wtyczka pogody” dotyczy launchera pełnego ekranu; nie każda wtyczka udostępnia wspólne API danych dla skina.
+- Trzy palety: **Aurora, Amber, Violet**.
+- Widoczna wersja skina jest spójna: **3.2.1**. `r2` oznacza wyłącznie rewizję pakietu IPK.
 
 ## Instalacja
 
-Prześlij IPK do `/tmp` tunera i wykonaj:
+Pobierz plik IPK z wydania GitHub, prześlij go do `/tmp` tunera i wykonaj:
 
 ```sh
-opkg install /tmp/enigma2-plugin-skins-aiohd-next_3.2.1-r1_all.ipk
+opkg install /tmp/enigma2-plugin-skins-aiohd-next_3.2.1-r2_all.ipk
 ```
 
-Następnie wybierz **AIOHD** w ustawieniach skina i uruchom ponownie GUI. Nie restartuj interfejsu w trakcie ważnego nagrania.
+Następnie wybierz **AIOHD** w ustawieniach skina i uruchom ponownie GUI z menu tunera.
+Nie restartuj GUI w czasie ważnego nagrania.
 
-Zależności pakietu: `enigma2`, `python3-core`, `enigma2-plugin-skins-metrix-atv`.
+Zależności pakietu:
 
-## Pogoda
+- `enigma2`
+- `python3-core`
+- `enigma2-plugin-skins-metrix-atv`
 
-Otwórz **Wtyczki → AIOHD NEXT — Style**. Opcja **Pogoda bezpośrednio w skinie** jest domyślnie włączona dla nowego klucza konfiguracji.
+## Ustawienia AIOHD NEXT
 
-Dane inline są pobierane przez zainstalowany i skonfigurowany **Weather Plugin** z feedu OpenATV. Lokalizację ustawia się w tej wtyczce. Brak Weather Plugin lub brak lokalizacji nie blokuje działania skina — pola pogodowe pozostają puste albo pokazują prośbę o konfigurację.
+Otwórz **Wtyczki → AIOHD NEXT — Style**.
 
-Żółty przycisk w ustawieniach może pokazać inne zarejestrowane wtyczki pogodowe. Niebieski uruchamia wybraną pełną wtyczkę. Ponieważ różne dodatki pogodowe nie mają wspólnego API danych, ich wybór jako launchera nie oznacza automatycznie użycia ich danych w polach inline.
+- **Czcionka listy kanałów**: Duża = 38 px / 15 wierszy, Bardzo duża = 42 px / 14 wierszy.
+- W trybie dwuliniowym: odpowiednio 9 lub 8 wierszy.
+- **Pogoda bezpośrednio w skinie**: domyślnie włączona dla nowego klucza konfiguracji.
+- **Skrót do pełnej wtyczki pogody**: opcjonalny launcher z menu rozszerzeń.
+- Żółty przycisk pokazuje szerszą listę zainstalowanych launcherów; niebieski otwiera wybraną wtyczkę.
 
-## Lista kanałów i EPG
+## Pogoda inline
 
-Domyślny wariant **Duża**: 15 wierszy i nazwa kanału 38 px. **Bardzo duża**: 14 wierszy i 42 px. W trybie dwuliniowym stosowane jest odpowiednio 9 lub 8 wierszy.
+AIOHD NEXT tworzy własne, bezpieczne źródła sesji, dlatego brak dostawcy danych nie powinien powodować błędu skina ani pustego, niewyjaśnionego panelu.
 
-Opis po prawej korzysta z `FullDescription` i renderera `RunningText`: tekst, który mieści się w polu, stoi nieruchomo; dłuższy opis po krótkim opóźnieniu przewija się pionowo. Cztery kolejne pozycje EPG korzystają z istniejącego konwertera `AIONextEvent`.
+W trybie **Automatycznie (OpenATV)** skin najpierw korzysta ze skonfigurowanego **Weather Plugin** z feedu OpenATV. Gdy go nie ma, nie jest skonfigurowany albo nie odpowie w wyznaczonym czasie, następuje przejście do aktualnego backendu **OpenATV / MetrixWeather / Tools.Weatherinfo**. Można też wymusić jeden z tych backendów w ustawieniach AIOHD NEXT.
 
-## Infobar i Event Information
+Pole **Wtyczka pogody** służy niezależnie jako launcher pełnego ekranu. Foreca i inne dodatki mogą być uruchamiane, ale nie wszystkie mają wspólne API danych, więc sam wybór launchera nie może być traktowany jako źródło pogody inline.
 
-Infobar celowo nie wyświetla pełnego akapitu opisu. Dzięki temu ma mniejszą wysokość i nie ucina treści. Pełny opis jest dostępny w oknie **Event Information**, którego pole `epg_description` ma przewijanie `showOnDemand`.
+## Budowanie
+
+Wymagany jest Python 3; pakiet nie wymaga kompilatora dla tunera.
+
+```sh
+python3 -m unittest discover -s tests -v
+python3 build.py
+```
+
+Gotowy IPK i plik `.sha256` trafiają do `dist/`. `build.py` sprawdza składnię Python, XML, applety oraz sumy plików. GitHub Actions wykonuje te same testy przy push/pull request.
+
+## Struktura repozytorium
+
+- `root/` — pliki instalowane na tunerze.
+- `control/` — metadane i skrypt instalacyjny IPK.
+- `build.py` — budowanie pakietu.
+- `tests/` — testy regresji.
+- `.github/workflows/build.yml` — CI GitHub Actions.
 
 ## Zgodność
 
-Pakiet przygotowano dla OpenATV / Python 3. XML i składnia Python są sprawdzane przed zbudowaniem IPK, ale test automatyczny nie zastępuje testu na fizycznym tunerze. W przypadku problemu podaj model tunera, wersję OpenATV, zdjęcie ekranu i crashlog bez haseł lub danych dostępowych.
+Projekt jest przygotowany dla **OpenATV / Python 3** i zachowuje informacje licencyjne MetrixHD. Testy automatyczne nie zastępują testów na fizycznym tunerze.
+
+Przy zgłoszeniu problemu podaj model odbiornika, wersję OpenATV, wersję skina, zdjęcie ekranu i crashlog po usunięciu haseł oraz danych dostępowych.
 
 Strona autora: https://olioli2013.github.io/aio-iptv-projekt/
