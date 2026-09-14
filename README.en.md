@@ -5,7 +5,7 @@ AIOHD NEXT modifications by **Paweł Pawełek**, based on MetrixHD by iMaxxx / O
 
 ## Highlights
 
-- Bold **38 px / 42 px** channel names with a strong active-row highlight.
+- Three channel-list sizes with strong selection: **Standard 32 px / 18 channels**, **Large 38 px / 15 channels**, and **Extra large 42 px / 14 channels**.
 - Rebuilt right panel with a smaller **544×306 16:9 MiniTV**, current event, time/progress, multi-line EPG description and **four upcoming events**.
 - Long descriptions auto-scroll vertically only when needed.
 - Compact **240 px** InfoBar with channel, current title, a **two-line current-event description**, progress/time and next event.
@@ -14,14 +14,15 @@ AIOHD NEXT modifications by **Paweł Pawełek**, based on MetrixHD by iMaxxx / O
 - Inline data provider is separate from the launcher. **Auto** uses a configured Weather Plugin first and falls back to the current **OpenATV / MetrixWeather / Tools.Weatherinfo** backend.
 - Other installed weather plugins can still be selected as full-screen launchers; they do not all expose a common inline-data API.
 - Aurora, Amber and Violet palettes.
-- Visible skin version stays **3.2.1**; `r2` is the IPK package revision only.
+- The **OpenATV Information** screen uses separated label/value columns, preventing long labels from overlapping values.
+- Visible skin version stays **3.2.1**; `r3` is the IPK package revision only.
 
 ## Install
 
 Copy the IPK to `/tmp` and run:
 
 ```sh
-opkg install /tmp/enigma2-plugin-skins-aiohd-next_3.2.1-r2_all.ipk
+opkg install /tmp/enigma2-plugin-skins-aiohd-next_3.2.1-r3_all.ipk
 ```
 
 Select **AIOHD** in the skin selector and restart the GUI from the receiver menu.
@@ -31,9 +32,10 @@ Dependencies: `enigma2`, `python3-core`, `enigma2-plugin-skins-metrix-atv`.
 
 Open **Plugins → AIOHD NEXT — Style**.
 
+- Standard: 32 px / 18 rows.
 - Large: 38 px / 15 rows.
 - Extra large: 42 px / 14 rows.
-- Two-line mode: 9 / 8 rows.
+- Two-line mode: 10 / 9 / 8 rows.
 - Inline weather is enabled by default for the new configuration key.
 - The full weather-plugin shortcut remains optional.
 - Yellow shows a broader launcher list; blue opens the selected plugin.

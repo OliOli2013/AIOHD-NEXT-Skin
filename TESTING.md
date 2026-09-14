@@ -1,4 +1,4 @@
-# Weryfikacja AIOHD NEXT 3.2.1-r2
+# Weryfikacja AIOHD NEXT 3.2.1-r3
 
 ## Testy automatyczne
 
@@ -9,8 +9,8 @@ python3 build.py
 
 Testy obejmują m.in.:
 
-- 15/14 wierszy listy oraz 9/8 w trybie dwuliniowym;
-- fonty kanałów 38/42 px i brak globalnej ingerencji w inne ServiceList;
+- 18/15/14 wierszy listy oraz 10/9/8 w trybie dwuliniowym;
+- fonty kanałów 32/38/42 px i brak globalnej ingerencji w inne ServiceList;
 - wykrywanie i wybór launcherów pogody;
 - niezależny wybór źródła danych inline (`Auto`, OpenATV/MetrixWeather, Weather Plugin);
 - fallback Weather Plugin → OpenATV/MetrixWeather oraz czytelny stan przy braku danych;
@@ -23,7 +23,8 @@ Testy obejmują m.in.:
 
 Po instalacji sprawdź:
 
-- listę kanałów we wszystkich wariantach i oba rozmiary czcionki;
+- listę kanałów we wszystkich wariantach i trzy rozmiary czcionki, w tym Standard = 18 kanałów;
+- ekran **OpenATV Informacje**: brak nakładania etykiet na wartości przy polskiej wersji językowej i długich danych MultiBoot;
 - zaznaczenie, picony i paski postępu;
 - PiG 544×306 i poprawną zmianę podglądu po przechodzeniu po kanałach;
 - pełny opis EPG po prawej oraz jego automatyczne przewijanie;

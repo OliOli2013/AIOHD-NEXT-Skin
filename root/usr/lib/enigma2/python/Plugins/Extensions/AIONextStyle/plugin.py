@@ -40,10 +40,10 @@ class AIONextStyle(Screen, ConfigListScreen):
         self['key_yellow'] = Label(tr('Wszystkie wtyczki', 'All plugins'))
         self['key_blue'] = Label(tr('Otwórz pogodę', 'Open weather'))
         self['description'] = Label(tr(
-            'Duża: pogrubione nazwy 38 px, 15 wierszy. Bardzo duża: 42 px, 14 wierszy.\nPogoda inline: Auto najpierw używa aktualnego backendu OpenATV / MetrixWeather, potem Weather Plugin.\nWybrana niżej wtyczka jest skrótem do pełnego ekranu i nie musi być źródłem danych inline.',
-            'Large: bold 38 px channel names, 15 rows. Extra large: 42 px, 14 rows.\nInline weather: Auto first uses the current OpenATV / MetrixWeather backend, then Weather Plugin.\nThe plugin selected below is a launcher for its full screen and does not have to be the inline data provider.'))
+            'Standard: 32 px / 18 kanałów. Duża: 38 px / 15 kanałów. Bardzo duża: 42 px / 14 kanałów.\nPogoda inline: Auto najpierw używa aktualnego backendu OpenATV / MetrixWeather, potem Weather Plugin.\nWybrana niżej wtyczka jest skrótem do pełnego ekranu i nie musi być źródłem danych inline.',
+            'Standard: 32 px / 18 channels. Large: 38 px / 15 channels. Extra large: 42 px / 14 channels.\nInline weather: Auto first uses the current OpenATV / MetrixWeather backend, then Weather Plugin.\nThe plugin selected below is a launcher for its full screen and does not have to be the inline data provider.'))
         self.palette = ConfigSelection(default=current_palette(SKIN_PATH), choices=[('aurora', 'Aurora'), ('amber', 'Amber'), ('violet', 'Violet')])
-        self.listSize = ConfigSelection(default=settings.listSize.value, choices=[('large', tr('Duża', 'Large')), ('xlarge', tr('Bardzo duża', 'Extra large'))])
+        self.listSize = ConfigSelection(default=settings.listSize.value, choices=[('standard', tr('Standard — 18 kanałów', 'Standard — 18 channels')), ('large', tr('Duża — 15 kanałów', 'Large — 15 channels')), ('xlarge', tr('Bardzo duża — 14 kanałów', 'Extra large — 14 channels'))])
         self.weatherInline = ConfigYesNo(default=settings.weatherInline.value)
         self.weatherProvider = ConfigSelection(default=settings.weatherProvider.value, choices=[
             ('auto', tr('Automatycznie (OpenATV)', 'Automatic (OpenATV)')),

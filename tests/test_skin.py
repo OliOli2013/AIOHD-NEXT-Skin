@@ -104,12 +104,12 @@ class FeatureTests(unittest.TestCase):
    def setItemsPerPage(self):self.l.setItemHeight(41)
    def setFontsize(self):self.ServiceNameFont=('Next',26)
    def setMode(self,mode):self.setItemsPerPage()
-  for setting,rows,two in [('large',15,False),('xlarge',14,False),('large',9,True),('xlarge',8,True)]:
+  for setting,rows,two in [('standard',18,False),('large',15,False),('xlarge',14,False),('standard',10,True),('large',9,True),('xlarge',8,True)]:
    config.usage.servicelist_twolines.value=two;self.settings.listSize.value=setting
    sl=ServiceList();channel.configure_channel_list({'list':sl})
    self.assertEqual(sl.ItemHeight,744//rows);self.assertLessEqual(sl.instance.sz.h,744)
    sl.setMode(1);self.assertEqual(sl.l.height,744//rows)
-   sl.setFontsize();self.assertEqual(sl.ServiceNameFont,('NextBold',38 if setting=='large' else 42));self.assertEqual(sl.ServiceInfoFont,('Next',30 if setting=='large' else 32))
+   sl.setFontsize();self.assertEqual(sl.ServiceNameFont,('NextBold',{'standard':32,'large':38,'xlarge':42}[setting]));self.assertEqual(sl.ServiceInfoFont,('Next',{'standard':26,'large':30,'xlarge':32}[setting]))
   untouched=ServiceList();untouched.setItemsPerPage();self.assertEqual(untouched.l.height,41)
  def test_weather_discovery_preference_and_missing_plugin(self):
   class Descriptor:
@@ -147,6 +147,8 @@ class FeatureTests(unittest.TestCase):
   self.assertEqual(s.find("widget[@name='list']").get('backgroundColorSelected'),'nextSelection')
   weather_sources={w.get('source') for w in s.findall('widget') if (w.get('source') or '').startswith('session.AIONextWeather')};self.assertEqual(len(weather_sources),4)
   self.assertTrue(Path('root/usr/lib/enigma2/python/Components/Renderer/AIONextWeatherPixmap.py').is_file())
+  openatv=E.parse(root/'skinfiles/skin_openatv.xml').getroot();info=openatv.find("screen[@name='information_common']/widget[@name='information']")
+  self.assertIsNotNone(info);self.assertEqual(info.get('splitSeparated'),'1');self.assertGreaterEqual(int(info.get('colPosition')),380);self.assertGreaterEqual(int(info.get('splitMargin')),12)
   infobar=E.parse(root/'skinfiles/skin_infobar.xml').getroot().find("screen[@name='InfoBar']")
   self.assertIsNotNone(infobar)
   self.assertTrue(any((c.text or '').strip()=='FullDescription' for c in infobar.findall("widget/convert[@type='EventName']")))

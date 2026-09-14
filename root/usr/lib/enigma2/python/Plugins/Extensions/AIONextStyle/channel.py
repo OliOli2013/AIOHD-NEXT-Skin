@@ -6,7 +6,7 @@ from Components.config import config
 from .settings import settings
 
 # rows, two-line rows, channel font, event font, number font
-SIZES = {'large': (15, 9, 38, 30, 30), 'xlarge': (14, 8, 42, 32, 32)}
+SIZES = {'standard': (18, 10, 32, 26, 26), 'large': (15, 9, 38, 30, 30), 'xlarge': (14, 8, 42, 32, 32)}
 
 
 def configure_channel_list(screen):

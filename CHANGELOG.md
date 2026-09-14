@@ -1,5 +1,14 @@
 # Changelog
 
+## 3.2.1-r3 — 2026-09-14
+
+- Naprawiono ekran **OpenATV Informacje**: kolumny etykiet i wartości są fizycznie rozdzielone (`splitSeparated`), z większym odstępem i bez nachodzenia tekstu.
+- Dostosowano szerokość kolumn i font informacji do długich polskich opisów oraz dłuższych wartości MultiBoot.
+- Dodano trzeci rozmiar listy kanałów **Standard**: 18 kanałów, nazwy 32 px, opis 26 px.
+- Tryb dwuliniowy dla Standard używa 10 wierszy; Duża/Bardzo duża pozostają bez zmian (15/14 oraz 9/8).
+- Zachowano pogodę, InfoBar, MiniTV i układ EPG z `r2` bez zmian funkcjonalnych.
+- Rewizja pakietu: `3.2.1-r3`; widoczna wersja skina pozostaje `3.2.1`.
+
 ## 3.2.1-r2 — 2026-09-14
 
 - Naprawiono pusty panel pogody: tryb Auto nie traktuje już wyboru launchera jako interfejsu danych.

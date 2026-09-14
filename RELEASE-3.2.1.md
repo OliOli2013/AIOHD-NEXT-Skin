@@ -1,19 +1,18 @@
-# AIOHD NEXT 3.2.1-r2 — pogoda inline i opis audycji w InfoBar
+# AIOHD NEXT 3.2.1-r3 — OpenATV Informacje i lista 18 kanałów
 
-Rewizja `r2` naprawia dwie rzeczy zgłoszone po teście `r1`, bez zmiany widocznego numeru skina **3.2.1**.
+Rewizja `r3` jest małą poprawką po testach `r2`. Widoczny numer skina pozostaje **3.2.1**.
 
 ## Zmiany
 
-- pogoda inline nie zależy już od samego wyboru launchera;
-- **Auto** korzysta ze skonfigurowanego Weather Plugin i ma fallback do aktualnego backendu OpenATV / MetrixWeather (`Tools.Weatherinfo`);
-- dodano timeout/fallback oraz czytelny status, więc panel pogody nie powinien pozostawać pustym prostokątem;
-- ustawienia rozdzielają teraz źródło danych pogody od wtyczki otwieranej na pełnym ekranie;
-- InfoBar zachowuje wysokość 240 px, ale pod tytułem bieżącej audycji pokazuje dwuwierszowy opis `FullDescription`;
-- pasek czasu/postępu i następna audycja zostały zachowane;
-- pełny opis nadal jest dostępny w przewijanym Event Information.
+- naprawiono ekran **OpenATV Informacje**, gdzie dłuższe etykiety nachodziły na wartości;
+- kolumny są teraz rozdzielone, mają bezpieczny odstęp i poprawne zawijanie długich wartości;
+- dodano rozmiar listy **Standard**: **18 kanałów**, nazwy 32 px, opis 26 px;
+- w trybie dwuliniowym Standard wyświetla 10 wierszy;
+- dotychczasowe opcje **Duża** (15 kanałów) i **Bardzo duża** (14 kanałów) pozostają bez zmian;
+- pogoda inline, InfoBar z opisem audycji, MiniTV i cztery następne audycje pozostają bez zmian względem `r2`.
 
 ## Pakiet
 
-`enigma2-plugin-skins-aiohd-next_3.2.1-r2_all.ipk`
+`enigma2-plugin-skins-aiohd-next_3.2.1-r3_all.ipk`
 
-Po instalacji wykonaj restart GUI. W **Wtyczki → AIOHD NEXT — Style** pozostaw źródło danych pogody na **Automatycznie (OpenATV)**, chyba że chcesz wymusić konkretny backend.
+Po instalacji wykonaj restart GUI. Rozmiar listy ustawisz w **Wtyczki → AIOHD NEXT — Style → Czcionka listy kanałów**.

@@ -1,3 +1,11 @@
+## 3.2.1-r3 — 2026-09-14
+
+- OpenATV Informacje: rozdzielono kolumny nazw i wartości, poprawiono odstęp i zawijanie.
+- Dodano listę Standard: 18 kanałów, nazwy 32 px, opis 26 px; dwuliniowo 10 wierszy.
+- Duża/Bardzo duża pozostają 15/14 kanałów i 9/8 dwuliniowo.
+- Pogoda, InfoBar i MiniTV bez zmian funkcjonalnych względem r2.
+- Widoczna wersja skina pozostaje 3.2.1; rewizja pakietu to r3.
+
 ## 3.2.1-r2 — 2026-09-14
 
 - Naprawiono pusty panel pogody: źródło danych inline jest niezależne od launchera.

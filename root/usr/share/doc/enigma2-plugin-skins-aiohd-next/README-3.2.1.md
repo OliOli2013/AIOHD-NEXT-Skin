@@ -7,7 +7,7 @@ Modyfikacje AIOHD NEXT: **Paweł Pawełek**. Baza: MetrixHD autorstwa iMaxxx / z
 
 ## Najważniejsze funkcje
 
-- Czytelna lista kanałów z pogrubionymi nazwami **38 px** lub **42 px** i mocnym zaznaczeniem aktywnej pozycji.
+- Czytelna lista kanałów z trzema rozmiarami: **Standard 32 px / 18 kanałów**, **Duża 38 px / 15 kanałów** i **Bardzo duża 42 px / 14 kanałów**, z mocnym zaznaczeniem aktywnej pozycji.
 - Prawy panel listy: mniejszy podgląd TV **544×306 (16:9)**, nazwa kanału, bieżąca audycja, czas, postęp, wielowierszowy opis EPG oraz **4 następne audycje**.
 - Długi opis EPG przewija się pionowo tylko wtedy, gdy nie mieści się w polu.
 - Kompaktowy InfoBar o wysokości **240 px**: kanał, tytuł, **dwuwierszowy opis bieżącej audycji**, postęp, czas i następna audycja.
@@ -16,14 +16,15 @@ Modyfikacje AIOHD NEXT: **Paweł Pawełek**. Baza: MetrixHD autorstwa iMaxxx / z
 - Pogoda inline ma osobne źródło danych: **Auto** korzysta z skonfigurowanego Weather Plugin, a w razie braku/błędu przechodzi do aktualnego backendu **OpenATV / MetrixWeather / Tools.Weatherinfo**.
 - Wybór Foreca, MSNWeather i innych pozycji w polu „Wtyczka pogody” dotyczy launchera pełnego ekranu; nie każda wtyczka udostępnia wspólne API danych dla skina.
 - Trzy palety: **Aurora, Amber, Violet**.
-- Widoczna wersja skina jest spójna: **3.2.1**. `r2` oznacza wyłącznie rewizję pakietu IPK.
+- Ekran **OpenATV Informacje** ma rozdzielone kolumny etykiet i wartości, dzięki czemu dłuższe opisy nie nachodzą na dane.
+- Widoczna wersja skina jest spójna: **3.2.1**. `r3` oznacza wyłącznie rewizję pakietu IPK.
 
 ## Instalacja
 
 Pobierz plik IPK z wydania GitHub, prześlij go do `/tmp` tunera i wykonaj:
 
 ```sh
-opkg install /tmp/enigma2-plugin-skins-aiohd-next_3.2.1-r2_all.ipk
+opkg install /tmp/enigma2-plugin-skins-aiohd-next_3.2.1-r3_all.ipk
 ```
 
 Następnie wybierz **AIOHD** w ustawieniach skina i uruchom ponownie GUI z menu tunera.
@@ -39,8 +40,8 @@ Zależności pakietu:
 
 Otwórz **Wtyczki → AIOHD NEXT — Style**.
 
-- **Czcionka listy kanałów**: Duża = 38 px / 15 wierszy, Bardzo duża = 42 px / 14 wierszy.
-- W trybie dwuliniowym: odpowiednio 9 lub 8 wierszy.
+- **Czcionka listy kanałów**: Standard = 32 px / 18 wierszy, Duża = 38 px / 15 wierszy, Bardzo duża = 42 px / 14 wierszy.
+- W trybie dwuliniowym: odpowiednio 10, 9 lub 8 wierszy.
 - **Pogoda bezpośrednio w skinie**: domyślnie włączona dla nowego klucza konfiguracji.
 - **Skrót do pełnej wtyczki pogody**: opcjonalny launcher z menu rozszerzeń.
 - Żółty przycisk pokazuje szerszą listę zainstalowanych launcherów; niebieski otwiera wybraną wtyczkę.

@@ -5,7 +5,7 @@ if not hasattr(config.plugins, 'aionext'):
     config.plugins.aionext = ConfigSubsection()
 settings = config.plugins.aionext
 if not hasattr(settings, 'listSize'):
-    settings.listSize = ConfigSelection(default='large', choices=[('large', 'Large'), ('xlarge', 'Extra large')])
+    settings.listSize = ConfigSelection(default='large', choices=[('standard', 'Standard'), ('large', 'Large'), ('xlarge', 'Extra large')])
 # Keep the launcher for users who want to open the complete weather plugin.
 if not hasattr(settings, 'weatherEnabled'):
     settings.weatherEnabled = ConfigYesNo(default=True)

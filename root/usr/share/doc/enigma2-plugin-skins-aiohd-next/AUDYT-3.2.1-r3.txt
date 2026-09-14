@@ -1,0 +1,18 @@
+AIOHD NEXT 3.2.1-r3 — audyt poprawki
+Data: 2026-09-14
+
+1. OpenATV Informacje
+- Przyczyną nachodzenia tekstu był dzielony ScrollLabel z splitSeparated=0.
+- W takim trybie lewa warstwa tekstu miała szerokość całego widgetu i mogła wchodzić pod prawą kolumnę.
+- Ustawiono splitSeparated=1, colPosition=390, splitMargin=18 i splitTrim=1.
+- Font informacji zmniejszono z 26 do 24 px, aby dłuższe wartości MultiBoot mieściły się w prawej kolumnie.
+- Zawijanie pozostaje aktywne; ScrollLabel synchronizuje wysokość obu kolumn.
+
+2. Lista kanałów
+- Dodano tryb Standard: 18 wierszy (10 w trybie dwuliniowym).
+- Fonty Standard: nazwa 32 px, EPG 26 px, numer 26 px.
+- Duża i Bardzo duża pozostają bez zmian.
+
+3. Zakres
+- Nie zmieniano działania pogody, InfoBar, Event Information, MiniTV ani czterech kolejnych audycji.
+- Widoczna wersja skina: 3.2.1. Rewizja pakietu: r3.
