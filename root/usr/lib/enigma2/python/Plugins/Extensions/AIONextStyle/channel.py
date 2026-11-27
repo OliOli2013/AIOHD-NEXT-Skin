@@ -10,13 +10,16 @@ SIZES = {'standard': (18, 10, 32, 26, 26), 'large': (15, 9, 38, 30, 30), 'xlarge
 
 
 def configure_channel_list(screen):
-    service_list = screen['list']
-    if not all(hasattr(service_list, key) for key in ('ServiceNameFontName', 'setItemsPerPage', 'setFontsize', 'setMode', 'l', 'listHeight')):
+    try:
+        service_list = screen['list']
+    except (KeyError, TypeError):
+        return
+    if not all(hasattr(service_list, key) for key in ('ServiceNameFontName', 'setItemsPerPage', 'setFontsize', 'setMode', 'l', 'listHeight', 'listWidth', 'instance', 'mode')):
         return
 
     def set_rows(instance):
         size = SIZES.get(settings.listSize.value, SIZES['large'])
-        rows = size[1] if config.usage.servicelist_twolines.value else size[0]
+        rows = size[1] if getattr(getattr(config.usage, 'servicelist_twolines', None), 'value', False) else size[0]
         height = max(1, instance.listHeight // rows)
         instance.ItemHeight = height
         instance.l.setItemHeight(height)
@@ -39,7 +42,19 @@ def configure_channel_list(screen):
         instance.l.setElementFont(instance.l.celServiceInfo, instance.ServiceInfoFont)
         instance.l.setElementFont(instance.l.celServiceNumber, instance.ServiceNumberFont)
 
-    service_list.setItemsPerPage = MethodType(set_rows, service_list)
-    service_list.setFontsize = MethodType(set_fonts, service_list)
-    service_list.setFontsize()
-    service_list.setMode(service_list.mode)
+    original_rows = service_list.setItemsPerPage
+    original_fonts = service_list.setFontsize
+    try:
+        service_list.setItemsPerPage = MethodType(set_rows, service_list)
+        service_list.setFontsize = MethodType(set_fonts, service_list)
+        service_list.setFontsize()
+        service_list.setMode(service_list.mode)
+    except Exception as exc:
+        service_list.setItemsPerPage = original_rows
+        service_list.setFontsize = original_fonts
+        try:
+            original_fonts()
+            service_list.setMode(service_list.mode)
+        except Exception:
+            pass
+        print('[AIOHD NEXT] Native channel list fallback: %s' % exc)

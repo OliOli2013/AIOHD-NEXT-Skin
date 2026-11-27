@@ -1,4 +1,4 @@
-<?xml version='1.0' encoding='UTF-8'?>
+<?xml version='1.0' encoding='utf-8'?>
 <skin>
   <screen name="MoviePlayer_1">
     <eLabel name="GRADIENT_BACKGROUND" position="0,855" zPosition="-2" size="1922,225" backgroundColor="infobarbackground" />
@@ -231,7 +231,7 @@
     <panel name="MovieSelection_left" />
   </screen>
   <screen name="MoviePlayer" position="0,0" size="1920,1080" title="Movie Player" flags="wfNoBorder" backgroundColor="transparent">
-    <ePixmap pixmap="next3/movie.png" position="60,760" size="1800,260" alphatest="blend" zPosition="0" />
+    <eLabel position="60,760" size="1800,260" backgroundColor="nextDock" zPosition="-2" />
     <eLabel position="90,760" size="120,3" backgroundColor="nextAccent" zPosition="1" />
     <ePixmap pixmap="icons/movie_small.png" position="88,796" size="140,140" alphatest="blend" scale="1" zPosition="2" />
     <widget source="session.CurrentService" render="Label" position="262,785" size="1340,54" font="NextBold;34" foregroundColor="nextText" backgroundColor="transparent" transparent="1" noWrap="1" zPosition="3">

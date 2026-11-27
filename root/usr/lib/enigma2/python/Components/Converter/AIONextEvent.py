@@ -15,7 +15,7 @@ def upcoming(cache, reference, now):
     if key in _CACHE:
         return _CACHE[key]
     # One query keeps event IDs, start times, durations and titles together.
-    rows = cache.lookupEvent(['IBDT', (reference, 0, int(now), 10080)]) or []
+    rows = cache.lookupEvent(['IBDT', (reference, 0, int(now), 1440)]) or []
     events, seen = [], set()
     for row in rows:
         if len(row) < 4:
@@ -40,16 +40,22 @@ class AIONextEvent(Poll, Converter):
         Converter.__init__(self, argument)
         Poll.__init__(self)
         try:
-            self.offset = max(1, min(4, int(argument)))
+            self.mode, _, value = argument.partition(':')
+            if not value:
+                value, self.mode = self.mode, 'both'
+            self.offset = max(1, min(4, int(value)))
         except (TypeError, ValueError):
             self.offset = 1
+            self.mode = 'both'
         self.poll_interval = 15000
         self.poll_enabled = True
 
     @cached
     def getText(self):
         try:
-            service = getattr(self.source, 'service', None)
+            service = getattr(self.source, 'serviceref', None)
+            if service is None or not hasattr(service, 'toString'):
+                service = getattr(self.source, 'service', None)
             cache = eEPGCache.getInstance()
             if service is None or cache is None:
                 return ''
@@ -59,12 +65,18 @@ class AIONextEvent(Poll, Converter):
             now = time()
             events = upcoming(cache, reference, now)
             if len(events) < self.offset:
+                if self.mode == 'time':
+                    return '—'
                 if self.offset == 1:
                     return ('Brak kolejnych audycji w EPG' if config.osd.language.value.startswith('pl')
                             else 'No upcoming events in EPG')
                 return '\u2014'
             begin, title = events[self.offset - 1]
             fmt = '%H:%M' if localtime(now)[:3] == localtime(begin)[:3] else '%d.%m %H:%M'
+            if self.mode == 'time':
+                return strftime(fmt, localtime(begin))
+            if self.mode == 'title':
+                return title
             return '%s  %s' % (strftime(fmt, localtime(begin)), title)
         except Exception:
             # Invalid provider EPG must not prevent opening the channel list.

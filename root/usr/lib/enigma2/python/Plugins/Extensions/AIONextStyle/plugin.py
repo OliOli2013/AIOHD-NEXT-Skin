@@ -10,19 +10,19 @@ from Components.Label import Label
 from Components.config import ConfigSelection, ConfigYesNo, getConfigListEntry, configfile
 from threading import Thread
 from twisted.internet import reactor
-from .theme import PALETTE_CHOICES, current_palette, apply_palette
+from .theme import PALETTE_CHOICES, current_palette, current_surface, apply_palette
 from .settings import settings, tr
 from .weather import weather_plugins, preferred_weather_key, open_weather, start_weather_sources
-from .updater import CURRENT_PACKAGE_VERSION, fetch_latest, installer_command
+from .updater import CURRENT_PACKAGE_VERSION, fetch_latest, installer_command, installed_version
 
 SKIN_PATH = '/usr/share/enigma2/AIOHD/skin.xml'
 
 
 class AIONextStyle(Screen, ConfigListScreen):
-    skin = '''<screen name="AIONextStyle" position="center,center" size="1360,800" title="AIOHD NEXT 3.2.1" backgroundColor="#000B111A">
+    skin = '''<screen name="AIONextStyle" position="center,center" size="1360,800" title="AIOHD NEXT 4.0.0" backgroundColor="#000B111A">
       <eLabel position="0,0" size="1360,6" backgroundColor="#0034D6CF" />
       <widget name="heading" position="44,30" size="1272,56" font="Regular;36" foregroundColor="#00F2F5FA" backgroundColor="#000B111A" />
-      <widget name="config" position="44,122" size="1272,336" itemHeight="56" font="Regular;30" backgroundColor="#00141E2A" foregroundColor="#00F2F5FA" backgroundColorSelected="#00007678" foregroundColorSelected="#00FFFFFF" scrollbarMode="showOnDemand" />
+      <widget name="config" position="44,122" size="1272,336" itemHeight="48" font="Regular;30" backgroundColor="#00141E2A" foregroundColor="#00F2F5FA" backgroundColorSelected="#00007678" foregroundColorSelected="#00FFFFFF" scrollbarMode="showOnDemand" />
       <widget name="update_status" position="44,470" size="1272,38" font="Regular;22" foregroundColor="#006BE3A2" backgroundColor="#000B111A" />
       <widget name="description" position="44,520" size="1272,150" font="Regular;23" foregroundColor="#00ADBACA" backgroundColor="#000B111A" />
       <eLabel position="44,714" size="6,30" backgroundColor="#00FF5A68" />
@@ -37,7 +37,7 @@ class AIONextStyle(Screen, ConfigListScreen):
 
     def __init__(self, session):
         Screen.__init__(self, session)
-        self.setTitle('AIOHD NEXT 3.2.1')
+        self.setTitle('AIOHD NEXT 4.0.0')
         self['heading'] = Label(tr('AIOHD NEXT — wygląd i pogoda', 'AIOHD NEXT — appearance and weather'))
         self['key_red'] = Label(tr('Anuluj', 'Cancel'))
         self['key_green'] = Label(tr('Zapisz', 'Save'))
@@ -49,9 +49,10 @@ class AIONextStyle(Screen, ConfigListScreen):
         self._offered_release = None
         self._closed = False
         self['description'] = Label(tr(
-            'Standard: 32 px / 18 kanałów. Duża: 38 px / 15 kanałów. Bardzo duża: 42 px / 14 kanałów.\nPogoda inline: Auto najpierw używa aktualnego backendu OpenATV / MetrixWeather, potem Weather Plugin.\nWybrana niżej wtyczka jest skrótem do pełnego ekranu i nie musi być źródłem danych inline.',
-            'Standard: 32 px / 18 channels. Large: 38 px / 15 channels. Extra large: 42 px / 14 channels.\nInline weather: Auto first uses the current OpenATV / MetrixWeather backend, then Weather Plugin.\nThe plugin selected below is a launcher for its full screen and does not have to be the inline data provider.'))
+            'Standard: 32 px / 18 kanałów. Duża: 38 px / 15 kanałów. Bardzo duża: 42 px / 14 kanałów.\nPogoda inline: Auto: Weather Plugin, następnie OpenATV / MetrixWeather. Cinema Glass zmienia przezroczystość paneli TV.\nWybrana niżej wtyczka jest skrótem do pełnego ekranu i nie musi być źródłem danych inline.',
+            'Standard: 32 px / 18 channels. Large: 38 px / 15 channels. Extra large: 42 px / 14 channels.\nInline weather: Auto: Weather Plugin, then OpenATV / MetrixWeather. Cinema Glass changes TV dock opacity.\nThe plugin selected below is a launcher for its full screen and does not have to be the inline data provider.'))
         self.palette = ConfigSelection(default=current_palette(SKIN_PATH), choices=PALETTE_CHOICES)
+        self.surface = ConfigSelection(default=current_surface(SKIN_PATH), choices=[('studio', 'Studio'), ('oled', 'OLED Black'), ('cinema', 'Cinema Glass')])
         self.listSize = ConfigSelection(default=settings.listSize.value, choices=[('standard', tr('Standard — 18 kanałów', 'Standard — 18 channels')), ('large', tr('Duża — 15 kanałów', 'Large — 15 channels')), ('xlarge', tr('Bardzo duża — 14 kanałów', 'Extra large — 14 channels'))])
         self.weatherInline = ConfigYesNo(default=settings.weatherInline.value)
         self.weatherProvider = ConfigSelection(default=settings.weatherProvider.value, choices=[
@@ -72,6 +73,7 @@ class AIONextStyle(Screen, ConfigListScreen):
         self.weatherPlugin = ConfigSelection(default=default if default in [key for key, name in choices] else choices[0][0], choices=choices)
         ConfigListScreen.__init__(self, [
             getConfigListEntry(tr('Kolor przewodni', 'Accent colour'), self.palette),
+            getConfigListEntry(tr('Tryb powierzchni', 'Surface mode'), self.surface),
             getConfigListEntry(tr('Czcionka listy kanałów', 'Channel list font'), self.listSize),
             getConfigListEntry(tr('Pogoda bezpośrednio w skinie', 'Inline weather in skin'), self.weatherInline),
             getConfigListEntry(tr('Źródło danych pogody', 'Inline weather provider'), self.weatherProvider),
@@ -114,8 +116,8 @@ class AIONextStyle(Screen, ConfigListScreen):
             return
         if not release:
             self['update_status'].setText(tr(
-                'Aktualizacja: masz najnowszą wersję %s' % CURRENT_PACKAGE_VERSION,
-                'Update: you have the latest version %s' % CURRENT_PACKAGE_VERSION))
+                'Aktualizacja: masz najnowszą wersję %s' % installed_version(),
+                'Update: you have the latest version %s' % installed_version()))
             return
         self._offered_release = release
         self['update_status'].setText(tr(
@@ -131,10 +133,10 @@ class AIONextStyle(Screen, ConfigListScreen):
             default=False)
 
     def _update_answer(self, answer):
-        if not answer or not self._offered_release:
+        if self._closed or not answer or not self._offered_release:
             return
         try:
-            command = installer_command(self._offered_release['url'])
+            command = installer_command(self._offered_release['url'], self._offered_release.get('digest'))
         except Exception as exc:
             self.session.open(MessageBox, tr('Nieprawidłowe dane aktualizacji: ', 'Invalid update data: ') + str(exc), MessageBox.TYPE_ERROR)
             return
@@ -147,6 +149,8 @@ class AIONextStyle(Screen, ConfigListScreen):
             closeOnSuccess=True)
 
     def _after_update_command(self):
+        if self._closed:
+            return
         status = ''
         try:
             with open('/tmp/aiohd-next-update.status', 'r') as handle:
@@ -186,11 +190,12 @@ class AIONextStyle(Screen, ConfigListScreen):
     def saveStyle(self):
         # Missing weather software must never block saving unrelated skin options.
         # The inline sources stay empty until a supported provider is configured.
-        restart_needed = (self.weatherEnabled.value != settings.weatherEnabled.value or
+        restart_needed = (self.listSize.value != settings.listSize.value or
+                          self.weatherEnabled.value != settings.weatherEnabled.value or
                           self.weatherInline.value != settings.weatherInline.value or
                           self.weatherProvider.value != settings.weatherProvider.value)
         try:
-            restart_needed = apply_palette(SKIN_PATH, self.palette.value) or restart_needed
+            restart_needed = apply_palette(SKIN_PATH, self.palette.value, self.surface.value) or restart_needed
             settings.listSize.value = self.listSize.value
             settings.weatherInline.value = self.weatherInline.value
             settings.weatherProvider.value = self.weatherProvider.value
@@ -216,6 +221,11 @@ def main(session, **kwargs):
     session.open(AIONextStyle)
 
 
+def dashboard_main(session, **kwargs):
+    from .dashboard import AIONextDashboard
+    session.open(AIONextDashboard)
+
+
 def weather_main(session, **kwargs):
     open_weather(session)
 
@@ -228,6 +238,7 @@ def sessionstart(reason, **kwargs):
 def Plugins(**kwargs):
     result = [
         PluginDescriptor(where=PluginDescriptor.WHERE_SESSIONSTART, fnc=sessionstart),
+        PluginDescriptor(name='AIOHD NEXT — Live Center', description=tr('Kanał, EPG i stan odbiornika', 'Channel, EPG and receiver status'), where=PluginDescriptor.WHERE_EXTENSIONSMENU, fnc=dashboard_main),
         PluginDescriptor(name='AIOHD NEXT — Style', description=tr('Wygląd, większe czcionki i pogoda', 'Appearance, larger fonts and weather'), where=PluginDescriptor.WHERE_PLUGINMENU, icon='plugin.png', fnc=main),
     ]
     if settings.weatherEnabled.value:

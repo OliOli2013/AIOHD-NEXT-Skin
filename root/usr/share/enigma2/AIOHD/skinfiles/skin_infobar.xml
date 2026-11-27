@@ -1,109 +1,151 @@
-<?xml version='1.0' encoding='UTF-8'?>
+<?xml version='1.0' encoding='utf-8'?>
 <skin>
   <screen name="InfoBar" position="0,0" size="1920,1080" flags="wfNoBorder" backgroundColor="transparent" title="InfoBar">
-    <!-- Compact 240 px InfoBar with a two-line current-event description; full scrollable text remains in Event Information. -->
-    <eLabel position="60,780" size="250,240" backgroundColor="nextCard" zPosition="-2" />
-    <eLabel position="322,780" size="1096,240" backgroundColor="nextCard" zPosition="-2" />
-    <eLabel position="1430,780" size="406,240" backgroundColor="nextCard" zPosition="-2" />
-    <eLabel position="1436,54" size="400,86" backgroundColor="nextCard" zPosition="-2" />
-    <eLabel position="60,54" size="540,86" backgroundColor="nextCard" zPosition="-2" />
-    <eLabel position="342,780" size="100,3" backgroundColor="nextAccent" zPosition="-1" />
-    <eLabel position="1450,780" size="64,3" backgroundColor="nextAccent" zPosition="-1" />
-    <eLabel position="80,54" size="64,3" backgroundColor="nextAccent" zPosition="-1" />
-
+    <!-- Live Grid TV dock with separate programme, status and weather cards. -->
+    <eLabel position="60,790" size="256,230" backgroundColor="nextDock" zPosition="-2" />
+    <eLabel position="328,790" size="1048,230" backgroundColor="nextDock" zPosition="-2" />
+    <eLabel position="1388,790" size="472,230" backgroundColor="nextDock" zPosition="-2" />
+    <eLabel position="1388,698" size="472,80" backgroundColor="nextDock" zPosition="-2" />
+    <eLabel position="612,698" size="764,80" backgroundColor="nextDock" zPosition="-2" />
+    <eLabel position="60,698" size="540,80" backgroundColor="nextDock" zPosition="-2" />
+    <eLabel position="348,790" size="120,4" backgroundColor="nextAccent" zPosition="-1" />
+    <eLabel position="1408,790" size="120,4" backgroundColor="nextAccent" zPosition="-1" />
+    <eLabel position="80,698" size="80,4" backgroundColor="nextAccent" zPosition="-1" />
     <!-- Weather directly in the skin. -->
-    <widget source="session.AIONextWeatherIcon" render="AIONextWeatherPixmap" position="78,66" size="62,62" zPosition="8" transparent="1" />
-    <widget source="session.AIONextWeatherCity" render="Label" position="154,65" size="254,34" zPosition="8" font="NextBold;23" foregroundColor="nextText" backgroundColor="nextCard" transparent="0" valign="center" noWrap="1" />
-    <widget source="session.AIONextWeatherCondition" render="Label" position="154,100" size="294,28" zPosition="8" font="Next;18" foregroundColor="nextMuted" backgroundColor="nextCard" transparent="0" valign="center" noWrap="1" />
-    <widget source="session.AIONextWeatherTemp" render="Label" position="450,66" size="126,58" zPosition="8" font="NextBold;32" foregroundColor="nextAccent" backgroundColor="nextCard" transparent="0" valign="center" halign="right" noWrap="1" />
-
+    <widget source="session.AIONextWeatherIcon" render="AIONextWeatherPixmap" position="78,707" size="62,62" zPosition="8" transparent="1" />
+    <widget source="session.AIONextWeatherCity" render="Label" position="154,706" size="254,32" zPosition="8" font="NextBold;23" foregroundColor="nextText" backgroundColor="nextDock" transparent="1" valign="center" noWrap="1" />
+    <widget source="session.AIONextWeatherCondition" render="Label" position="154,738" size="294,27" zPosition="8" font="Next;18" foregroundColor="nextMuted" backgroundColor="nextDock" transparent="1" valign="center" noWrap="1" />
+    <widget source="session.AIONextWeatherTemp" render="Label" position="450,706" size="126,60" zPosition="8" font="NextBold;32" foregroundColor="nextAccent" backgroundColor="nextDock" transparent="1" valign="center" halign="right" noWrap="1" />
     <!-- Date and clock. -->
-    <widget source="global.CurrentTime" render="Label" position="1460,71" size="180,46" zPosition="5" font="Next;26" foregroundColor="nextMuted" backgroundColor="nextCard" transparent="0" valign="center">
+    <widget source="global.CurrentTime" render="Label" position="1410,716" size="205,44" zPosition="5" font="Next;26" foregroundColor="nextMuted" backgroundColor="nextDock" transparent="1" valign="center">
       <convert type="ClockToText">Format:%d.%m.%Y</convert>
     </widget>
-    <widget source="global.CurrentTime" render="Label" position="1645,66" size="164,58" zPosition="5" font="Next;40" foregroundColor="nextText" backgroundColor="nextCard" transparent="0" valign="center" halign="right">
+    <widget source="global.CurrentTime" render="Label" position="1650,708" size="186,60" zPosition="5" font="Next;40" foregroundColor="nextText" backgroundColor="nextDock" transparent="1" valign="center" halign="right">
       <convert type="ClockToText">Default</convert>
     </widget>
-
     <!-- Picon / number block. -->
-    <widget source="session.CurrentService" render="Picon" position="80,812" size="210,126" zPosition="7" alphatest="blend" transparent="1" scale="1">
+    <widget source="session.CurrentService" render="Picon" position="82,820" size="212,106" zPosition="7" alphatest="blend" transparent="1" scale="1">
       <convert type="ServiceName">Reference</convert>
     </widget>
-    <widget source="session.CurrentService" render="Label" position="84,948" size="202,34" zPosition="7" font="Next;27" foregroundColor="nextText" backgroundColor="nextCard" transparent="0" valign="center" halign="center">
+    <widget source="session.CurrentService" render="Label" position="82,936" size="212,42" zPosition="7" font="Next;27" foregroundColor="nextText" backgroundColor="nextDock" transparent="1" valign="center" halign="center">
       <convert type="MetrixHDExtServiceInfo">ServiceNumber</convert>
     </widget>
-    <eLabel text="AIO  /  NEXT" position="84,986" size="202,24" font="Next;16" foregroundColor="nextMuted" backgroundColor="nextCard" transparent="0" valign="center" zPosition="5" halign="center" />
-
+    <eLabel text="NEXT / 4.0" position="82,983" size="212,28" font="Next;16" foregroundColor="nextMuted" backgroundColor="nextDock" transparent="1" valign="center" zPosition="5" halign="center" />
     <!-- Main Now/Next block: current description has its own line box; progress is kept below it so text can never run into the bar. -->
-    <widget source="session.CurrentService" render="Label" position="348,790" size="1044,34" zPosition="7" font="NextBold;28" foregroundColor="nextText" backgroundColor="nextCard" transparent="0" valign="center" noWrap="1">
+    <widget source="session.CurrentService" render="Label" position="348,804" size="1004,34" zPosition="7" font="NextBold;28" foregroundColor="nextText" backgroundColor="nextDock" transparent="1" valign="center" noWrap="1">
       <convert type="ServiceName">Name</convert>
     </widget>
-    <widget source="session.Event_Now" render="RunningText" position="348,824" size="1044,38" zPosition="7" font="NextBold;27" foregroundColor="nextAccent" backgroundColor="nextCard" transparent="0" valign="center" halign="left" options="movetype=running,direction=left,step=2,steptime=50,startdelay=2400,pause=1600,always=0,nowrap">
+    <widget source="session.Event_Now" render="RunningText" position="348,840" size="1004,40" zPosition="7" font="NextBold;27" foregroundColor="nextAccent" backgroundColor="nextDock" transparent="1" valign="center" halign="left" options="movetype=running,direction=left,step=2,steptime=50,startdelay=2400,pause=1600,always=0,nowrap">
       <convert type="EventName">Name</convert>
     </widget>
-    <widget source="session.Event_Now" render="Label" position="348,866" size="1044,56" zPosition="7" font="Next;17" foregroundColor="nextMuted" backgroundColor="nextCard" transparent="0" valign="top">
+    <widget source="session.Event_Now" render="Label" position="348,884" size="1004,48" zPosition="7" font="Next;19" foregroundColor="nextMuted" backgroundColor="nextDock" transparent="1" valign="top">
       <convert type="EventName">FullDescription</convert>
     </widget>
-    <widget source="session.Event_Now" render="Label" position="348,926" size="82,26" zPosition="7" font="Next;19" foregroundColor="nextText" backgroundColor="nextCard" transparent="0" valign="center">
+    <widget source="session.Event_Now" render="Label" position="348,937" size="90,30" zPosition="7" font="Next;19" foregroundColor="nextText" backgroundColor="nextDock" transparent="1" valign="center">
       <convert type="EventTime">StartTime</convert>
       <convert type="ClockToText">Default</convert>
     </widget>
-    <widget source="session.Event_Now" render="Progress" position="442,935" size="670,8" zPosition="7" foregroundColor="nextAccent" backgroundColor="nextTrack" borderWidth="0">
+    <widget source="session.Event_Now" render="Progress" position="448,947" size="590,10" zPosition="7" foregroundColor="nextAccent" backgroundColor="nextTrack" borderWidth="0">
       <convert type="EventTime">Progress</convert>
     </widget>
-    <widget source="session.Event_Now" render="Label" position="1124,926" size="84,26" zPosition="7" font="Next;19" foregroundColor="nextText" backgroundColor="nextCard" transparent="0" valign="center" halign="right">
+    <widget source="session.Event_Now" render="Label" position="1048,937" size="88,30" zPosition="7" font="Next;19" foregroundColor="nextText" backgroundColor="nextDock" transparent="1" valign="center" halign="right">
       <convert type="EventTime">EndTime</convert>
       <convert type="ClockToText">Default</convert>
     </widget>
-    <widget source="session.Event_Now" render="Label" position="1218,926" size="174,26" zPosition="7" font="Next;19" foregroundColor="nextGold" backgroundColor="nextCard" transparent="0" valign="center" halign="right">
+    <widget source="session.Event_Now" render="Label" position="1216,937" size="136,30" zPosition="7" font="Next;19" foregroundColor="nextGold" backgroundColor="nextDock" transparent="1" valign="center" halign="right">
       <convert type="EventTime">Remaining</convert>
       <convert type="RemainingToText" />
     </widget>
-    <eLabel position="348,958" size="1044,2" backgroundColor="nextDivider" zPosition="5" />
-    <eLabel text="Next" position="348,964" size="76,28" font="NextBold;18" foregroundColor="nextMuted" backgroundColor="nextCard" transparent="0" valign="center" zPosition="5" />
-    <widget source="session.Event_Next" render="Label" position="438,964" size="88,28" font="Next;19" foregroundColor="nextAccent" backgroundColor="nextCard" transparent="0" zPosition="7" valign="center">
+    <eLabel position="348,971" size="1004,2" backgroundColor="nextDivider" zPosition="5" />
+    <eLabel text="Next" position="348,977" size="92,32" font="NextBold;18" foregroundColor="nextMuted" backgroundColor="nextDock" transparent="1" valign="center" zPosition="5" />
+    <widget source="session.Event_Next" render="Label" position="448,977" size="100,32" font="Next;19" foregroundColor="nextAccent" backgroundColor="nextDock" transparent="1" zPosition="7" valign="center">
       <convert type="EventTime">StartTime</convert>
       <convert type="ClockToText">Default</convert>
     </widget>
-    <widget source="session.Event_Next" render="RunningText" position="536,960" size="856,36" zPosition="5" font="Next;22" foregroundColor="nextText" backgroundColor="nextCard" transparent="0" valign="center" halign="left" options="movetype=running,direction=left,step=2,steptime=55,startdelay=2600,pause=1600,always=0,nowrap">
+    <widget source="session.Event_Next" render="RunningText" position="558,977" size="794,32" zPosition="5" font="Next;22" foregroundColor="nextText" backgroundColor="nextDock" transparent="1" valign="center" halign="left" options="movetype=running,direction=left,step=2,steptime=55,startdelay=2600,pause=1600,always=0,nowrap">
       <convert type="EventName">Name</convert>
     </widget>
-    <eLabel text="INFO  •  EPG" position="348,999" size="1044,16" font="Next;14" foregroundColor="nextMuted" backgroundColor="nextCard" transparent="0" valign="center" zPosition="5" />
-
+    <eLabel text="AIOHD NEXT  /  LIVE" position="620,698" size="744,80" font="NextBold;24" foregroundColor="nextAccent" backgroundColor="transparent" transparent="1" valign="center" zPosition="5" halign="center" />
     <!-- Signal block. -->
-    <widget source="session.CurrentService" render="Label" position="1588,794" size="222,30" zPosition="7" font="Next;21" foregroundColor="nextText" backgroundColor="nextCard" transparent="0" valign="center" halign="right">
+    <widget source="session.CurrentService" render="Label" position="1580,804" size="256,30" zPosition="7" font="Next;21" foregroundColor="nextText" backgroundColor="nextDock" transparent="1" valign="center" halign="right">
       <convert type="ServiceOrbitalPosition" />
     </widget>
-    <eLabel position="1450,796" size="27,27" font="NextBold;16" halign="center" valign="center" backgroundColor="nextCard" transparent="0" zPosition="5" text="A" foregroundColor="nextTrack" />
-    <widget position="1450,796" size="27,27" font="NextBold;16" halign="center" valign="center" backgroundColor="transparent" transparent="1" zPosition="6" text="A" source="session.TunerInfo" render="FixedLabel" foregroundColor="nextAccent"><convert type="TunerInfo">TunerUseMask</convert><convert type="ValueBitTest">1</convert><convert type="ConditionalShowHide" /></widget>
-    <eLabel position="1479,796" size="27,27" font="NextBold;16" halign="center" valign="center" backgroundColor="nextCard" transparent="0" zPosition="5" text="B" foregroundColor="nextTrack" />
-    <widget position="1479,796" size="27,27" font="NextBold;16" halign="center" valign="center" backgroundColor="transparent" transparent="1" zPosition="6" text="B" source="session.TunerInfo" render="FixedLabel" foregroundColor="nextAccent"><convert type="TunerInfo">TunerUseMask</convert><convert type="ValueBitTest">2</convert><convert type="ConditionalShowHide" /></widget>
-    <eLabel position="1508,796" size="27,27" font="NextBold;16" halign="center" valign="center" backgroundColor="nextCard" transparent="0" zPosition="5" text="C" foregroundColor="nextTrack" />
-    <widget position="1508,796" size="27,27" font="NextBold;16" halign="center" valign="center" backgroundColor="transparent" transparent="1" zPosition="6" text="C" source="session.TunerInfo" render="FixedLabel" foregroundColor="nextAccent"><convert type="TunerInfo">TunerUseMask</convert><convert type="ValueBitTest">4</convert><convert type="ConditionalShowHide" /></widget>
-    <eLabel position="1537,796" size="27,27" font="NextBold;16" halign="center" valign="center" backgroundColor="nextCard" transparent="0" zPosition="5" text="D" foregroundColor="nextTrack" />
-    <widget position="1537,796" size="27,27" font="NextBold;16" halign="center" valign="center" backgroundColor="transparent" transparent="1" zPosition="6" text="D" source="session.TunerInfo" render="FixedLabel" foregroundColor="nextAccent"><convert type="TunerInfo">TunerUseMask</convert><convert type="ValueBitTest">8</convert><convert type="ConditionalShowHide" /></widget>
-
-    <eLabel text="SNR" position="1450,838" size="55,28" font="Next;18" foregroundColor="nextMuted" backgroundColor="nextCard" transparent="0" valign="center" zPosition="5" />
-    <widget source="session.FrontendStatus" render="Progress" position="1515,848" size="196,8" zPosition="5" foregroundColor="nextAccent" backgroundColor="nextTrack" borderWidth="0"><convert type="FrontendInfo">SNR</convert></widget>
-    <widget source="session.FrontendStatus" render="Label" position="1718,838" size="92,28" zPosition="5" font="Next;19" foregroundColor="nextAccent" backgroundColor="nextCard" transparent="0" valign="center" halign="right"><convert type="FrontendInfo">SNR</convert></widget>
-    <eLabel text="AGC" position="1450,875" size="55,28" font="Next;18" foregroundColor="nextMuted" backgroundColor="nextCard" transparent="0" valign="center" zPosition="5" />
-    <widget source="session.FrontendStatus" render="Progress" position="1515,885" size="196,8" zPosition="5" foregroundColor="nextGreen" backgroundColor="nextTrack" borderWidth="0"><convert type="FrontendInfo">AGC</convert></widget>
-    <widget source="session.FrontendStatus" render="Label" position="1718,875" size="92,28" zPosition="5" font="Next;19" foregroundColor="nextGreen" backgroundColor="nextCard" transparent="0" valign="center" halign="right"><convert type="FrontendInfo">AGC</convert></widget>
-    <eLabel text="BER" position="1450,912" size="60,28" font="Next;18" foregroundColor="nextMuted" backgroundColor="nextCard" transparent="0" valign="center" zPosition="5" />
-    <widget source="session.FrontendStatus" render="Label" position="1530,912" size="280,28" zPosition="5" font="Next;19" foregroundColor="nextText" backgroundColor="nextCard" transparent="0" valign="center" halign="right"><convert type="FrontendInfo">BER</convert></widget>
-    <widget source="session.CurrentService" render="Label" position="1450,949" size="360,28" zPosition="7" font="Next;18" foregroundColor="nextAccent" backgroundColor="nextCard" transparent="0" valign="center" halign="center"><convert type="MetrixHDServiceInfo">VideoInfo</convert></widget>
-
-    <eLabel text="REC" position="1450,988" size="52,22" font="Next;15" foregroundColor="nextTrack" backgroundColor="nextCard" transparent="0" valign="center" zPosition="5" halign="center" />
-    <widget source="session.RecordState" render="FixedLabel" position="1450,988" size="52,22" zPosition="5" font="Next;15" foregroundColor="red" backgroundColor="transparent" transparent="1" valign="center" text="REC" halign="center"><convert type="ConditionalShowHide">Blink</convert></widget>
-    <eLabel text="SUB" position="1508,988" size="52,22" font="Next;15" foregroundColor="nextTrack" backgroundColor="nextCard" transparent="0" valign="center" zPosition="5" halign="center" />
-    <widget source="session.CurrentService" render="FixedLabel" position="1508,988" size="52,22" zPosition="7" font="Next;15" foregroundColor="nextAccent" backgroundColor="transparent" transparent="1" valign="center" text="SUB" halign="center"><convert type="ServiceInfo">SubtitlesAvailable</convert><convert type="ConditionalShowHide" /></widget>
-    <eLabel text="TXT" position="1566,988" size="52,22" font="Next;15" foregroundColor="nextTrack" backgroundColor="nextCard" transparent="0" valign="center" zPosition="5" halign="center" />
-    <widget source="session.CurrentService" render="FixedLabel" position="1566,988" size="52,22" zPosition="7" font="Next;15" foregroundColor="nextAccent" backgroundColor="transparent" transparent="1" valign="center" text="TXT" halign="center"><convert type="ServiceInfo">HasTeletext</convert><convert type="ConditionalShowHide" /></widget>
-    <eLabel text="DD" position="1624,988" size="52,22" font="Next;15" foregroundColor="nextTrack" backgroundColor="nextCard" transparent="0" valign="center" zPosition="5" halign="center" />
-    <widget source="session.CurrentService" render="FixedLabel" position="1624,988" size="52,22" zPosition="7" font="Next;15" foregroundColor="nextAccent" backgroundColor="transparent" transparent="1" valign="center" text="DD" halign="center"><convert type="ServiceInfo">IsMultichannel</convert><convert type="ConditionalShowHide" /></widget>
-    <eLabel text="HBB" position="1682,988" size="52,22" font="Next;15" foregroundColor="nextTrack" backgroundColor="nextCard" transparent="0" valign="center" zPosition="5" halign="center" />
-    <widget source="session.CurrentService" render="FixedLabel" position="1682,988" size="52,22" zPosition="7" font="Next;15" foregroundColor="nextAccent" backgroundColor="transparent" transparent="1" valign="center" text="HBB" halign="center"><convert type="ServiceInfo">HasHBBTV</convert><convert type="ConditionalShowHide" /></widget>
-    <eLabel text="CA" position="1740,988" size="52,22" font="Next;15" foregroundColor="nextTrack" backgroundColor="nextCard" transparent="0" valign="center" zPosition="5" halign="center" />
-    <widget source="session.CurrentService" render="FixedLabel" position="1740,988" size="52,22" zPosition="7" font="Next;15" foregroundColor="nextAccent" backgroundColor="transparent" transparent="1" valign="center" text="CA" halign="center"><convert type="ServiceInfo">IsCrypted</convert><convert type="ConditionalShowHide" /></widget>
+    <eLabel position="1410,802" size="27,27" font="NextBold;16" halign="center" valign="center" backgroundColor="nextDock" transparent="1" zPosition="5" text="A" foregroundColor="nextTrack" />
+    <widget position="1410,802" size="27,27" font="NextBold;16" halign="center" valign="center" backgroundColor="transparent" transparent="1" zPosition="6" text="A" source="session.TunerInfo" render="FixedLabel" foregroundColor="nextAccent">
+      <convert type="TunerInfo">TunerUseMask</convert>
+      <convert type="ValueBitTest">1</convert>
+      <convert type="ConditionalShowHide" />
+    </widget>
+    <eLabel position="1439,802" size="27,27" font="NextBold;16" halign="center" valign="center" backgroundColor="nextDock" transparent="1" zPosition="5" text="B" foregroundColor="nextTrack" />
+    <widget position="1439,802" size="27,27" font="NextBold;16" halign="center" valign="center" backgroundColor="transparent" transparent="1" zPosition="6" text="B" source="session.TunerInfo" render="FixedLabel" foregroundColor="nextAccent">
+      <convert type="TunerInfo">TunerUseMask</convert>
+      <convert type="ValueBitTest">2</convert>
+      <convert type="ConditionalShowHide" />
+    </widget>
+    <eLabel position="1468,802" size="27,27" font="NextBold;16" halign="center" valign="center" backgroundColor="nextDock" transparent="1" zPosition="5" text="C" foregroundColor="nextTrack" />
+    <widget position="1468,802" size="27,27" font="NextBold;16" halign="center" valign="center" backgroundColor="transparent" transparent="1" zPosition="6" text="C" source="session.TunerInfo" render="FixedLabel" foregroundColor="nextAccent">
+      <convert type="TunerInfo">TunerUseMask</convert>
+      <convert type="ValueBitTest">4</convert>
+      <convert type="ConditionalShowHide" />
+    </widget>
+    <eLabel position="1497,802" size="27,27" font="NextBold;16" halign="center" valign="center" backgroundColor="nextDock" transparent="1" zPosition="5" text="D" foregroundColor="nextTrack" />
+    <widget position="1497,802" size="27,27" font="NextBold;16" halign="center" valign="center" backgroundColor="transparent" transparent="1" zPosition="6" text="D" source="session.TunerInfo" render="FixedLabel" foregroundColor="nextAccent">
+      <convert type="TunerInfo">TunerUseMask</convert>
+      <convert type="ValueBitTest">8</convert>
+      <convert type="ConditionalShowHide" />
+    </widget>
+    <eLabel text="SNR" position="1410,844" size="55,28" font="Next;18" foregroundColor="nextMuted" backgroundColor="nextDock" transparent="1" valign="center" zPosition="5" />
+    <widget source="session.FrontendStatus" render="Progress" position="1475,854" size="196,8" zPosition="5" foregroundColor="nextAccent" backgroundColor="nextTrack" borderWidth="0">
+      <convert type="FrontendInfo">SNR</convert>
+    </widget>
+    <widget source="session.FrontendStatus" render="Label" position="1678,844" size="92,28" zPosition="5" font="Next;19" foregroundColor="nextAccent" backgroundColor="nextDock" transparent="1" valign="center" halign="right">
+      <convert type="FrontendInfo">SNR</convert>
+    </widget>
+    <eLabel text="AGC" position="1410,881" size="55,28" font="Next;18" foregroundColor="nextMuted" backgroundColor="nextDock" transparent="1" valign="center" zPosition="5" />
+    <widget source="session.FrontendStatus" render="Progress" position="1475,891" size="196,8" zPosition="5" foregroundColor="nextGreen" backgroundColor="nextTrack" borderWidth="0">
+      <convert type="FrontendInfo">AGC</convert>
+    </widget>
+    <widget source="session.FrontendStatus" render="Label" position="1678,881" size="92,28" zPosition="5" font="Next;19" foregroundColor="nextGreen" backgroundColor="nextDock" transparent="1" valign="center" halign="right">
+      <convert type="FrontendInfo">AGC</convert>
+    </widget>
+    <eLabel text="BER" position="1410,918" size="60,28" font="Next;18" foregroundColor="nextMuted" backgroundColor="nextDock" transparent="1" valign="center" zPosition="5" />
+    <widget source="session.FrontendStatus" render="Label" position="1490,918" size="280,28" zPosition="5" font="Next;19" foregroundColor="nextText" backgroundColor="nextDock" transparent="1" valign="center" halign="right">
+      <convert type="FrontendInfo">BER</convert>
+    </widget>
+    <widget source="session.CurrentService" render="Label" position="1410,955" size="360,28" zPosition="7" font="Next;18" foregroundColor="nextAccent" backgroundColor="nextDock" transparent="1" valign="center" halign="center">
+      <convert type="MetrixHDServiceInfo">VideoInfo</convert>
+    </widget>
+    <eLabel text="REC" position="1410,994" size="52,22" font="Next;17" foregroundColor="nextTrack" backgroundColor="nextDock" transparent="1" valign="center" zPosition="5" halign="center" />
+    <widget source="session.RecordState" render="FixedLabel" position="1410,994" size="52,22" zPosition="5" font="Next;17" foregroundColor="red" backgroundColor="transparent" transparent="1" valign="center" text="REC" halign="center">
+      <convert type="ConditionalShowHide">Blink</convert>
+    </widget>
+    <eLabel text="SUB" position="1468,994" size="52,22" font="Next;17" foregroundColor="nextTrack" backgroundColor="nextDock" transparent="1" valign="center" zPosition="5" halign="center" />
+    <widget source="session.CurrentService" render="FixedLabel" position="1468,994" size="52,22" zPosition="7" font="Next;17" foregroundColor="nextAccent" backgroundColor="transparent" transparent="1" valign="center" text="SUB" halign="center">
+      <convert type="ServiceInfo">SubtitlesAvailable</convert>
+      <convert type="ConditionalShowHide" />
+    </widget>
+    <eLabel text="TXT" position="1526,994" size="52,22" font="Next;17" foregroundColor="nextTrack" backgroundColor="nextDock" transparent="1" valign="center" zPosition="5" halign="center" />
+    <widget source="session.CurrentService" render="FixedLabel" position="1526,994" size="52,22" zPosition="7" font="Next;17" foregroundColor="nextAccent" backgroundColor="transparent" transparent="1" valign="center" text="TXT" halign="center">
+      <convert type="ServiceInfo">HasTeletext</convert>
+      <convert type="ConditionalShowHide" />
+    </widget>
+    <eLabel text="DD" position="1584,994" size="52,22" font="Next;17" foregroundColor="nextTrack" backgroundColor="nextDock" transparent="1" valign="center" zPosition="5" halign="center" />
+    <widget source="session.CurrentService" render="FixedLabel" position="1584,994" size="52,22" zPosition="7" font="Next;17" foregroundColor="nextAccent" backgroundColor="transparent" transparent="1" valign="center" text="DD" halign="center">
+      <convert type="ServiceInfo">IsMultichannel</convert>
+      <convert type="ConditionalShowHide" />
+    </widget>
+    <eLabel text="HBB" position="1642,994" size="52,22" font="Next;17" foregroundColor="nextTrack" backgroundColor="nextDock" transparent="1" valign="center" zPosition="5" halign="center" />
+    <widget source="session.CurrentService" render="FixedLabel" position="1642,994" size="52,22" zPosition="7" font="Next;17" foregroundColor="nextAccent" backgroundColor="transparent" transparent="1" valign="center" text="HBB" halign="center">
+      <convert type="ServiceInfo">HasHBBTV</convert>
+      <convert type="ConditionalShowHide" />
+    </widget>
+    <eLabel text="CA" position="1700,994" size="52,22" font="Next;17" foregroundColor="nextTrack" backgroundColor="nextDock" transparent="1" valign="center" zPosition="5" halign="center" />
+    <widget source="session.CurrentService" render="FixedLabel" position="1700,994" size="52,22" zPosition="7" font="Next;17" foregroundColor="nextAccent" backgroundColor="transparent" transparent="1" valign="center" text="CA" halign="center">
+      <convert type="ServiceInfo">IsCrypted</convert>
+      <convert type="ConditionalShowHide" />
+    </widget>
+    <widget source="session.Event_Now" render="Label" position="1152,937" size="64,30" font="NextBold;16" foregroundColor="nextAccent" backgroundColor="nextCard" transparent="1" valign="center" noWrap="1" zPosition="9">
+      <convert type="AIONextContext">percent</convert>
+    </widget>
   </screen>
 </skin>

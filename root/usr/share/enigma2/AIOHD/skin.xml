@@ -2,7 +2,7 @@
 <skin>
   <!-- cf#_#start -->
   <!-- MetrixHD v2.5 by iMaxxx | optimized for openATV 4.0 -->
-  <!-- AIOHD NEXT 3.2.1 by Paweł Pawełek; based on MetrixHD by openATV Team   | NEXT 3.2.1 refined layout, 2026-09-14 -->
+  <!-- AIOHD NEXT 4.0.0 by Paweł Pawełek; based on MetrixHD by openATV Team   | NEXT 4.0.0 refined layout, 2026-11-27 -->
   <!-- recommended to use with XPicons -->
   <!-- Explicitly, no one is allowed to use any version of the Skin with other team Images -->
   <!-- You can modify and redistribute it as long as you keep this license and the original author for the skin and all of your modifications -->
@@ -197,6 +197,7 @@
     <color name="nextGold" value="#00F6C56C" />
     <color name="nextDivider" value="#00304456" />
     <color name="nextSelection" value="#00007678" />
+    <color name="nextDock" value="#00141E2A" />
     <color name="nextCardHi" value="#00192330" />
   </colors>
   <fonts>

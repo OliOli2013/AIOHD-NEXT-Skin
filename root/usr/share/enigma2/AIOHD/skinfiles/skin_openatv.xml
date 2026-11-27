@@ -1,4 +1,4 @@
-<?xml version='1.0' encoding='UTF-8'?>
+<?xml version='1.0' encoding='utf-8'?>
 <skin>
   <screen name="OPEN_SOURCE_INFO">
     <!-- Opaque title strip hides the previous Software Manager title on transparent full-screen views. -->
@@ -1985,11 +1985,9 @@ if getattr(self, "event", None) is None and not self["epg_description"].getText(
     </widget>
     <eLabel position="76,120" size="1768,2" backgroundColor="nextDivider" zPosition="-20" />
     <eLabel position="76,120" size="104,3" backgroundColor="nextAccent" zPosition="-20" />
-    <eLabel text="NEXT 3.2.1  /  by Paweł Pawełek" position="76,1022" size="720,30" font="Next;18" foregroundColor="nextMuted" backgroundColor="nextBg" transparent="0" valign="center" zPosition="8" />
+    <eLabel text="AIOHD NEXT 4.0  /  Paweł Pawełek" position="76,1022" size="720,30" font="Next;18" foregroundColor="nextMuted" backgroundColor="nextBg" transparent="0" valign="center" zPosition="8" />
     <eLabel position="76,180" size="1096,780" backgroundColor="nextCard" zPosition="-20" />
     <eLabel position="1192,180" size="652,780" backgroundColor="nextCard" zPosition="-20" />
-    <ePixmap pixmap="next3/channels.png" position="76,180" size="1096,780" alphatest="blend" zPosition="-10" />
-    <ePixmap pixmap="next3/details.png" position="1192,180" size="652,780" alphatest="blend" zPosition="-10" />
     <widget name="epg_description" position="108,212" size="1030,716" zPosition="0" font="Next;27" foregroundColor="nextText" backgroundColor="nextCard" transparent="0" scrollbarMode="showOnDemand" />
     <widget source="Service" render="Picon" position="1350,222" size="334,200" zPosition="8" alphatest="blend" transparent="1" scale="1">
       <convert type="ServiceName">Reference</convert>
@@ -2008,6 +2006,8 @@ from Components.config import config
 if getattr(self, "event", None) is None and not self["epg_description"].getText():
     self["epg_description"].setText("Brak danych EPG dla tej audycji." if config.osd.language.value.startswith("pl") else "No EPG information for this event.")
 </applet>
+    <eLabel position="76,180" size="5,780" backgroundColor="nextAccent" zPosition="-8" />
+    <eLabel position="1192,180" size="5,780" backgroundColor="nextAccentDim" zPosition="-8" />
   </screen>
   <screen name="EventViewContextMenu" position="0,0" size="1920,1080" title="Eventview Menu" flags="wfNoBorder" backgroundColor="nextBg">
     <panel name="CONTEXTMENU2_textTitle_template" />
@@ -2313,7 +2313,7 @@ if getattr(self, "event", None) is None and not self["epg_description"].getText(
     <widget source="key_yellow" render="Label" position="976,973" size="400,40" zPosition="8" font="Next;23" foregroundColor="nextText" backgroundColor="transparent" transparent="1" valign="center" conditional="key_yellow" />
     <eLabel position="1396,981" size="6,24" backgroundColor="blue" zPosition="8" />
     <widget source="key_blue" render="Label" position="1416,973" size="400,40" zPosition="8" font="Next;23" foregroundColor="nextText" backgroundColor="transparent" transparent="1" valign="center" conditional="key_blue" />
-    <eLabel text="NEXT 3.2.1  /  by Paweł Pawełek" position="76,1022" size="720,30" font="Next;18" foregroundColor="nextMuted" backgroundColor="transparent" transparent="1" valign="center" zPosition="8" />
+    <eLabel text="NEXT 4.0.0  /  by Paweł Pawełek" position="76,1022" size="720,30" font="Next;18" foregroundColor="nextMuted" backgroundColor="transparent" transparent="1" valign="center" zPosition="8" />
   </screen>
   <screen name="PluginBrowserList" position="0,0" size="1920,1080" title="Plugin browser" flags="wfNoBorder" backgroundColor="nextBg">
     <eLabel position="0,0" size="1920,1080" backgroundColor="nextBg" zPosition="0" />
@@ -2348,7 +2348,7 @@ if getattr(self, "event", None) is None and not self["epg_description"].getText(
     <widget source="key_yellow" render="Label" position="976,973" size="400,40" zPosition="8" font="Next;23" foregroundColor="nextText" backgroundColor="transparent" transparent="1" valign="center" conditional="key_yellow" />
     <eLabel position="1396,981" size="6,24" backgroundColor="blue" zPosition="8" />
     <widget source="key_blue" render="Label" position="1416,973" size="400,40" zPosition="8" font="Next;23" foregroundColor="nextText" backgroundColor="transparent" transparent="1" valign="center" conditional="key_blue" />
-    <eLabel text="NEXT 3.2.1  /  by Paweł Pawełek" position="76,1022" size="720,30" font="Next;18" foregroundColor="nextMuted" backgroundColor="transparent" transparent="1" valign="center" zPosition="8" />
+    <eLabel text="NEXT 4.0.0  /  by Paweł Pawełek" position="76,1022" size="720,30" font="Next;18" foregroundColor="nextMuted" backgroundColor="transparent" transparent="1" valign="center" zPosition="8" />
   </screen>
   <screen name="PluginBrowserGrid" position="0,0" size="1920,1080" title="Plugin browser" flags="wfNoBorder" backgroundColor="nextBg">
     <eLabel position="0,0" size="1920,1080" backgroundColor="nextBg" zPosition="0" />
@@ -2384,7 +2384,7 @@ if getattr(self, "event", None) is None and not self["epg_description"].getText(
     <widget source="key_yellow" render="Label" position="976,973" size="400,40" zPosition="8" font="Next;23" foregroundColor="nextText" backgroundColor="transparent" transparent="1" valign="center" conditional="key_yellow" />
     <eLabel position="1396,981" size="6,24" backgroundColor="blue" zPosition="8" />
     <widget source="key_blue" render="Label" position="1416,973" size="400,40" zPosition="8" font="Next;23" foregroundColor="nextText" backgroundColor="transparent" transparent="1" valign="center" conditional="key_blue" />
-    <eLabel text="NEXT 3.2.1  /  by Paweł Pawełek" position="76,1022" size="720,30" font="Next;18" foregroundColor="nextMuted" backgroundColor="transparent" transparent="1" valign="center" zPosition="8" />
+    <eLabel text="NEXT 4.0.0  /  by Paweł Pawełek" position="76,1022" size="720,30" font="Next;18" foregroundColor="nextMuted" backgroundColor="transparent" transparent="1" valign="center" zPosition="8" />
   </screen>
   <screen name="PluginAction" position="0,0" size="1920,1080" title="Downloadable plugins" flags="wfNoBorder" backgroundColor="transparent">
     <panel name="T_Title" />
@@ -3879,6 +3879,8 @@ if getattr(self, "event", None) is None and not self["epg_description"].getText(
     <screen key="uShareSelection" image="icons/menu_network_netnfs_setup.png" />
   </screens>
   <screen name="Menu" position="0,0" size="1920,1080" flags="wfNoBorder" backgroundColor="nextBg" title="Menu">
+    <eLabel position="76,180" size="1188,720" backgroundColor="nextCard" zPosition="-10" />
+    <eLabel position="1284,180" size="560,720" backgroundColor="nextCard" zPosition="-10" />
     <eLabel position="0,0" size="1920,1080" backgroundColor="nextBg" zPosition="0" />
     <eLabel text="AIO" position="76,46" size="84,50" font="Next;34" foregroundColor="nextAccent" backgroundColor="transparent" transparent="1" valign="center" zPosition="5" />
     <eLabel position="182,51" size="2,42" backgroundColor="nextTrack" zPosition="1" />
@@ -3887,20 +3889,18 @@ if getattr(self, "event", None) is None and not self["epg_description"].getText(
     </widget>
     <eLabel position="76,120" size="1768,2" backgroundColor="nextTrack" zPosition="1" />
     <eLabel position="76,120" size="104,3" backgroundColor="nextAccent" zPosition="1" />
-    <eLabel text="NEXT 3.2.1  /  by Paweł Pawełek" position="76,1022" size="720,30" font="Next;18" foregroundColor="nextMuted" backgroundColor="transparent" transparent="1" valign="center" zPosition="5" />
+    <eLabel text="AIOHD NEXT 4.0  /  Paweł Pawełek" position="76,1022" size="720,30" font="Next;18" foregroundColor="nextMuted" backgroundColor="transparent" transparent="1" valign="center" zPosition="5" />
     <widget source="Title" render="Label" position="210,42" size="1210,60" zPosition="5" font="Next;36" foregroundColor="nextText" backgroundColor="transparent" transparent="1" valign="center" noWrap="1" />
-    <ePixmap pixmap="next3/menu_side.png" position="76,180" size="580,720" alphatest="blend" zPosition="0" />
-    <ePixmap pixmap="next3/menu_list.png" position="676,180" size="1188,720" alphatest="blend" zPosition="0" />
-    <widget name="menuimage" position="176,208" size="380,290" pixmap="aio_next/aio_logo.png" alphatest="blend" scaleFlags="scaleCenter" transparent="1" zPosition="5" />
-    <eLabel position="114,528" size="504,2" backgroundColor="nextTrack" zPosition="1" />
-    <widget source="global.CurrentTime" render="Label" position="116,552" size="500,80" zPosition="5" font="Next;59" foregroundColor="nextText" backgroundColor="transparent" transparent="1" valign="center" halign="center">
+    <widget name="menuimage" position="1376,208" size="380,290" pixmap="aio_next/aio_logo.png" alphatest="blend" scaleFlags="scaleCenter" transparent="1" zPosition="5" />
+    <eLabel position="1314,528" size="504,2" backgroundColor="nextTrack" zPosition="1" />
+    <widget source="global.CurrentTime" render="Label" position="1316,552" size="500,80" zPosition="5" font="Next;59" foregroundColor="nextText" backgroundColor="transparent" transparent="1" valign="center" halign="center">
       <convert type="ClockToText">Default</convert>
     </widget>
-    <widget source="global.CurrentTime" render="Label" position="110,644" size="510,46" zPosition="5" font="Next;25" foregroundColor="nextMuted" backgroundColor="transparent" transparent="1" valign="center" halign="center">
+    <widget source="global.CurrentTime" render="Label" position="1310,644" size="510,46" zPosition="5" font="Next;25" foregroundColor="nextMuted" backgroundColor="transparent" transparent="1" valign="center" halign="center">
       <convert type="ClockToText">Format:%A, %d.%m.%Y</convert>
     </widget>
-    <widget source="description" render="Label" position="116,724" size="500,132" zPosition="5" font="Next;25" foregroundColor="nextMuted" backgroundColor="transparent" transparent="1" valign="center" halign="center" conditional="description" />
-    <widget source="menu" render="Listbox" position="702,204" size="1136,672" foregroundColor="nextText" backgroundColor="nextCard" backgroundColorSelected="nextAccentDim" foregroundColorSelected="#00FFFFFF" scrollbarMode="showOnDemand" enableWrapAround="1" transparent="0" zPosition="10">
+    <widget source="description" render="Label" position="1316,724" size="500,132" zPosition="5" font="Next;25" foregroundColor="nextMuted" backgroundColor="transparent" transparent="1" valign="center" halign="center" conditional="description" />
+    <widget source="menu" render="Listbox" position="102,204" size="1136,672" foregroundColor="nextText" backgroundColor="nextCard" backgroundColorSelected="nextAccentDim" foregroundColorSelected="#00FFFFFF" scrollbarMode="showOnDemand" enableWrapAround="1" transparent="0" zPosition="10">
       <templates>
         <template name="Default" fonts="Next;34,Next;32,Next;30" itemWidth="1136" itemHeight="84">
           <mode name="default" itemHeight="84">
@@ -3933,8 +3933,12 @@ if getattr(self, "event", None) is None and not self["epg_description"].getText(
     <widget source="key_yellow" render="Label" position="976,973" size="400,40" zPosition="5" font="Next;23" foregroundColor="nextText" backgroundColor="transparent" transparent="1" valign="center" conditional="key_yellow" />
     <eLabel position="1396,981" size="6,24" backgroundColor="blue" zPosition="1" />
     <widget source="key_blue" render="Label" position="1416,973" size="400,40" zPosition="5" font="Next;23" foregroundColor="nextText" backgroundColor="transparent" transparent="1" valign="center" conditional="key_blue" />
+    <eLabel position="76,180" size="5,720" backgroundColor="nextAccent" zPosition="-8" />
+    <eLabel position="1284,180" size="5,720" backgroundColor="nextAccentDim" zPosition="-8" />
   </screen>
   <screen name="EPGSelection" position="0,0" size="1920,1080" flags="wfNoBorder" backgroundColor="nextBg" title="EPGSelection">
+    <eLabel position="76,180" size="1188,720" backgroundColor="nextCard" zPosition="-10" />
+    <eLabel position="1284,180" size="560,720" backgroundColor="nextCard" zPosition="-10" />
     <eLabel text="AIO" position="76,46" size="84,50" font="Next;34" foregroundColor="nextAccent" backgroundColor="transparent" transparent="1" valign="center" zPosition="5" />
     <eLabel position="182,51" size="2,42" backgroundColor="nextTrack" zPosition="1" />
     <eLabel text="Electronic Program Guide" position="210,42" size="1210,60" font="Next;36" foregroundColor="nextText" backgroundColor="transparent" transparent="1" valign="center" zPosition="5" />
@@ -3943,19 +3947,17 @@ if getattr(self, "event", None) is None and not self["epg_description"].getText(
     </widget>
     <eLabel position="76,120" size="1768,2" backgroundColor="nextTrack" zPosition="1" />
     <eLabel position="76,120" size="104,3" backgroundColor="nextAccent" zPosition="1" />
-    <eLabel text="NEXT 3.2.1  /  by Paweł Pawełek" position="76,1022" size="720,30" font="Next;18" foregroundColor="nextMuted" backgroundColor="transparent" transparent="1" valign="center" zPosition="5" />
-    <ePixmap pixmap="next3/menu_side.png" position="76,180" size="580,720" alphatest="blend" zPosition="0" />
-    <ePixmap pixmap="next3/menu_list.png" position="676,180" size="1188,720" alphatest="blend" zPosition="0" />
-    <widget source="Service" render="Picon" position="200,250" size="330,198" zPosition="5" alphatest="blend" transparent="1" scale="1">
+    <eLabel text="AIOHD NEXT 4.0  /  Paweł Pawełek" position="76,1022" size="720,30" font="Next;18" foregroundColor="nextMuted" backgroundColor="transparent" transparent="1" valign="center" zPosition="5" />
+    <widget source="Service" render="Picon" position="1400,250" size="330,198" zPosition="5" alphatest="blend" transparent="1" scale="1">
       <convert type="ServiceName">Reference</convert>
     </widget>
-    <widget source="Service" render="Label" position="112,484" size="500,100" zPosition="5" font="Next;34" foregroundColor="nextText" backgroundColor="transparent" transparent="1" valign="center" halign="center">
+    <widget source="Service" render="Label" position="1312,484" size="500,100" zPosition="5" font="Next;34" foregroundColor="nextText" backgroundColor="transparent" transparent="1" valign="center" halign="center">
       <convert type="ServiceName">Name</convert>
     </widget>
-    <widget source="Title" render="Label" position="112,608" size="500,164" zPosition="5" font="Next;26" foregroundColor="nextMuted" backgroundColor="transparent" transparent="1" valign="center" halign="center" />
-    <widget name="list" position="700,204" size="1138,672" itemHeight="56" EventFontSingle="Next;28" backgroundColor="nextCard" foregroundColor="#00DCE7F0" backgroundColorSelected="nextAccentDim" foregroundColorSelected="#00FFFFFF" EntryForegroundColor="#00DCE7F0" EntryForegroundColorSelected="#00FFFFFF" EntryForegroundColorNow="#0000BEF5" EntryForegroundColorNowSelected="#00FFFFFF" EntryForegroundColorPast="#0091A6B8" EntryForegroundColorPastSelected="#00FFFFFF" scrollbarMode="showOnDemand" enableWrapAround="1" transparent="0" />
-    <widget name="lab1" position="720,460" size="1080,110" font="Regular;32" halign="center" valign="center" zPosition="20" foregroundColor="#00DCE7F0" backgroundColor="transparent" transparent="1" conditional="lab1" />
-    <widget name="number" position="720,460" size="1080,110" font="Regular;32" halign="center" valign="center" zPosition="20" foregroundColor="#00DCE7F0" backgroundColor="transparent" transparent="1" />
+    <widget source="Title" render="Label" position="1312,608" size="500,164" zPosition="5" font="Next;26" foregroundColor="nextMuted" backgroundColor="transparent" transparent="1" valign="center" halign="center" />
+    <widget name="list" position="100,204" size="1138,672" itemHeight="56" EventFontSingle="Next;28" backgroundColor="nextCard" foregroundColor="#00DCE7F0" backgroundColorSelected="nextAccentDim" foregroundColorSelected="#00FFFFFF" EntryForegroundColor="#00DCE7F0" EntryForegroundColorSelected="#00FFFFFF" EntryForegroundColorNow="#0000BEF5" EntryForegroundColorNowSelected="#00FFFFFF" EntryForegroundColorPast="#0091A6B8" EntryForegroundColorPastSelected="#00FFFFFF" scrollbarMode="showOnDemand" enableWrapAround="1" transparent="0" />
+    <widget name="lab1" position="120,460" size="1080,110" font="Regular;32" halign="center" valign="center" zPosition="20" foregroundColor="#00DCE7F0" backgroundColor="transparent" transparent="1" conditional="lab1" />
+    <widget name="number" position="120,460" size="1080,110" font="Regular;32" halign="center" valign="center" zPosition="20" foregroundColor="#00DCE7F0" backgroundColor="transparent" transparent="1" />
     <eLabel position="76,981" size="6,24" backgroundColor="red" zPosition="1" />
     <widget source="key_red" render="Label" position="96,973" size="400,40" zPosition="5" font="Next;23" foregroundColor="nextText" backgroundColor="transparent" transparent="1" valign="center" conditional="key_red" />
     <eLabel position="516,981" size="6,24" backgroundColor="green" zPosition="1" />
@@ -3964,6 +3966,8 @@ if getattr(self, "event", None) is None and not self["epg_description"].getText(
     <widget source="key_yellow" render="Label" position="976,973" size="400,40" zPosition="5" font="Next;23" foregroundColor="nextText" backgroundColor="transparent" transparent="1" valign="center" conditional="key_yellow" />
     <eLabel position="1396,981" size="6,24" backgroundColor="blue" zPosition="1" />
     <widget source="key_blue" render="Label" position="1416,973" size="400,40" zPosition="5" font="Next;23" foregroundColor="nextText" backgroundColor="transparent" transparent="1" valign="center" conditional="key_blue" />
+    <eLabel position="76,180" size="5,720" backgroundColor="nextAccent" zPosition="-8" />
+    <eLabel position="1284,180" size="5,720" backgroundColor="nextAccentDim" zPosition="-8" />
   </screen>
   <screen name="EventView" position="0,0" size="1920,1080" flags="wfNoBorder" backgroundColor="nextBg" title="Event information">
     <eLabel position="0,0" size="1920,1080" backgroundColor="nextBg" zPosition="-20" />
@@ -3975,11 +3979,9 @@ if getattr(self, "event", None) is None and not self["epg_description"].getText(
     </widget>
     <eLabel position="76,120" size="1768,2" backgroundColor="nextDivider" zPosition="-20" />
     <eLabel position="76,120" size="104,3" backgroundColor="nextAccent" zPosition="-20" />
-    <eLabel text="NEXT 3.2.1  /  by Paweł Pawełek" position="76,1022" size="720,30" font="Next;18" foregroundColor="nextMuted" backgroundColor="nextBg" transparent="0" valign="center" zPosition="8" />
+    <eLabel text="AIOHD NEXT 4.0  /  Paweł Pawełek" position="76,1022" size="720,30" font="Next;18" foregroundColor="nextMuted" backgroundColor="nextBg" transparent="0" valign="center" zPosition="8" />
     <eLabel position="76,180" size="1096,780" backgroundColor="nextCard" zPosition="-20" />
     <eLabel position="1192,180" size="652,780" backgroundColor="nextCard" zPosition="-20" />
-    <ePixmap pixmap="next3/channels.png" position="76,180" size="1096,780" alphatest="blend" zPosition="-10" />
-    <ePixmap pixmap="next3/details.png" position="1192,180" size="652,780" alphatest="blend" zPosition="-10" />
     <widget name="epg_description" position="108,212" size="1030,716" zPosition="0" font="Next;27" foregroundColor="nextText" backgroundColor="nextCard" transparent="0" scrollbarMode="showOnDemand" />
     <eLabel text="KANAŁ" position="1224,250" size="588,28" zPosition="8" font="NextBold;18" halign="center" valign="center" foregroundColor="nextMuted" backgroundColor="nextCard" transparent="0" />
     <widget name="channel" position="1224,286" size="588,116" zPosition="8" font="NextBold;31" halign="center" valign="center" foregroundColor="nextText" backgroundColor="nextCard" transparent="0" />
@@ -4002,9 +4004,11 @@ from Components.config import config
 if getattr(self, "event", None) is None and not self["epg_description"].getText():
     self["epg_description"].setText("Brak danych EPG dla tej audycji." if config.osd.language.value.startswith("pl") else "No EPG information for this event.")
 </applet>
+    <eLabel position="76,180" size="5,780" backgroundColor="nextAccent" zPosition="-8" />
+    <eLabel position="1192,180" size="5,780" backgroundColor="nextAccentDim" zPosition="-8" />
   </screen>
   <screen name="Volume" position="60,60" size="460,92" title="Volume" flags="wfNoBorder" backgroundColor="transparent" zPosition="99" ignoreWidgets="VolumeText">
-    <ePixmap pixmap="next3/volume.png" position="0,0" size="460,92" alphatest="blend" zPosition="0" />
+    <eLabel position="0,0" size="460,92" backgroundColor="nextDock" zPosition="0" />
     <ePixmap pixmap="icons/volume.png" position="14,14" size="64,64" alphatest="blend" scale="1" zPosition="2" />
     <widget name="Volume" position="94,40" size="250,12" foregroundColor="nextAccent" backgroundColor="nextTrack" zPosition="3" />
     <widget source="global.CurrentTime" render="MetrixHDVolumeText" position="356,16" size="86,60" zPosition="5" foregroundColor="nextText" backgroundColor="transparent" transparent="1" halign="center" valign="center" font="NextBold;36" />
@@ -4019,7 +4023,7 @@ if getattr(self, "event", None) is None and not self["epg_description"].getText(
     </widget>
     <eLabel position="76,120" size="1768,2" backgroundColor="nextDivider" zPosition="-20" />
     <eLabel position="76,120" size="104,3" backgroundColor="nextAccent" zPosition="-20" />
-    <eLabel text="NEXT 3.2.1  /  by Paweł Pawełek" position="76,1022" size="720,30" font="Next;18" foregroundColor="nextMuted" backgroundColor="nextBg" transparent="0" valign="center" zPosition="8" />
+    <eLabel text="NEXT 4.0.0  /  by Paweł Pawełek" position="76,1022" size="720,30" font="Next;18" foregroundColor="nextMuted" backgroundColor="nextBg" transparent="0" valign="center" zPosition="8" />
     <eLabel position="76,180" size="1096,780" backgroundColor="nextCard" zPosition="-20" />
     <eLabel position="1192,180" size="652,780" backgroundColor="nextCard" zPosition="-20" />
     <ePixmap pixmap="next3/channels.png" position="76,180" size="1096,780" alphatest="blend" zPosition="-10" />

@@ -1,3 +1,16 @@
+## 4.0.0-r0 — 2026-11-27 (test)
+
+- Live Grid: przebudowane główne ekrany, dolny dock, rozdzielone czasy i tytuły EPG, procent postępu audycji.
+- Live Center: lokalne informacje o kanale, sygnale, RAM, systemie plików i nagraniach.
+- 9 palet × 3 tryby powierzchni, Cinema Glass, OLED Black.
+- Poprawki TLS, weryfikacji URL/digestu aktualizacji, zabezpieczenie pliku tymczasowego.
+- Bezpieczniejszy fallback listy kanałów, zachowany uchwyt eTimer, poprawiony opis pogody Auto.
+- Instalacja nie nadpisuje systemowego bootlogo ani nie restartuje GUI.
+- Testy statyczne wykonane; testy na tunerze wymagane.
+
+
+---
+
 # Changelog
 
 ## 3.2.1-r5 — 2026-09-15
