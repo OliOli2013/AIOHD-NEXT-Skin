@@ -13,7 +13,6 @@ from __future__ import absolute_import
 import json
 import re
 import shlex
-import ssl
 import subprocess
 
 try:
@@ -22,7 +21,7 @@ except ImportError:  # pragma: no cover - AIOHD NEXT requires Python 3
     from urllib2 import Request, urlopen
 
 PACKAGE_NAME = 'enigma2-plugin-skins-aiohd-next'
-CURRENT_PACKAGE_VERSION = '3.2.1-r5'  # safe fallback if opkg status is unavailable
+CURRENT_PACKAGE_VERSION = '4.0.0-r0'  # safe fallback if opkg status is unavailable
 RELEASES_API = 'https://api.github.com/repos/OliOli2013/AIOHD-NEXT-Skin/releases/latest'
 DOWNLOAD_PREFIX = 'https://github.com/OliOli2013/AIOHD-NEXT-Skin/releases/download/'
 _PACKAGE_RE = re.compile(r'^enigma2-plugin-skins-aiohd-next_([0-9]+\.[0-9]+\.[0-9]+-r[0-9]+)_all\.ipk$')
@@ -65,14 +64,14 @@ def is_newer(candidate, current=None):
     return version_tuple(candidate) > version_tuple(current)
 
 
-def _read_json(context=None, timeout=8):
+def _read_json(timeout=8):
     current = installed_version()
     request = Request(RELEASES_API, headers={
         'User-Agent': 'AIOHD-NEXT/%s' % current,
         'Accept': 'application/vnd.github+json',
         'Cache-Control': 'no-cache',
     })
-    response = urlopen(request, timeout=timeout, context=context) if context is not None else urlopen(request, timeout=timeout)
+    response = urlopen(request, timeout=timeout)
     try:
         raw = response.read(262144)
     finally:
@@ -87,12 +86,7 @@ def _read_json(context=None, timeout=8):
 
 def fetch_latest(timeout=8):
     """Return {'version', 'url', 'name'} only for a genuinely newer release."""
-    try:
-        data = _read_json(timeout=timeout)
-    except Exception:
-        # Some older Enigma2 images have an outdated CA store. GitHub download
-        # URLs are still restricted below to this project's exact release path.
-        data = _read_json(context=ssl._create_unverified_context(), timeout=timeout)
+    data = _read_json(timeout=timeout)
 
     if data.get('draft') or data.get('prerelease'):
         return None
@@ -118,24 +112,36 @@ def fetch_latest(timeout=8):
         # version. This also prevents a stale/mismatched asset from being offered.
         if version_tuple(asset_version) != version_tuple(tag):
             continue
-        if url.startswith(DOWNLOAD_PREFIX) and url.endswith('/' + name):
-            return {'version': tag, 'url': url, 'name': name}
+        if url == DOWNLOAD_PREFIX + tag + '/' + name:
+            digest = asset.get('digest')
+            if not isinstance(digest, str) or not re.fullmatch(r'sha256:[0-9a-fA-F]{64}', digest):
+                digest = None
+            return {'version': tag, 'url': url, 'name': name, 'digest': digest}
     return None
 
 
-def installer_command(url):
-    """Build the only shell command accepted by the updater."""
+def installer_command(url, digest=None):
+    """Strict official URL; verified TLS; private temporary package directory."""
     url = str(url or '').strip()
     name = url.rsplit('/', 1)[-1]
-    if not url.startswith(DOWNLOAD_PREFIX) or not _PACKAGE_RE.match(name):
+    match = _PACKAGE_RE.fullmatch(name)
+    if not match or not url.startswith(DOWNLOAD_PREFIX):
         raise ValueError('unexpected update URL')
-    quoted = shlex.quote(url)
-    status = '/tmp/aiohd-next-update.status'
+    tag = url[len(DOWNLOAD_PREFIX):].split('/')[0]
+    if url != DOWNLOAD_PREFIX + tag + '/' + name or version_tuple(tag) != version_tuple(match.group(1)):
+        raise ValueError('unexpected update version/path')
+    verify = ''
+    if digest is not None:
+        if not re.fullmatch(r'sha256:[0-9a-fA-F]{64}', digest):
+            raise ValueError('invalid asset digest')
+        verify = ' && printf "%s  %s\\n" ' + shlex.quote(digest[7:].lower()) + ' "$work/update.ipk" | sha256sum -c -'
     return (
-        'rm -f {status} /tmp/aiohd-next-update.ipk; '
-        'wget -q --no-check-certificate {url} -O /tmp/aiohd-next-update.ipk '
-        '&& opkg install /tmp/aiohd-next-update.ipk '
-        '&& rm -f /tmp/aiohd-next-update.ipk '
-        '&& echo OK > {status} '
-        '|| {{ rc=$?; rm -f /tmp/aiohd-next-update.ipk; echo FAIL:$rc > {status}; exit $rc; }}'
-    ).format(status=status, url=quoted)
+        'status=/tmp/aiohd-next-update.status; rm -f "$status"; '
+        'work=$(mktemp -d /tmp/aiohd-next.XXXXXX) || exit 1; '
+        "trap 'rm -rf \"$work\"' EXIT; "
+        'if wget -q ' + shlex.quote(url) + ' -O "$work/update.ipk"' + verify +
+        ' && opkg install "$work/update.ipk"; then '
+        'printf "OK\\n" > "$work/status"; mv -f "$work/status" "$status"; '
+        'else rc=$?; printf "FAIL:%s\\n" "$rc" > "$work/status"; '
+        'mv -f "$work/status" "$status"; exit "$rc"; fi'
+    )

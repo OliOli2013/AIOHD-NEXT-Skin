@@ -129,14 +129,14 @@ class FeatureTests(unittest.TestCase):
   weather_session=types.SimpleNamespace(screen={});weather.start_weather_sources(weather_session);self.assertEqual(weather_session.screen[weather.SOURCE_CITY].text,'Pogoda');self.assertIn('Ładowanie',weather_session.screen[weather.SOURCE_CONDITION].text)
  def test_updater_version_and_command_safety(self):
   updater=load('aiofeatures.updater',B/'Plugins/Extensions/AIONextStyle/updater.py')
-  self.assertEqual(updater.CURRENT_PACKAGE_VERSION,'3.2.1-r5')
-  self.assertTrue(updater.is_newer('3.2.1-r6'))
-  self.assertTrue(updater.is_newer('3.2.2-r0'))
-  self.assertFalse(updater.is_newer('3.2.1-r5'))
+  self.assertEqual(updater.CURRENT_PACKAGE_VERSION,'4.0.0-r0')
+  self.assertTrue(updater.is_newer('4.0.0-r1'))
+  self.assertTrue(updater.is_newer('4.0.1-r0'))
+  self.assertFalse(updater.is_newer('4.0.0-r0'))
   self.assertFalse(updater.is_newer('3.2.1-r4'))
-  url='https://github.com/OliOli2013/AIOHD-NEXT-Skin/releases/download/3.2.1-r6/enigma2-plugin-skins-aiohd-next_3.2.1-r6_all.ipk'
+  url='https://github.com/OliOli2013/AIOHD-NEXT-Skin/releases/download/4.0.0-r1/enigma2-plugin-skins-aiohd-next_4.0.0-r1_all.ipk'
   cmd=updater.installer_command(url)
-  self.assertIn('wget -q --no-check-certificate',cmd);self.assertIn('opkg install /tmp/aiohd-next-update.ipk',cmd)
+  self.assertNotIn('--no-check-certificate',cmd);self.assertIn('opkg install',cmd);self.assertIn('mktemp -d',cmd)
   with self.assertRaises(ValueError):updater.installer_command('https://example.com/evil.ipk')
  def test_reported_openatv_screens_do_not_clip(self):
   import xml.etree.ElementTree as E
@@ -169,23 +169,17 @@ class FeatureTests(unittest.TestCase):
   self.assertGreaterEqual(py,dy+dh+8)
   plugin=(B/'Plugins/Extensions/AIONextStyle/plugin.py').read_text()
   self.assertIn("self['update_status']",plugin);self.assertIn('fetch_latest',plugin);self.assertIn('CURRENT_PACKAGE_VERSION',plugin)
- def test_bootlogo_backup_and_active_skin(self):
-  import tempfile
-  script=Path('control/postinst').read_text().split("<<'AIO_BOOTLOGO_PY'",1)[1].split('AIO_BOOTLOGO_PY',1)[0]
-  with tempfile.TemporaryDirectory() as temp:
-   root=Path(temp);source=root/'usr/share/enigma2/AIOHD/bootlogo.mvi';source.parent.mkdir(parents=True);source.write_bytes(b'new-logo')
-   settingsfile=root/'etc/enigma2/settings';settingsfile.parent.mkdir(parents=True);settingsfile.write_text('config.skin.primary_skin=Other/skin.xml')
-   target=root/'usr/share/bootlogo.mvi';target.write_bytes(b'original-logo');code=compile(script.replace("Path('/", "Path('"+temp+"/"),'postinst-bootlogo','exec')
-   exec(code,{});self.assertEqual(target.read_bytes(),b'original-logo');settingsfile.write_text('config.skin.primary_skin=AIOHD/skin.xml');exec(code,{})
-   self.assertEqual(target.read_bytes(),b'new-logo');backup=root/'usr/share/bootlogo.mvi.before-aiohd-next';self.assertEqual(backup.read_bytes(),b'original-logo')
-   source.write_bytes(b'newer-logo');exec(code,{});self.assertEqual(target.read_bytes(),b'newer-logo');self.assertEqual(backup.read_bytes(),b'original-logo')
+ def test_bootlogo_not_overwritten(self):
+  script=Path('control/postinst').read_text()
+  self.assertNotIn('/usr/share/bootlogo.mvi',script)
+  self.assertIn('No automatic restart',script)
  def test_xml_shared_layout_weather_and_contrast(self):
   import xml.etree.ElementTree as E
   root=Path('root/usr/share/enigma2/AIOHD');trees=[E.parse(p) for p in root.rglob('*.xml')];screens={s.get('name'):s for t in trees for s in t.getroot().findall('screen')}
   for t in trees:
    for p in t.getroot().iter('panel'):
     if p.get('name'):self.assertIn(p.get('name'),screens)
-  s=screens['AIONextChannelLayout'];self.assertEqual(len(s.findall("widget/convert[@type='AIONextEvent']")),4);self.assertIsNotNone(s.find("widget[@render='Pig']"));self.assertIsNotNone(s.find('applet'))
+  s=screens['AIONextChannelLayout'];self.assertEqual(len(s.findall("widget/convert[@type='AIONextEvent']")),8);self.assertIsNotNone(s.find("widget[@render='Pig']"));self.assertIsNotNone(s.find('applet'))
   self.assertEqual(s.find("widget[@name='list']").get('backgroundColorSelected'),'nextSelection')
   weather_sources={w.get('source') for w in s.findall('widget') if (w.get('source') or '').startswith('session.AIONextWeather')};self.assertEqual(len(weather_sources),4)
   self.assertTrue(Path('root/usr/lib/enigma2/python/Components/Renderer/AIONextWeatherPixmap.py').is_file())

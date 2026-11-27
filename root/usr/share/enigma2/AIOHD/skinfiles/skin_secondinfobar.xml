@@ -1,6 +1,9 @@
-<?xml version='1.0' encoding='UTF-8'?>
+<?xml version='1.0' encoding='utf-8'?>
 <skin>
   <screen name="SecondInfoBar" position="0,0" size="1920,1080" flags="wfNoBorder" backgroundColor="nextBg" title="SecondInfoBar">
+    <eLabel position="1222,552" size="622,390" backgroundColor="nextCard" zPosition="-10" />
+    <eLabel position="76,552" size="1130,390" backgroundColor="nextCard" zPosition="-10" />
+    <eLabel position="76,160" size="1768,330" backgroundColor="nextCard" zPosition="-10" />
     <eLabel text="AIO" position="76,46" size="84,50" font="Next;34" foregroundColor="nextAccent" backgroundColor="nextBg" transparent="0" valign="center" zPosition="5" />
     <eLabel position="182,51" size="2,42" backgroundColor="nextTrack" zPosition="1" />
     <eLabel text="Information" position="210,42" size="1210,60" font="Next;36" foregroundColor="nextText" backgroundColor="nextBg" transparent="0" valign="center" zPosition="5" />
@@ -9,9 +12,7 @@
     </widget>
     <eLabel position="76,120" size="1768,2" backgroundColor="nextTrack" zPosition="1" />
     <eLabel position="76,120" size="104,3" backgroundColor="nextAccent" zPosition="1" />
-    <eLabel text="NEXT 3.2.1  /  by Paweł Pawełek" position="76,1022" size="720,30" font="Next;18" foregroundColor="nextMuted" backgroundColor="nextBg" transparent="0" valign="center" zPosition="5" />
-    <ePixmap pixmap="next3/second_top.png" position="76,160" size="1768,330" alphatest="blend" zPosition="-10" />
-    <ePixmap pixmap="next3/second_body.png" position="76,552" size="1768,390" alphatest="blend" zPosition="-10" />
+    <eLabel text="AIOHD NEXT 4.0  /  Paweł Pawełek" position="76,1022" size="720,30" font="Next;18" foregroundColor="nextMuted" backgroundColor="nextBg" transparent="0" valign="center" zPosition="5" />
     <widget source="session.CurrentService" render="Picon" position="116,211" size="330,198" zPosition="5" alphatest="blend" transparent="1" scale="1">
       <convert type="ServiceName">Reference</convert>
     </widget>
@@ -83,12 +84,41 @@
       <convert type="ServiceInfo">IsCrypted</convert>
       <convert type="ConditionalShowHide" />
     </widget>
-    <widget source="session.Event_Now" render="Label" position="106,580" size="1708,325" zPosition="5" font="Next;29" foregroundColor="nextText" backgroundColor="nextBg" transparent="0" valign="top">
+    <widget source="session.Event_Now" render="Label" position="106,602" size="1070,302" zPosition="5" font="Next;29" foregroundColor="nextText" backgroundColor="nextCard" transparent="0" valign="top">
       <convert type="EventName">FullDescription</convert>
     </widget>
     <eLabel text="Next" position="96,963" size="120,40" font="Next;23" foregroundColor="nextMuted" backgroundColor="nextBg" transparent="0" valign="center" zPosition="5" />
     <widget source="session.Event_Next" render="Label" position="230,960" size="1585,44" zPosition="5" font="Next;28" foregroundColor="nextText" backgroundColor="nextBg" transparent="0" valign="center" noWrap="1">
       <convert type="EventName">Name</convert>
+    </widget>
+    <eLabel text="EPG / DETAILS" position="106,563" size="1070,34" font="NextBold;20" foregroundColor="nextAccent" backgroundColor="nextCard" transparent="1" valign="center" zPosition="8" />
+    <eLabel text="UP NEXT / TIMELINE" position="1250,563" size="566,38" font="NextBold;20" foregroundColor="nextAccent" backgroundColor="nextCard" transparent="1" valign="center" zPosition="8" />
+    <widget source="session.CurrentService" render="Label" position="1250,617" size="140,30" font="NextBold;23" foregroundColor="nextAccent" backgroundColor="nextCard" transparent="1" valign="center" noWrap="1" zPosition="9">
+      <convert type="AIONextEvent">time:1</convert>
+    </widget>
+    <widget source="session.CurrentService" render="Label" position="1250,648" size="566,33" font="Next;22" foregroundColor="nextText" backgroundColor="nextCard" transparent="1" valign="center" noWrap="1" zPosition="9">
+      <convert type="AIONextEvent">title:1</convert>
+    </widget>
+    <widget source="session.CurrentService" render="Label" position="1250,693" size="140,30" font="NextBold;23" foregroundColor="nextAccent" backgroundColor="nextCard" transparent="1" valign="center" noWrap="1" zPosition="9">
+      <convert type="AIONextEvent">time:2</convert>
+    </widget>
+    <widget source="session.CurrentService" render="Label" position="1250,724" size="566,33" font="Next;22" foregroundColor="nextText" backgroundColor="nextCard" transparent="1" valign="center" noWrap="1" zPosition="9">
+      <convert type="AIONextEvent">title:2</convert>
+    </widget>
+    <widget source="session.CurrentService" render="Label" position="1250,769" size="140,30" font="NextBold;23" foregroundColor="nextAccent" backgroundColor="nextCard" transparent="1" valign="center" noWrap="1" zPosition="9">
+      <convert type="AIONextEvent">time:3</convert>
+    </widget>
+    <widget source="session.CurrentService" render="Label" position="1250,800" size="566,33" font="Next;22" foregroundColor="nextText" backgroundColor="nextCard" transparent="1" valign="center" noWrap="1" zPosition="9">
+      <convert type="AIONextEvent">title:3</convert>
+    </widget>
+    <widget source="session.CurrentService" render="Label" position="1250,845" size="140,30" font="NextBold;23" foregroundColor="nextAccent" backgroundColor="nextCard" transparent="1" valign="center" noWrap="1" zPosition="9">
+      <convert type="AIONextEvent">time:4</convert>
+    </widget>
+    <widget source="session.CurrentService" render="Label" position="1250,876" size="566,33" font="Next;22" foregroundColor="nextText" backgroundColor="nextCard" transparent="1" valign="center" noWrap="1" zPosition="9">
+      <convert type="AIONextEvent">title:4</convert>
+    </widget>
+    <widget source="session.Event_Now" render="Label" position="1580,426" size="46,32" font="NextBold;19" foregroundColor="nextAccent" backgroundColor="nextCard" transparent="1" valign="center" noWrap="1" zPosition="9">
+      <convert type="AIONextContext">percent</convert>
     </widget>
   </screen>
 </skin>

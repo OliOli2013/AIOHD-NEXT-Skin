@@ -1,38 +1,5 @@
 #!/bin/sh
 set -eu
 if [ -n "${D:-}" ] || [ -n "${IPKG_INSTROOT:-}" ]; then exit 0; fi
-# Update the active AIOHD bootlogo without changing another skin's branding.
-if ! python3 - <<'AIO_BOOTLOGO_PY'
-import os
-import shutil
-import tempfile
-from pathlib import Path
-settings = Path('/etc/enigma2/settings')
-source = Path('/usr/share/enigma2/AIOHD/bootlogo.mvi')
-active = settings.exists() and any(line.startswith('config.skin.primary_skin=AIOHD/') for line in settings.read_text().splitlines())
-target = Path('/usr/share/bootlogo.mvi')
-if active and source.is_file() and target.resolve() != source.resolve():
-    backup = Path('/usr/share/bootlogo.mvi.before-aiohd-next')
-    if target.is_file() and not backup.exists():
-        shutil.copy2(str(target), str(backup))
-    fd, temporary = tempfile.mkstemp(prefix='.aio-bootlogo-', dir=str(target.parent))
-    try:
-        with os.fdopen(fd, 'wb') as stream:
-            stream.write(source.read_bytes())
-            stream.flush()
-            os.fchmod(stream.fileno(), 0o644)
-            os.fsync(stream.fileno())
-        os.replace(temporary, str(target))
-    finally:
-        if os.path.exists(temporary):
-            os.unlink(temporary)
-AIO_BOOTLOGO_PY
-then
-    printf '%s\n' 'AIOHD: system bootlogo update failed; skin bootlogo remains available.'
-fi
-printf '%s\n'  \
-  'AIOHD NEXT 3.2.1-r5 installed.' \
-  'Choose AIOHD in the skin selector, then restart the GUI.' \
-  'Accent colours: Plugins -> AIOHD NEXT - Style.' \
-  'No automatic restart or skin activation was performed.'
+printf '%s\n' 'AIOHD NEXT 4.0.0-r0 installed.' 'Select AIOHD and restart GUI manually.' 'No automatic restart, skin activation or system bootlogo replacement.'
 exit 0

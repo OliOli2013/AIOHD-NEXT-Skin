@@ -135,7 +135,7 @@ class AIONextWeatherManager(object):
         self.provider = ''
         self.timer = eTimer()
         try:
-            self.timer.timeout.connect(self._timer_event)
+            self._timer_connection = self.timer.timeout.connect(self._timer_event)
         except Exception:
             self.timer.callback.append(self._timer_event)
         self._publish(city=tr('Pogoda', 'Weather'), condition=tr('Ładowanie…', 'Loading…'))

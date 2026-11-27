@@ -1,3 +1,25 @@
+# Testy AIOHD NEXT 4.0.0-r0
+
+## Automatyczne
+
+`python3 -m unittest discover -s tests -v` i `python3 build.py`.
+Nowe testy: składnia XML/Python/applety, rozpoznawanie paneli, granice geometrii, oś EPG, procent EPG, 27 kombinacji stylu, aktualizator, schemat Live Center. Zachowano testy regresji 3.2.1, aktualizując oczekiwania dotyczące zmienionych funkcji.
+
+## Test odbiornika (przed wydaniem stabilnym)
+
+1. OpenATV 7.6 i 8.0, następnie 8.1 beta osobno; ARM i MIPS, jeśli dostępne. Testować na Full HD, nie podczas nagrywania.
+2. Instalacja z czystego image i aktualizacja 3.2.1-r5; wybór AIOHD, ręczny restart, brak pętli GUI. Powrót do MetrixHD.
+3. InfoBar: SAT/IPTV, brak EPG, polskie i długie nazwy, picon, nagrywanie, SNR/AGC/BER, pogoda. Procent tylko przy poprawnym bieżącym EPG.
+4. Lista: trzy rozmiary, tryb dwuliniowy, PiG, 4 audycje (czas i tytuł), długie opisy. Sprawdzić również brak EPG i skrajne długości.
+5. SecondInfoBar, Menu, EPGSelection, EventView, MoviePlayer, Volume, FlashOnline, DeviceManager, SoftwareUpdate, OSDCalibration, MessageBox.
+6. Style: wszystkie 3 powierzchnie, kilka palet, restart, ponowny zapis, odczyt ustawień. Cinema Glass — czytelność na jasnym obrazie; OLED — kontrast starszych ekranów.
+7. Live Center: SAT/IPTV, brak aktywnej usługi, nagrania, czas, odczyt danych systemowych, zamknięcie i ponowne otwarcie; brak błędu i zatrzymanie timera.
+8. Aktualizator: brak sieci, błędny certyfikat, odmowa instalacji, poprawny oficjalny pakiet, niezgodny digest, gdy podany. Nie publikować testowego wydania jako stable.
+9. Sprawdź wtyczki zewnętrzne, które były stylowane przez MetrixHD. Nie wszystkie kombinacje image/wtyczek mają identyczne komponenty.
+
+
+---
+
 # Weryfikacja AIOHD NEXT 3.2.1-r3
 
 ## Testy automatyczne
